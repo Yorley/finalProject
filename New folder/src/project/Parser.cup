@@ -1,0 +1,112 @@
+
+   
+/* ---------------Seccion de declaraciones preliminares--------------------*/
+package project;
+
+/* Import the class java_cup.runtime.*  */
+import java_cup.runtime.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
+import project.semantic.evaluators.*;
+import project.semantic.SemanticStack;
+import project.semantic.SymbolTable.SymbolTable;
+import project.semantic.registers.*;
+import project.semantic.Writer;
+
+parser code {:
+
+    public  ArrayList<String> expectedTokens_msg = new ArrayList<String>();
+    public  ArrayList<String> errorsLines = new ArrayList<String>();
+    public  ArrayList<String> errors = new ArrayList<String>();
+    public  ArrayList<String> getExpectedTokens() {
+        return expectedTokens_msg;
+    }
+
+    public ArrayList<String> getLineErrors() {
+        return errorsLines;
+    }
+    public ArrayList<String> getErrors() {
+        return errors;
+    }
+
+    protected void report_expected_token_ids() {
+
+        List<Integer> ids = expected_token_ids();
+        LinkedList<String> list = new LinkedList<String>();
+
+        for (Integer expected : ids) {
+            if (!(symbl_name_from_id(expected).equals("EOF") || symbl_name_from_id(expected).equals("error")))
+                list.add(symbl_name_from_id(expected));
+          }
+        String msg = "expected tokens are "+ list;
+        expectedTokens_msg.add(msg);
+        System.err.println(msg);  
+    }
+    
+    public void syntax_error(Symbol s){
+        String msg = "Syntax error: "+" Line: " + s.left +" Column: " +s.right;
+        String symbolName = symbl_name_from_id(s.sym);
+        msg += "\nCurrent: " + symbolName + "\n";
+
+        errorsLines.add(msg);
+        System.err.print(msg);
+      
+        report_expected_token_ids();
+    }
+    
+    public void unrecovered_syntax_error(Symbol s)throws java.lang.Exception{   
+        
+    }
+
+    /* Reporte de error encontrado. */
+    public void report_error(String message, Object info) {
+
+        StringBuilder m = new StringBuilder("Error");
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+
+            if (s.left >= 0) {
+                m.append(" in line " + (s.left+1));
+                if (s.right >= 0)
+                    m.append(", column " + (s.right));
+            }
+        }
+        m.append(" : " + message);
+        System.err.println(m);
+    }
+    public void printError(String pMsg){
+        System.err.println(pMsg+"\n");
+        errors.add(pMsg+"\n");        
+    }
+
+    public void report_fatal_error(String message, Object info) {
+
+        //report_error(message, info);
+        //System.exit(1);
+    }
+
+
+:}   
+
+// Simbolos terminales
+terminal LITERAL_NUM,LITERAL_CONSTANT, LITERAL_CHAR, TYPE_NUM, TYPE_CHAR, TYPE_STR, IF, ELSE, WHILE,BREAK, KEYWORD, 
+    IDENTIFIER, ARITHMETIC, SEMICOLON, COMMA, LPAR, RPAR, ASSIGN,PUTW, PUTS, MAIN, OPERADOR, BEGIN, END;  
+
+
+// Simbolos no terminales
+non terminal program,main,decl_set;
+
+// Seccion de precedencia
+
+
+//Gramatica
+
+start with program;
+
+// Simbolo Inicial
+    
+program ::= decl_set main 
+            | main ;
+main ::= MAIN BEGIN  END;
+decl_set ::= TYPE_NUM IDENTIFIER SEMICOLON;
