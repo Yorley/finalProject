@@ -42,7 +42,6 @@ public class MainWindow extends javax.swing.JFrame {
         btnAnalize = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txbInput = new javax.swing.JTextArea();
-        chkBox_ReadFile = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         txbOutput = new javax.swing.JTextArea();
@@ -55,6 +54,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txbSemantic = new javax.swing.JTextArea();
+        chkBox_ReadFile = new javax.swing.JCheckBox();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -70,8 +70,6 @@ public class MainWindow extends javax.swing.JFrame {
         txbInput.setColumns(20);
         txbInput.setRows(5);
         jScrollPane2.setViewportView(txbInput);
-
-        chkBox_ReadFile.setText("Analizar desde archivo solamente");
 
         txbOutput.setColumns(20);
         txbOutput.setRows(5);
@@ -91,6 +89,8 @@ public class MainWindow extends javax.swing.JFrame {
         txbSemantic.setRows(5);
         jScrollPane4.setViewportView(txbSemantic);
 
+        chkBox_ReadFile.setText("Analizar desde el archivo solamente");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -107,13 +107,13 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(chkBox_ReadFile)
-                                .addGap(51, 51, 51)
-                                .addComponent(btnAnalize))
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(chkBox_ReadFile)
+                                .addGap(39, 39, 39)
+                                .addComponent(btnAnalize)))
                         .addGap(0, 239, Short.MAX_VALUE)))
                 .addContainerGap())
         );
