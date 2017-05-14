@@ -91,11 +91,16 @@ parser code {:
 
 // Simbolos terminales
 terminal LITERAL_NUM,LITERAL_CONSTANT, LITERAL_CHAR, TYPE_NUM, TYPE_CHAR, TYPE_STR, IF, ELSE, WHILE,BREAK, KEYWORD, 
-    IDENTIFIER, ARITHMETIC, SEMICOLON, COMMA, LPAR, RPAR, ASSIGN,PUTW, PUTS, MAIN, OPERADOR, BEGIN, END;  
+    IDENTIFIER, ARITHMETIC, SEMICOLON, COMMA, LPAR, RPAR, ASSIGN,PUTW, PUTS, MAIN, OPERADOR, BEGIN, END, PLUS,MINUS,MULT,DIV;  
 
 
 // Simbolos no terminales
-non terminal program,main,decl_set;
+non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_variable_list, constant_list, mainn, fin, mainnn,mainnnn
+             ,lmain, variables_list_one, assign,assign_one,variables_elem,variables_elem_one,variables_elem_two, variables_elem_three
+            ,end_decl,decl_set_aux, variables_list_auxx,assign_two,content,if_struct,while_struct,declar_assign,putw_struct,puts_struct,structures,
+            puts_struct_one,puts_struct_two,puts_struct_three,puts_struct_fourth            
+            ,putw_struct_one,putw_struct_two,putw_struct_three,putw_struct_fourth,
+            arithmetic,add ,subs, mult, div, params;
 
 // Seccion de precedencia
 
@@ -103,10 +108,72 @@ non terminal program,main,decl_set;
 //Gramatica
 
 start with program;
-
 // Simbolo Inicial
     
-program ::= decl_set main 
-            | main ;
-main ::= MAIN BEGIN  END;
-decl_set ::= TYPE_NUM IDENTIFIER SEMICOLON;
+program ::= variables_list:d lmain:f | lmain:f;
+
+lmain ::= MAIN main | error {: printError("Missing main token") ;:} main;
+
+
+
+variables_list ::= variables_elem variables_list | variables_elem ;
+
+variables_elem ::= TYPE_NUM variables_elem_one ;
+                   //| error {: printError("Missing Type token") ;:} variables_elem_one  ;
+
+variables_elem_one ::= IDENTIFIER variables_elem_two
+                       | error {: printError("Missing Type token") ;:} variables_elem_two  ;
+
+variables_elem_two ::= SEMICOLON 
+                        | assign
+                        | error {: printError("Missing ; token") ;:} ;
+end_decl ::= SEMICOLON 
+                        | error {: printError("Missing ; token") ;:} ;
+
+assign ::= ASSIGN assign_one | error {: printError("Missing = token") ;:} assign_one;
+
+assign_one ::= LITERAL_NUM assign_two ;
+
+assign_two ::= SEMICOLON;
+
+main ::= LPAR  mainn
+        |error {: printError("Missing ( token") ;:} mainn;
+
+mainn ::= RPAR mainnn
+        | error {: printError("Missing ) token") ;:} mainnn; 
+
+mainnn ::= BEGIN mainnnn
+        | error {: printError("Missing { token") ;:} mainnnn; 
+
+mainnnn ::=  content END | END 
+        | error {: printError("Missing } token") ;:} fin; 
+
+fin ::=  END
+        | error {: printError("Missing } token") ;:};
+
+content ::= structures content | structures ;
+
+structures ::= if_struct | while_struct | declar_assign | putw_struct | puts_struct;
+
+putw_struct ::= PUTW putw_struct_one;
+putw_struct_one ::= LPAR putw_struct_two;
+putw_struct_two ::= arithmetic putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
+putw_struct_three ::= RPAR putw_struct_fourth;
+putw_struct_fourth ::= SEMICOLON;
+
+puts_struct ::= PUTS puts_struct_one;
+puts_struct_one ::= LPAR puts_struct_two;
+puts_struct_two ::= LITERAL_CONSTANT puts_struct_three | error {: printError("Missing } token") ;:} puts_struct_three;
+puts_struct_three ::= RPAR puts_struct_fourth;
+puts_struct_fourth ::= SEMICOLON;
+
+
+
+arithmetic ::= add |subs|mult |div;
+
+add ::= params PLUS params arithmetic | params PLUS params ;
+
+params ::= LITERAL_NUM | IDENTIFIER;
+
+if_struct ::= SEMICOLON;
+while_struct ::= PUTS;

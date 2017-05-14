@@ -204,6 +204,31 @@ INVALID_CHAR_ERROR = {INVALID_CHARACTERS}
     tokens.add(t);
     return t;
 }
+"+" {
+    contador++;
+    Symbol t = new Symbol(sym.PLUS, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"-" {
+    contador++;
+    Symbol t = new Symbol(sym.MINUS, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"/" {
+    contador++;
+    Symbol t = new Symbol(sym.DIV, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"*" {
+    contador++;
+    Symbol t = new Symbol(sym.MULT, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"," {
+    contador++;
+    Symbol t = new Symbol(sym.COMMA, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
 {ARITHMETIC} {
     contador ++;
     Symbol t = new Symbol(sym.ARITHMETIC,yyline,yycolumn, yytext());

@@ -11,6 +11,7 @@ public class sym {
   public static final int LITERAL_NUM = 2;
   public static final int SEMICOLON = 15;
   public static final int ELSE = 9;
+  public static final int PLUS = 26;
   public static final int WHILE = 10;
   public static final int END = 25;
   public static final int IDENTIFIER = 13;
@@ -20,11 +21,14 @@ public class sym {
   public static final int KEYWORD = 12;
   public static final int COMMA = 16;
   public static final int TYPE_NUM = 5;
+  public static final int MULT = 28;
   public static final int EOF = 0;
   public static final int OPERADOR = 23;
   public static final int MAIN = 22;
+  public static final int DIV = 29;
   public static final int BREAK = 11;
   public static final int PUTW = 20;
+  public static final int MINUS = 27;
   public static final int error = 1;
   public static final int PUTS = 21;
   public static final int ASSIGN = 19;
@@ -60,7 +64,11 @@ public class sym {
   "MAIN",
   "OPERADOR",
   "BEGIN",
-  "END"
+  "END",
+  "PLUS",
+  "MINUS",
+  "MULT",
+  "DIV"
   };
 }
 

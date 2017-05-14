@@ -201,6 +201,7 @@ public class MainWindow extends javax.swing.JFrame {
         jflex.Main.generate(file);
     }
     private  void showParserErrors(ArrayList<String> pExpectedTokens, ArrayList<String> pErrorsLine, ArrayList<String> pErrors){
+        txbParser.setText("");
         for(int iError = 0; iError != pExpectedTokens.size(); iError++){
             txbParser.setText(txbParser.getText()+ pErrorsLine.get(iError));
             txbParser.setText(txbParser.getText()+ pExpectedTokens.get(iError)+"\n");
@@ -208,6 +209,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         if (pExpectedTokens.size()==0){
             System.out.println(_TokensList.size() );
+            
             if (_TokensList.size() == 0){
                 txbParser.setText("Parseo completado sin errores");
             }else{                

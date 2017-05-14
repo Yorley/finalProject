@@ -1,1 +1,1 @@
-main { int pedrito12=43}
+main(){putw(8
