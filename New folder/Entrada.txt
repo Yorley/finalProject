@@ -1,1 +1,1 @@
-main(){putw(8
+main(){if(*){puts("kjhgfd");}else}

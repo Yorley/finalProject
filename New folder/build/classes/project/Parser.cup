@@ -100,7 +100,8 @@ non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_var
             ,end_decl,decl_set_aux, variables_list_auxx,assign_two,content,if_struct,while_struct,declar_assign,putw_struct,puts_struct,structures,
             puts_struct_one,puts_struct_two,puts_struct_three,puts_struct_fourth            
             ,putw_struct_one,putw_struct_two,putw_struct_three,putw_struct_fourth,
-            arithmetic,add ,subs, mult, div, params;
+            arithmetic,add ,subs, mult, div, params,_aux,if_struct_one,if_struct_two,if_struct_three,if_struct_four,if_struct_five,else_struct,
+condition;
 
 // Seccion de precedencia
 
@@ -153,16 +154,16 @@ fin ::=  END
 
 content ::= structures content | structures ;
 
-structures ::= if_struct | while_struct | declar_assign | putw_struct | puts_struct;
+structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assign ;
 
 putw_struct ::= PUTW putw_struct_one;
-putw_struct_one ::= LPAR putw_struct_two;
+putw_struct_one ::= LPAR putw_struct_two| error {: printError("Missing } token") ;:} putw_struct_two;
 putw_struct_two ::= arithmetic putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
-putw_struct_three ::= RPAR putw_struct_fourth;
+putw_struct_three ::= RPAR putw_struct_fourth| error {: printError("Missing } token") ;:} putw_struct_fourth; 
 putw_struct_fourth ::= SEMICOLON;
 
 puts_struct ::= PUTS puts_struct_one;
-puts_struct_one ::= LPAR puts_struct_two;
+puts_struct_one ::= LPAR puts_struct_two | error {: printError("Missing } token") ;:} puts_struct_two;
 puts_struct_two ::= LITERAL_CONSTANT puts_struct_three | error {: printError("Missing } token") ;:} puts_struct_three;
 puts_struct_three ::= RPAR puts_struct_fourth;
 puts_struct_fourth ::= SEMICOLON;
@@ -170,10 +171,32 @@ puts_struct_fourth ::= SEMICOLON;
 
 
 arithmetic ::= add |subs|mult |div;
+mult ::= params MULT _aux;
+div ::= params DIV _aux;
+add ::= params PLUS _aux;
+subs ::= params MINUS _aux;
 
-add ::= params PLUS params arithmetic | params PLUS params ;
 
-params ::= LITERAL_NUM | IDENTIFIER;
+_aux ::= arithmetic | params ;
 
-if_struct ::= SEMICOLON;
-while_struct ::= PUTS;
+
+params ::= LITERAL_NUM | IDENTIFIER| error {: printError("Missing parameter token") ;:};
+
+if_struct ::= IF if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
+if_struct_one ::= LPAR condition if_struct_two ;
+if_struct_two ::= RPAR if_struct_three| error {: printError("Missing ( token") ;:} if_struct_three;
+if_struct_three ::= BEGIN if_struct_four | error {: printError("Missing { token") ;:} condition if_struct_four;
+if_struct_four ::= content if_struct_five | error {: printError("Missing ( token") ;:} condition if_struct_five;
+if_struct_five ::= END | END else_struct;
+
+else_struct ::= ELSE ;
+
+condition ::= MULT;
+
+
+
+
+
+
+while_struct ::= MINUS;
+declar_assign ::= COMMA;
