@@ -91,7 +91,8 @@ parser code {:
 
 // Simbolos terminales
 terminal LITERAL_NUM,LITERAL_CONSTANT, LITERAL_CHAR, TYPE_NUM, TYPE_CHAR, TYPE_STR, IF, ELSE, WHILE,BREAK, KEYWORD, 
-    IDENTIFIER, ARITHMETIC, SEMICOLON, COMMA, LPAR, RPAR, ASSIGN,PUTW, PUTS, MAIN, OPERADOR, BEGIN, END, PLUS,MINUS,MULT,DIV;  
+    IDENTIFIER, ARITHMETIC, SEMICOLON, COMMA, LPAR, RPAR, ASSIGN,PUTW, PUTS, MAIN, OPERADOR, BEGIN, END, PLUS,MINUS,MULT,DIV,
+    AND, OR, HIGHER, LOWER,EQUALS,DIFFERENT;  
 
 
 // Simbolos no terminales
@@ -101,7 +102,8 @@ non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_var
             puts_struct_one,puts_struct_two,puts_struct_three,puts_struct_fourth            
             ,putw_struct_one,putw_struct_two,putw_struct_three,putw_struct_fourth,
             arithmetic,add ,subs, mult, div, params,_aux,if_struct_one,if_struct_two,if_struct_three,if_struct_four,if_struct_five,else_struct,
-condition;
+            condition,else_struct_one,else_struct_two,else_struct_three,declar_assign_one,declar_assign_two,declar_assign_three
+            ;
 
 // Seccion de precedencia
 
@@ -189,14 +191,16 @@ if_struct_three ::= BEGIN if_struct_four | error {: printError("Missing { token"
 if_struct_four ::= content if_struct_five | error {: printError("Missing ( token") ;:} condition if_struct_five;
 if_struct_five ::= END | END else_struct;
 
-else_struct ::= ELSE ;
+else_struct ::= ELSE else_struct_one ;//| error {: printError("Missing if token") ;:} else_struct_one;
+else_struct_one ::= BEGIN else_struct_two | error {: printError("Missing if token") ;:} else_struct_two;
+else_struct_two ::= content else_struct_three | error {: printError("Missing if token") ;:} else_struct_three;
+else_struct_three ::= END;
 
 condition ::= MULT;
 
-
-
-
-
+declar_assign ::= IDENTIFIER declar_assign_one;
+declar_assign_one ::= ASSIGN declar_assign_two | error {: printError("Missing ) token"); :} declar_assign_two;
+declar_assign_two ::= IDENTIFIER declar_assign_three | arithmetic declar_assign_three | LITERAL_NUM declar_assign_three | error declar_assign_three;
+declar_assign_three ::= SEMICOLON;
 
 while_struct ::= MINUS;
-declar_assign ::= COMMA;

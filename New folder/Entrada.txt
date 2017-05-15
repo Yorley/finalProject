@@ -1,1 +1,1 @@
-main(){if(*){puts("kjhgfd");}else}
+&&

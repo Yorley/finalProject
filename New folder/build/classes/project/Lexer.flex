@@ -229,6 +229,37 @@ INVALID_CHAR_ERROR = {INVALID_CHARACTERS}
     Symbol t = new Symbol(sym.COMMA, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;}
+
+"<" {
+    contador++;
+    Symbol t = new Symbol(sym.LOWER, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+">" {
+    contador++;
+    Symbol t = new Symbol(sym.HIGHER, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"==" {
+    contador++;
+    Symbol t = new Symbol(sym.EQUALS, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"¡=" {
+    contador++;
+    Symbol t = new Symbol(sym.DIFFERENT, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"&&" {
+    contador++;
+    Symbol t = new Symbol(sym.AND, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
+"||" {
+    contador++;
+    Symbol t = new Symbol(sym.OR, yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;}
 {ARITHMETIC} {
     contador ++;
     Symbol t = new Symbol(sym.ARITHMETIC,yyline,yycolumn, yytext());
