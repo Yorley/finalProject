@@ -1,15 +1,12 @@
 # finalProject
 final_project
-      **************************************************************************************************************************
-      *************************                     INSTITUTO TECNOLÓGICO DE COSTA RICA                ************************* 
-      *************************                           INGENIERÍA EN COMPUTACIÓN                    ************************* 
-      *************************                                SEDE DE ALAJUELA                        ************************* 
-      *************************                          COMPILADORES E INTERPRETES                    ************************* 
-      *************************                           PROF. FABIAN FALLAS MOYA                     ************************* 
-      *************************                                  ESTUDIANTES:                          ************************* 
-      *************************                            YORLEY AGUILAR MENDOZA                      ************************* 
-      *************************                           FERNANDA ALVARADO VARGAS                     ************************* 
-      **************************************************************************************************************************
+INSTITUTO TECNOLÓGICO DE COSTA RICA 
+INGENIERÍA EN COMPUTACIÓN                    
+SEDE DE ALAJUELA                        
+COMPILADORES E INTERPRETES                    
+PROF. FABIAN FALLAS MOYA                     
+ESTUDIANTES: YORLEY AGUILAR MENDOZA 
+             FERNANDA ALVARADO VARGAS                   
 
 1. Introducción.
 El proyecto a desarrollar pretende describir un lenguaje de programación con la intención de desarrollar un compilador, "un compilador es un programa encargado de traducir un lenguaje de programación a otro". Con lo anterior mencionado, es importante recalcar que el proyecto se desarrolla con el fin de poner en práctica el conocimiento que los estudiantes han obtenido hasta el momento.
