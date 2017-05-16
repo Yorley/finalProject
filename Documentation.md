@@ -1,5 +1,4 @@
 # finalProject
-final_project
 INSTITUTO TECNOLÓGICO DE COSTA RICA 
 INGENIERÍA EN COMPUTACIÓN                    
 SEDE DE ALAJUELA                        
