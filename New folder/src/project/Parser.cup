@@ -102,7 +102,9 @@ non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_var
             puts_struct_one,puts_struct_two,puts_struct_three,puts_struct_fourth            
             ,putw_struct_one,putw_struct_two,putw_struct_three,putw_struct_fourth,
             arithmetic,add ,subs, mult, div, params,_aux,if_struct_one,if_struct_two,if_struct_three,if_struct_four,if_struct_five,else_struct,
-            condition,else_struct_one,else_struct_two,else_struct_three,declar_assign_one,declar_assign_two,declar_assign_three
+            condition,else_struct_one,else_struct_two,else_struct_three,declar_assign_one,declar_assign_two,declar_assign_three,
+            comparison,expr,expr_two,expr_aux,logic_comparison,exp,arithmetic_aux,expr_aux_one,condition_one,arithmetic_aux_one,
+            if_struct_six,condition_two,condition_three,condition_aux,expr_one, expr_three, expr_four
             ;
 
 // Seccion de precedencia
@@ -184,19 +186,46 @@ _aux ::= arithmetic | params ;
 
 params ::= LITERAL_NUM | IDENTIFIER| error {: printError("Missing parameter token") ;:};
 
+/*
 if_struct ::= IF if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
 if_struct_one ::= LPAR condition if_struct_two ;
 if_struct_two ::= RPAR if_struct_three| error {: printError("Missing ( token") ;:} if_struct_three;
 if_struct_three ::= BEGIN if_struct_four | error {: printError("Missing { token") ;:} condition if_struct_four;
 if_struct_four ::= content if_struct_five | error {: printError("Missing ( token") ;:} condition if_struct_five;
 if_struct_five ::= END | END else_struct;
+*/
+
+if_struct ::= IF if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
+if_struct_one ::= LPAR if_struct_two ;
+if_struct_two ::= condition if_struct_three ; //| error {: printError("Missing ( token") ;:} if_struct_three;
+if_struct_three ::= RPAR if_struct_four;
+if_struct_four ::= BEGIN if_struct_five | error {: printError("Missing { token") ;:} if_struct_five; 
+if_struct_five ::= content if_struct_six | error {: printError("Missing ( token") ;:} if_struct_six;
+if_struct_six ::= END | END else_struct;
+
+
+
 
 else_struct ::= ELSE else_struct_one ;//| error {: printError("Missing if token") ;:} else_struct_one;
 else_struct_one ::= BEGIN else_struct_two | error {: printError("Missing if token") ;:} else_struct_two;
 else_struct_two ::= content else_struct_three | error {: printError("Missing if token") ;:} else_struct_three;
 else_struct_three ::= END;
 
-condition ::= MULT;
+condition ::= condition_aux | exp ;
+condition_aux ::= condition_one | error {: printError("Missing if token") ;:};
+condition_one ::= LITERAL_NUM condition_two  | IDENTIFIER condition_two  | arithmetic_aux condition_two;
+condition_two ::= comparison condition_three;
+condition_three ::= LITERAL_NUM | IDENTIFIER | arithmetic_aux;
+arithmetic_aux ::= LPAR  arithmetic arithmetic_aux_one;
+arithmetic_aux_one ::=  RPAR;
+exp ::= LPAR expr ;
+expr ::= condition_aux expr_one ;
+expr_one ::= RPAR expr_two | RPAR;
+expr_two ::= logic_comparison expr_three;
+expr_three ::= exp  ;
+comparison ::= LOWER | HIGHER | EQUALS | DIFFERENT;
+logic_comparison ::= AND | OR;
+
 
 declar_assign ::= IDENTIFIER declar_assign_one;
 declar_assign_one ::= ASSIGN declar_assign_two | error {: printError("Missing ) token"); :} declar_assign_two;
