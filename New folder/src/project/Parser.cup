@@ -104,7 +104,8 @@ non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_var
             arithmetic,add ,subs, mult, div, params,_aux,if_struct_one,if_struct_two,if_struct_three,if_struct_four,if_struct_five,else_struct,
             condition,else_struct_one,else_struct_two,else_struct_three,declar_assign_one,declar_assign_two,declar_assign_three,
             comparison,expr,expr_two,expr_aux,logic_comparison,exp,arithmetic_aux,expr_aux_one,condition_one,arithmetic_aux_one,
-            if_struct_six,condition_two,condition_three,condition_aux,expr_one, expr_three, expr_four
+            if_struct_six,condition_two,condition_three,condition_aux,expr_one, expr_three, expr_four, while_struct_one,while_struct_two,
+            while_struct_three,while_struct_four,while_struct_five,while_struct_six,while_struct_aux
             ;
 
 // Seccion de precedencia
@@ -162,7 +163,7 @@ structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assi
 
 putw_struct ::= PUTW putw_struct_one;
 putw_struct_one ::= LPAR putw_struct_two| error {: printError("Missing } token") ;:} putw_struct_two;
-putw_struct_two ::= arithmetic putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
+putw_struct_two ::= arithmetic putw_struct_three | IDENTIFIER putw_struct_three | LITERAL_NUM putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
 putw_struct_three ::= RPAR putw_struct_fourth| error {: printError("Missing } token") ;:} putw_struct_fourth; 
 putw_struct_fourth ::= SEMICOLON;
 
@@ -232,4 +233,11 @@ declar_assign_one ::= ASSIGN declar_assign_two | error {: printError("Missing ) 
 declar_assign_two ::= IDENTIFIER declar_assign_three | arithmetic declar_assign_three | LITERAL_NUM declar_assign_three | error declar_assign_three;
 declar_assign_three ::= SEMICOLON;
 
-while_struct ::= MINUS;
+while_struct ::= WHILE while_struct_one ;
+while_struct_one ::= LPAR while_struct_two;
+while_struct_two ::= condition while_struct_three;
+while_struct_three ::= RPAR while_struct_four;
+while_struct_four ::= BEGIN while_struct_five;
+while_struct_five ::= while_struct_aux while_struct_six;
+while_struct_aux ::= content | content BREAK SEMICOLON | BREAK SEMICOLON | BREAK SEMICOLON content;
+while_struct_six ::= END;

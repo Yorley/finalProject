@@ -1,4 +1,4 @@
-int x; 
+﻿int x; 
 int y; 
 main(){
      x=6; 
