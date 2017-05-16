@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
+import javax.swing.JTable;
 import project.semantic.SemanticStack;
 import project.semantic.SymbolTable.SymbolTable;
 import project.semantic.Writer;
@@ -45,8 +46,6 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txbInput = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txbOutput = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -59,6 +58,10 @@ public class MainWindow extends javax.swing.JFrame {
         chkBox_ReadFile = new javax.swing.JCheckBox();
         jScrollPane6 = new javax.swing.JScrollPane();
         tbl_tokens = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable_Lexical_errors = new javax.swing.JTable();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -74,10 +77,6 @@ public class MainWindow extends javax.swing.JFrame {
         txbInput.setColumns(20);
         txbInput.setRows(5);
         jScrollPane2.setViewportView(txbInput);
-
-        txbOutput.setColumns(20);
-        txbOutput.setRows(5);
-        jScrollPane1.setViewportView(txbOutput);
 
         jLabel1.setText("Errores Léxicos");
 
@@ -212,72 +211,186 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(tbl_tokens);
 
+        jTable_Lexical_errors.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Token", "Tipo", "Línea", "Columna"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable_Lexical_errors);
+
+        jLabel4.setText("TOKENS");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator3)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSeparator1)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(chkBox_ReadFile)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(btnAnalize)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(chkBox_ReadFile)
+                                .addGap(39, 39, 39)
+                                .addComponent(btnAnalize)))
                         .addGap(12, 12, 12))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
-                        .addContainerGap())))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnalize)
                     .addComponent(chkBox_ReadFile))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(9, 9, 9)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -288,23 +401,27 @@ public class MainWindow extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnalizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizeActionPerformed
+        //En esta parte se obtienen los tokens que hay en el programa y los muestra, además muestra cuales tokens no pertenecen al programa.
         try {
             clearTableTokens();
+            clearTableTokens(jTable_Lexical_errors);
+
             File dir =new File(".");
             String filePath =dir.getCanonicalPath()+"/src/project/";
             String inPath = filePath+ fileInputPath;
             System.out.println(inPath);
-            txbOutput.setText("");
+            
+            //En el caso de que el usuario ingrese el codigo, lo que se escriba se guardará en un archivo y a la hora de la compilación se leerá ese archivo.
             if(!chkBox_ReadFile.isSelected()){
                 writeFile(inPath,txbInput.getText());
 
@@ -313,7 +430,8 @@ public class MainWindow extends javax.swing.JFrame {
             completeTableTokens(_Tokens);
             String lexicalErrors =tokensToString(_TokensList);
             String result = tokensToString(_Tokens);
-            txbOutput.setText(lexicalErrors);
+            
+            completeTableTokens(_TokensList,jTable_Lexical_errors);
             writeFile((filePath+fileOutputPath),result);
             SymbolTable.getInstance().clearAll();
             SemanticStack.getInstance().clearStack();
@@ -321,8 +439,6 @@ public class MainWindow extends javax.swing.JFrame {
             parse(inPath);
             _TokensList.clear();
             _Tokens.clear();
-            
-            
 
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
@@ -344,14 +460,19 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
     // Generates .flex file
+    //Función encargada de generar el archivo .flex
     private static void generateLexer(String pFilePath){
         File file = new File(pFilePath);
         jflex.Main.generate(file);
     }
+    
+    //Muestra los errores de que hay en el programa, es decir si la sintaxis es correcta.
     private  void showParserErrors(ArrayList<String> pExpectedTokens, ArrayList<String> pErrorsLine, ArrayList<String> pErrors){
         txbParser.setText("");
         for(int iError = 0; iError != pExpectedTokens.size(); iError++){
             txbParser.setText(txbParser.getText()+ pErrorsLine.get(iError));
+                        txbParser.setText(txbParser.getText()+ "\n GGG \n");
+
             txbParser.setText(txbParser.getText()+ pExpectedTokens.get(iError)+"\n");
             txbParser.setText(txbParser.getText()+ "------------------------------------------------------------\n");
         }
@@ -366,6 +487,7 @@ public class MainWindow extends javax.swing.JFrame {
             
         }
     }
+    //Realiza el pareser, muestra los errores del parser y muestra los errores semanticos.
     private void parse(String pFileInputPath){
         BufferedReader bf = null;
         try {
@@ -389,6 +511,8 @@ public class MainWindow extends javax.swing.JFrame {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    //genera el .cup
     private static void generateParser(String pFilePath){
         String[] asintactico = {"-parser", "AnalizadorSintactico", pFilePath};
         try {
@@ -403,6 +527,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     }
     
+    //Función encargada de escribir un archivo.
     private static boolean writeFile(String pFilePath, String pText){
         PrintWriter writer = null;
         try {
@@ -415,6 +540,8 @@ public class MainWindow extends javax.swing.JFrame {
             return false;
         }
     }
+    
+    //Realiza el análisis de lossimbolos del programa.
     private static void scanFile(String pFileInputPath){
         BufferedReader bf = null;
         try {
@@ -496,6 +623,8 @@ public class MainWindow extends javax.swing.JFrame {
         return result;
     }
     */
+    
+    //Completa la tabla donde se muestran los tokens del programa, es la primer tabla de la interfaz.
     private void completeTableTokens(ArrayList<Symbol> pList){
         for(int iRow = 0; iRow < pList.size(); iRow++){
             tbl_tokens.setValueAt(pList.get(iRow).value.toString(), iRow, 0);
@@ -504,6 +633,7 @@ public class MainWindow extends javax.swing.JFrame {
             tbl_tokens.setValueAt((pList.get(iRow)).right, iRow, 3);
         }
     }
+    //Setea la tabla de tokens.
     private void clearTableTokens(){
         for(int iRow = 0; iRow < tbl_tokens.getRowCount(); iRow++){
             tbl_tokens.setValueAt(null, iRow, 0);
@@ -512,6 +642,28 @@ public class MainWindow extends javax.swing.JFrame {
             tbl_tokens.setValueAt(null, iRow, 3);
         }
     }
+    
+        //Completa la tabla donde se muestran los tokens del programa, es la primer tabla de la interfaz.
+    private void completeTableTokens(ArrayList<Symbol> pList,JTable pTable){
+        for(int iRow = 0; iRow < pList.size(); iRow++){
+            pTable.setValueAt(pList.get(iRow).value.toString(), iRow, 0);
+            pTable.setValueAt(sym.terminalNames[(pList.get(iRow).sym)], iRow, 1);
+            pTable.setValueAt((pList.get(iRow)).left, iRow, 2);
+            pTable.setValueAt((pList.get(iRow)).right, iRow, 3);
+        }
+    }
+    //Setea la tabla de tokens.
+   //Setea la tabla de tokens.
+    private void clearTableTokens(JTable pTable){
+        for(int iRow = 0; iRow < tbl_tokens.getRowCount(); iRow++){
+            pTable.setValueAt(null, iRow, 0);
+            pTable.setValueAt(null, iRow, 1);
+            pTable.setValueAt(null, iRow, 2);
+            pTable.setValueAt(null, iRow, 3);
+        }
+    }
+    
+    //Convierte cada tken en un string, mostrando la línea, columna, el token y el tipo de token.
     private static String tokensToString(ArrayList<Symbol> pList){
         String result = "Token                    \tTipo                     \tLineas \n\n";
         for(int iRow = 0; iRow < pList.size(); iRow++){
@@ -524,6 +676,8 @@ public class MainWindow extends javax.swing.JFrame {
         return result;
         
     }
+    
+    //Mueve un archio de una carpeta a otra.
     public static boolean moverArch(String archNombre) {
         boolean efectuado = false;
         File arch = new File(archNombre);
@@ -565,18 +719,20 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable jTable_Lexical_errors;
     private javax.swing.JTable tbl_tokens;
     private javax.swing.JTextArea txbInput;
-    private javax.swing.JTextArea txbOutput;
     private javax.swing.JTextArea txbParser;
     private javax.swing.JTextArea txbSemantic;
     // End of variables declaration//GEN-END:variables

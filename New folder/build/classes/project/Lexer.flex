@@ -1,4 +1,5 @@
-/*Seccion de codigo de usuario*/
+/*Seccion de codigo de usuario.
+En esta sección se declaran los que se utilizarán en el programa*/
 package project;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -42,6 +43,7 @@ import project.sym;
 //Fin de opciones
 
 //Expresiones regulares
+/*En esta sección se declaran todas las expresiones regulares utilizadas en el compilador*/
 //Declaraciones
 
 
@@ -52,32 +54,32 @@ import project.sym;
 
 
 
-EXP_ALPHA = [A-Za-z]
-DIGIT = [0-9]
-SPACE = " "
-JUMP = \n|\r|\r\n
-WHITESPACE = {JUMP} | [ \t\f] | {SPACE}
-EXP_ALPHANUMERIC = {EXP_ALPHA}|{DIGIT}
-SIGN = ("+"|"-")
-INTEGER = ([1-9]{DIGIT}*)(("u"|"l"|"ul")?) | "0"
+EXP_ALPHA = [A-Za-z]                                                            //Expresión utilizada para formar palabras; principalmente para los identificadores
+DIGIT = [0-9]                                                                   //Expresión utilizada para lo números de 1-9; con elos se pueden formar números más grandes
+SPACE = " "                                                                     //Expresión que determina como será el espacio en el compilador
+JUMP = \n|\r|\r\n                                                               //Expresión que señala los saltos de línea, como el enter.
+WHITESPACE = {JUMP} | [ \t\f] | {SPACE}                                         //Expresión que determina los espacios en blanco, permitiendo que hayan espacios seguidos.
+EXP_ALPHANUMERIC = {EXP_ALPHA}|{DIGIT}                                          //Expresión que permite tener tanto números como letras en una palabra.
+SIGN = ("+"|"-")                                                                //Signos permitidos en el compilador
+INTEGER = ([1-9]{DIGIT}*)(("u"|"l"|"ul")?) | "0"                                //Expresión que permite crear enters; para ello se utiliza la expresión DIGIT.
 
-IDENTIFIER = {EXP_ALPHA}(_*)({EXP_ALPHANUMERIC}|(_))*
-CHARACTER = \'{EXP_ALPHANUMERIC}?\'
+IDENTIFIER = {EXP_ALPHA}(_*)({EXP_ALPHANUMERIC}|(_))*                           //Expresión que permite declarar variable, para ello se utiliza la expresión EXP_ALPHA, la cúal permite tener letras y números
+CHARACTER = \'{EXP_ALPHANUMERIC}?\'                                             //Expresión que permite crear un caracter.
 
 //Operadores y delimitadores
-DELIMITERS = "(" | ")" | "{" | "}"
-ARITHMETIC = "+" | "-" | "*" | "/"
-RELATIONAL = "<" | ">" | "==" | "¡="
-LOGIC = "||" | "&&"
-ASSIGN= "="
+DELIMITERS = "(" | ")" | "{" | "}"                                              //Expresión que permite definir los delimitadores, es decir los que me indican el inicio y fin de una condición o el programa.
+ARITHMETIC = "+" | "-" | "*" | "/"                                              //Expresión que permite definr los simbolos aritmeticos que se podrán utilizar en el compilador.
+RELATIONAL = "<" | ">" | "==" | "¡="                                            //Expresión que permite definir los simbolos relacionales que se podrán utilizar en el compilador, es decir los signos utilizados para realzar comparaciones.
+LOGIC = "||" | "&&"                                                             //Expresión que perite definir los operadores lógico utilizados en el compilador.
+ASSIGN= "="                                                                     //Signo de asignación para identificadores.
 
 //Constantes
-CONSTANT=  \"[^\n\r\"]*\" | \'[^\n\r\']*\'
+CONSTANT=  \"[^\n\r\"]*\" | \'[^\n\r\']*\'                                      
 
 //Identificadores y palabras reservadas
-KEYWORD = "main" | "else" | "puts" | "int" | "break"
-TYPE_INT = "int"
-TYPE_FLOW_CONTROL = "while" | "if" | "else" | "then"
+KEYWORD = "main" | "else" | "puts" | "int" | "break"                            //Palabras claves utilizadas en elcompilador.
+TYPE_INT = "int"                                                                //Tipo de dato aceptado en el compilador.
+TYPE_FLOW_CONTROL = "while" | "if" | "else" | "then"                            //Otras palabras claves, sin embargo estas son para las estructuras de control.
 //FLOAT = ({DIGITO}+)"."({DIGITO}*)("e"({SIGNO}?)({DIGITO}+))?(L|l|f|F)?
 
 //PALABRAS RESERVADAS
@@ -87,8 +89,8 @@ TYPE_NUM = "int"
 //TYPE_STR = "string"
 
 // LITERALS
-INVALID_CHARACTERS = "á"|"é"|"í"|"ó"|"ú"|"Á"|"É"|"Í"|"Ó"|"Ú"|"ñ"|"Ñ"|"¿"
-LITERAL_NUM = {INTEGER} 
+INVALID_CHARACTERS = "á"|"é"|"í"|"ó"|"ú"|"Á"|"É"|"Í"|"Ó"|"Ú"|"ñ"|"Ñ"|"¿"        //Los caracteres que no son permitidos en el compilador.
+LITERAL_NUM = {INTEGER}                                                         //Se refiere a los números enteros.
 // {FLOAT}| ESTO IRIA ARRIBA SI SE IMPLEMENTAN MAS TIPOS
 //LITERAL_BOOL = "true"|"false"
 LITERAL_CONSTANT = {CONSTANT}
@@ -101,7 +103,7 @@ LITERAL_CONSTANT = {CONSTANT}
 
 
 // Expresiones de Error 
-ERROR = {DIGIT}({EXP_ALPHA}+) | {CONSTANT_ERROR}| {INVALID_CHAR_ERROR}
+ERROR = {DIGIT}({EXP_ALPHA}+) | {CONSTANT_ERROR}| {INVALID_CHAR_ERROR}          //Detecta los errores.
 //COMMENT_ERROR = "/*"([^"*/"])+
 CONSTANT_ERROR = \"[^\n\r\"]*{JUMP} | \'[^\n\r\']*{JUMP}
 //FLOAT_ERROR = ({DIGIT}+)"."[^0-9]*
@@ -112,6 +114,7 @@ INVALID_CHAR_ERROR = {INVALID_CHARACTERS}
 //fin declaraciones
 
 /* Seccion de reglas lexicas */
+//En esta parte se describe las reglas léxicas para cada simbolo, estas vann en orden de priorización.
 %% 
 //Reglas
 <YYINITIAL> {

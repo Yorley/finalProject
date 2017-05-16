@@ -88,13 +88,14 @@ parser code {:
 
 
 :}   
-
+//Todos los simbolos terminales aquí declarados son necesarios para las declaraciones de cada estuctura; si alguno de ellos no está pro se utiliza en alguna parte, esto dará error.
 // Simbolos terminales
 terminal LITERAL_NUM,LITERAL_CONSTANT, LITERAL_CHAR, TYPE_NUM, TYPE_CHAR, TYPE_STR, IF, ELSE, WHILE,BREAK, KEYWORD, 
     IDENTIFIER, ARITHMETIC, SEMICOLON, COMMA, LPAR, RPAR, ASSIGN,PUTW, PUTS, MAIN, OPERADOR, BEGIN, END, PLUS,MINUS,MULT,DIV,
     AND, OR, HIGHER, LOWER,EQUALS,DIFFERENT;  
 
 
+//Todos los no terminales, son las "funciones" que se utilizan para definir una estructura, deben estar declaradas para que no surja ningún error.
 // Simbolos no terminales
 non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_variable_list, constant_list, mainn, fin, mainnn,mainnnn
              ,lmain, variables_list_one, assign,assign_one,variables_elem,variables_elem_one,variables_elem_two, variables_elem_three
@@ -115,13 +116,15 @@ non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_var
 
 start with program;
 // Simbolo Inicial
-    
+ 
+//Estructura que me indica como debe comenzar el programa, en esta estructura hay más donde se utilizan para ir recuperando errores.   
 program ::= variables_list:d lmain:f | lmain:f;
 
 lmain ::= MAIN main | error {: printError("Missing main token") ;:} main;
 
 
 
+//En esta estructura se tiene la forma en que se debe declarar una variable, para ello se utilizan diferentes etiquetas que declara cuál terminal debe ir en la estructura y si esta no está recupera el error.
 variables_list ::= variables_elem variables_list | variables_elem ;
 
 variables_elem ::= TYPE_NUM variables_elem_one ;
@@ -136,12 +139,15 @@ variables_elem_two ::= SEMICOLON
 end_decl ::= SEMICOLON 
                         | error {: printError("Missing ; token") ;:} ;
 
+//Cada vez que se realiza una asignación debe tener el simbolo = y un entero junto con ;, para esta estructura se defien varias etiquetas para la recuperación de errores.
 assign ::= ASSIGN assign_one | error {: printError("Missing = token") ;:} assign_one;
 
 assign_one ::= LITERAL_NUM assign_two ;
 
 assign_two ::= SEMICOLON;
 
+
+//El main del programa debe seguir cierto orden en la estructura, para ell se utilizan diferntes etiiquetas para declarar la estructura del main.
 main ::= LPAR  mainn
         |error {: printError("Missing ( token") ;:} mainn;
 
@@ -157,16 +163,20 @@ mainnnn ::=  content END | END
 fin ::=  END
         | error {: printError("Missing } token") ;:};
 
+//Content es la estructura que me dice como debe ser el contenido del programa, dentro de esta estructura pueden haber if,else,while, puts,putw, asignaciones...
 content ::= structures content | structures ;
 
+//Definición  de las estructuras if, putw,puts,while y la declaración de una asignación.
 structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assign ;
 
+//Estructura para declarar como debe ser el putw, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
 putw_struct ::= PUTW putw_struct_one;
 putw_struct_one ::= LPAR putw_struct_two| error {: printError("Missing } token") ;:} putw_struct_two;
 putw_struct_two ::= arithmetic putw_struct_three | IDENTIFIER putw_struct_three | LITERAL_NUM putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
 putw_struct_three ::= RPAR putw_struct_fourth| error {: printError("Missing } token") ;:} putw_struct_fourth; 
 putw_struct_fourth ::= SEMICOLON;
 
+//Estructura para declarar como debe ser el puts, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
 puts_struct ::= PUTS puts_struct_one;
 puts_struct_one ::= LPAR puts_struct_two | error {: printError("Missing } token") ;:} puts_struct_two;
 puts_struct_two ::= LITERAL_CONSTANT puts_struct_three | error {: printError("Missing } token") ;:} puts_struct_three;
@@ -174,7 +184,7 @@ puts_struct_three ::= RPAR puts_struct_fourth;
 puts_struct_fourth ::= SEMICOLON;
 
 
-
+//Estructura para declarar como deben ser las operaciones aritmeticas, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
 arithmetic ::= add |subs|mult |div;
 mult ::= params MULT _aux;
 div ::= params DIV _aux;
@@ -184,7 +194,7 @@ subs ::= params MINUS _aux;
 
 _aux ::= arithmetic | params ;
 
-
+//Obliga al programa a tener enteros o una variable.
 params ::= LITERAL_NUM | IDENTIFIER| error {: printError("Missing parameter token") ;:};
 
 /*
@@ -196,6 +206,7 @@ if_struct_four ::= content if_struct_five | error {: printError("Missing ( token
 if_struct_five ::= END | END else_struct;
 */
 
+//La estructura del if me indica como debe ser la sintaxis en el programa, para ello se realizan diferentes etiquetas donde en cada una se dice cuál es el simbolo que debe haber y realiza la recuperacion de errores.
 if_struct ::= IF if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
 if_struct_one ::= LPAR if_struct_two ;
 if_struct_two ::= condition if_struct_three ; //| error {: printError("Missing ( token") ;:} if_struct_three;
@@ -206,12 +217,13 @@ if_struct_six ::= END | END else_struct;
 
 
 
-
+//La estructura del else me indica como debe ser la sintaxis en el programa, para ello se realizan diferentes etiquetas donde en cada una se dice cuál es el simbolo que debe haber y realiza la recuperacion de errores.
 else_struct ::= ELSE else_struct_one ;//| error {: printError("Missing if token") ;:} else_struct_one;
 else_struct_one ::= BEGIN else_struct_two | error {: printError("Missing if token") ;:} else_struct_two;
 else_struct_two ::= content else_struct_three | error {: printError("Missing if token") ;:} else_struct_three;
 else_struct_three ::= END;
 
+//En las estructuras if,while debe haber una condición; en esta etiquita declara la sintaxis de las condiciones.Llama diferentes etiquetas para determinar los simbolos que deben ir en esta estructura y realiza recuperación dee errores.
 condition ::= condition_aux | exp ;
 condition_aux ::= condition_one | error {: printError("Missing if token") ;:};
 condition_one ::= LITERAL_NUM condition_two  | IDENTIFIER condition_two  | arithmetic_aux condition_two;
@@ -219,6 +231,8 @@ condition_two ::= comparison condition_three;
 condition_three ::= LITERAL_NUM | IDENTIFIER | arithmetic_aux;
 arithmetic_aux ::= LPAR  arithmetic arithmetic_aux_one;
 arithmetic_aux_one ::=  RPAR;
+
+//En cada condición se puede tener una expresión para realizar una comparación, estas se pueden realizar con operadores relacionales o operadores lógicos.
 exp ::= LPAR expr ;
 expr ::= condition_aux expr_one ;
 expr_one ::= RPAR expr_two | RPAR;
@@ -233,6 +247,8 @@ declar_assign_one ::= ASSIGN declar_assign_two | error {: printError("Missing ) 
 declar_assign_two ::= IDENTIFIER declar_assign_three | arithmetic declar_assign_three | LITERAL_NUM declar_assign_three | error declar_assign_three;
 declar_assign_three ::= SEMICOLON;
 
+
+//La estructura while dice la sintaxis en el programa, para ello se llaman diferentes etiquetas que permite la recuperación de errores.
 while_struct ::= WHILE while_struct_one ;
 while_struct_one ::= LPAR while_struct_two;
 while_struct_two ::= condition while_struct_three;
