@@ -198,7 +198,7 @@ public class MainWindow extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Token", "Tipo", "Linea", "Columna"
+                "Token", "Tipo", "Posición en línea", "Línea"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -315,7 +315,7 @@ public class MainWindow extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Token", "Tipo", "Línea", "Columna"
+                "Token", "Tipo", "Posición en línea", "Línea"
             }
         ));
         jScrollPane5.setViewportView(jTable_Lexical_errors);
@@ -471,8 +471,6 @@ public class MainWindow extends javax.swing.JFrame {
         txbParser.setText("");
         for(int iError = 0; iError != pExpectedTokens.size(); iError++){
             txbParser.setText(txbParser.getText()+ pErrorsLine.get(iError));
-                        txbParser.setText(txbParser.getText()+ "\n GGG \n");
-
             txbParser.setText(txbParser.getText()+ pExpectedTokens.get(iError)+"\n");
             txbParser.setText(txbParser.getText()+ "------------------------------------------------------------\n");
         }
@@ -541,11 +539,33 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    //Realiza el análisis de lossimbolos del programa.
-    private static void scanFile(String pFileInputPath){
+    public String convertFileToString(BufferedReader bf){
+        String result= null;
+        String res = null;
+        try {
+            while ((result = bf.readLine())!=null){
+                if (res!=null){
+                   res+= (result+"\n");
+                }else{
+                    res= (result+"\n");
+                }
+            }
+            return res;
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
+    
+    }    
+
+//Realiza el análisis de lossimbolos del programa.
+    private  void scanFile(String pFileInputPath){
         BufferedReader bf = null;
         try {
             bf = new BufferedReader(new FileReader(pFileInputPath));
+            if(chkBox_ReadFile.isSelected()){
+                txbInput.setText(convertFileToString(new BufferedReader(new FileReader(pFileInputPath))));
+            }
             AnalizadorLexico a = new AnalizadorLexico(bf);
             Symbol token = null;
             boolean isEOF = false;

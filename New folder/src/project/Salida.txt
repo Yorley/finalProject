@@ -1,4 +1,6 @@
 Token                    	Tipo                     	Lineas 
 
-main					MAIN			0
-)					RPAR			0
+hola					IDENTIFIER			0
+/					DIV			1
+(					LPAR			2
+8					LITERAL_NUM			3
