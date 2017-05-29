@@ -198,7 +198,7 @@ public class MainWindow extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Token", "Tipo", "Posición en línea", "Línea"
+                "Token", "Tipo", "Línea", "Posición en línea"
             }
         ) {
             boolean[] canEdit = new boolean [] {

@@ -229,8 +229,8 @@
                   <Table columnCount="4" rowCount="100">
                     <Column editable="false" title="Token" type="java.lang.Object"/>
                     <Column editable="false" title="Tipo" type="java.lang.Object"/>
-                    <Column editable="false" title="Posici&#xf3;n en l&#xed;nea" type="java.lang.Object"/>
                     <Column editable="false" title="L&#xed;nea" type="java.lang.Object"/>
+                    <Column editable="false" title="Posici&#xf3;n en l&#xed;nea" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

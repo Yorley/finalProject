@@ -1,6 +1,17 @@
 Token                    	Tipo                     	Lineas 
 
-hola					IDENTIFIER			0
-/					DIV			1
-(					LPAR			2
-8					LITERAL_NUM			3
+main					MAIN			0
+(					LPAR			0
+)					RPAR			0
+{					BEGIN			0
+puts					PUTS			1
+(					LPAR			1
+"\n"					LITERAL_CONSTANT			1
+)					RPAR			1
+;					SEMICOLON			1
+$					error			0
+putw					PUTW			3
+(					LPAR			3
+4					LITERAL_NUM			3
++					PLUS			3
+3					LITERAL_NUM			3

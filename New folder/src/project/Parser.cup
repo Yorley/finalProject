@@ -174,18 +174,18 @@ putw_struct ::= PUTW putw_struct_one;
 putw_struct_one ::= LPAR putw_struct_two| error {: printError("Missing } token") ;:} putw_struct_two;
 putw_struct_two ::= arithmetic putw_struct_three | IDENTIFIER putw_struct_three | LITERAL_NUM putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
 putw_struct_three ::= RPAR putw_struct_fourth| error {: printError("Missing } token") ;:} putw_struct_fourth; 
-putw_struct_fourth ::= SEMICOLON;
+putw_struct_fourth ::= SEMICOLON| error {: printError("Missing ; token") ;:} SEMICOLON;
 
 //Estructura para declarar como debe ser el puts, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
-puts_struct ::= PUTS puts_struct_one;
+puts_struct ::= PUTS puts_struct_one ;
 puts_struct_one ::= LPAR puts_struct_two | error {: printError("Missing } token") ;:} puts_struct_two;
 puts_struct_two ::= LITERAL_CONSTANT puts_struct_three | error {: printError("Missing } token") ;:} puts_struct_three;
-puts_struct_three ::= RPAR puts_struct_fourth;
-puts_struct_fourth ::= SEMICOLON;
+puts_struct_three ::= RPAR puts_struct_fourth | error {: printError("Missing ; token") ;:} puts_struct_fourth;
+puts_struct_fourth ::= SEMICOLON | error {: printError("Missing ; token") ;:} SEMICOLON;
 
 
 //Estructura para declarar como deben ser las operaciones aritmeticas, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
-arithmetic ::= add |subs|mult |div;
+arithmetic ::= add |subs|mult |div ;//| error {: printError("Missing ) token"); :};
 mult ::= params MULT _aux;
 div ::= params DIV _aux;
 add ::= params PLUS _aux;
@@ -226,11 +226,11 @@ else_struct_three ::= END;
 //En las estructuras if,while debe haber una condición; en esta etiquita declara la sintaxis de las condiciones.Llama diferentes etiquetas para determinar los simbolos que deben ir en esta estructura y realiza recuperación dee errores.
 condition ::= condition_aux | exp ;
 condition_aux ::= condition_one | error {: printError("Missing if token") ;:};
-condition_one ::= LITERAL_NUM condition_two  | IDENTIFIER condition_two  | arithmetic_aux condition_two;
-condition_two ::= comparison condition_three;
-condition_three ::= LITERAL_NUM | IDENTIFIER | arithmetic_aux;
-arithmetic_aux ::= LPAR  arithmetic arithmetic_aux_one;
-arithmetic_aux_one ::=  RPAR;
+condition_one ::= LITERAL_NUM condition_two  | IDENTIFIER condition_two  | arithmetic_aux condition_two | error {: printError("Missing literal_num or Idendifier or arithmetic expression token") ;:} condition_two;
+condition_two ::= comparison condition_three ;//;| error {: printError("Missing ) token"); :} condition_three ;
+condition_three ::= LITERAL_NUM | IDENTIFIER | arithmetic_aux | error {: printError("Missing ) token"); :};
+arithmetic_aux ::= LPAR  arithmetic arithmetic_aux_one;// | error {: printError("Missing ) token"); :} arithmetic arithmetic_aux_one;
+arithmetic_aux_one ::=  RPAR | error {: printError("Missing ) token"); :} RPAR;
 
 //En cada condición se puede tener una expresión para realizar una comparación, estas se pueden realizar con operadores relacionales o operadores lógicos.
 exp ::= LPAR expr ;
@@ -238,22 +238,22 @@ expr ::= condition_aux expr_one ;
 expr_one ::= RPAR expr_two | RPAR;
 expr_two ::= logic_comparison expr_three;
 expr_three ::= exp  ;
-comparison ::= LOWER | HIGHER | EQUALS | DIFFERENT;
+comparison ::= LOWER | HIGHER | EQUALS | DIFFERENT ;
 logic_comparison ::= AND | OR;
 
 
 declar_assign ::= IDENTIFIER declar_assign_one;
 declar_assign_one ::= ASSIGN declar_assign_two | error {: printError("Missing ) token"); :} declar_assign_two;
 declar_assign_two ::= IDENTIFIER declar_assign_three | arithmetic declar_assign_three | LITERAL_NUM declar_assign_three | error declar_assign_three;
-declar_assign_three ::= SEMICOLON;
+declar_assign_three ::= SEMICOLON | error {: printError("Missing ; token") ;:} SEMICOLON;
 
 
 //La estructura while dice la sintaxis en el programa, para ello se llaman diferentes etiquetas que permite la recuperación de errores.
 while_struct ::= WHILE while_struct_one ;
-while_struct_one ::= LPAR while_struct_two;
+while_struct_one ::= LPAR while_struct_two | error {: printError("Missing ) token"); :} while_struct_two ;
 while_struct_two ::= condition while_struct_three;
-while_struct_three ::= RPAR while_struct_four;
-while_struct_four ::= BEGIN while_struct_five;
+while_struct_three ::= RPAR while_struct_four | error {: printError("Missing ) token"); :} while_struct_four;
+while_struct_four ::= BEGIN while_struct_five | error {: printError("Missing { token"); :} while_struct_five;
 while_struct_five ::= while_struct_aux while_struct_six;
 while_struct_aux ::= content | content BREAK SEMICOLON | BREAK SEMICOLON | BREAK SEMICOLON content;
-while_struct_six ::= END;
+while_struct_six ::= END ;
