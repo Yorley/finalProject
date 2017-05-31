@@ -1,4 +1,8 @@
+int y;
+
+int x=4;
+int n;
 main(){
-puts("\n");
-$
-putw(4+3
+n=6;
+if(112<1){y=0;}
+}

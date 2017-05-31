@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/pruuu.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/SymbolTable/Symbol.java</file>
             <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/MainWindow.java</file>
-            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/Lexer.flex</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/SymbolTable/SymbolTable.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/VariableEvaluator.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/IfEvaluator.java</file>
             <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/Parser.cup</file>
         </group>
     </open-files>

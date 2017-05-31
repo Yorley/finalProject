@@ -1,6 +1,7 @@
 package project;
 
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,10 +14,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java_cup.runtime.Symbol;
+import static javafx.scene.paint.Color.color;
+import static javafx.scene.paint.Color.color;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 import project.semantic.SemanticStack;
 import project.semantic.SymbolTable.SymbolTable;
 import project.semantic.Writer;
@@ -60,20 +69,21 @@ public class View_C0 extends javax.swing.JFrame {
         chkBox_ReadFile = new javax.swing.JCheckBox();
         btnAnalize = new javax.swing.JButton();
         Lexical_errors = new javax.swing.JTabbedPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable_Sintactic_errors = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable_Semantic_errors = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbl_tokens = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable_Lexical_errors = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txbParser = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable_Semantic_errors = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txbInput.setColumns(20);
         txbInput.setRows(5);
+        txbInput.setSelectedTextColor(new java.awt.Color(255, 0, 102));
         jScrollPane2.setViewportView(txbInput);
 
         chkBox_ReadFile.setText("Analizar desde archivo solamente");
@@ -85,244 +95,6 @@ public class View_C0 extends javax.swing.JFrame {
                 btnAnalizeActionPerformed(evt);
             }
         });
-
-        jTable_Sintactic_errors.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Token", "Tipo", "Línea", "Posición en línea"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(jTable_Sintactic_errors);
-
-        Lexical_errors.addTab("Errores sintácticos", jScrollPane3);
-
-        jTable_Semantic_errors.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Token", "Tipo", "Línea", "Posición línea"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane4.setViewportView(jTable_Semantic_errors);
-
-        Lexical_errors.addTab("Errores semánticos", jScrollPane4);
 
         tbl_tokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -558,9 +330,140 @@ public class View_C0 extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable_Lexical_errors.setCellSelectionEnabled(true);
+        jTable_Lexical_errors.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cell_selecction(evt);
+            }
+        });
         jScrollPane6.setViewportView(jTable_Lexical_errors);
 
         Lexical_errors.addTab("Errores léxicos", jScrollPane6);
+
+        txbParser.setColumns(20);
+        txbParser.setRows(5);
+        jScrollPane1.setViewportView(txbParser);
+
+        Lexical_errors.addTab("Errores sintácticos", jScrollPane1);
+
+        jTable_Semantic_errors.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Token", "Tipo", "Línea", "Posición línea"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(jTable_Semantic_errors);
+
+        Lexical_errors.addTab("Errores semánticos", jScrollPane4);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("C-0");
@@ -657,6 +560,53 @@ public class View_C0 extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnAnalizeActionPerformed
+    public void searchWord(String text){
+        if(text.length()>=1){
+            DefaultHighlighter.DefaultHighlightPainter highlightPainter= new DefaultHighlighter.DefaultHighlightPainter(Color.GREEN);
+            Highlighter h= txbInput.getHighlighter();
+            h.removeAllHighlights();
+            String text1= txbInput.getText();
+            String chars= text;
+            Pattern p = Pattern.compile(chars);
+            Matcher m = p.matcher(text1);
+            System.out.println(m);
+                        System.out.println(m.find());
+
+            while (m.find()){
+                try {
+                    h.addHighlight(m.start(), m.end(), highlightPainter);
+                    //txbInput.setHighlighter(h);
+                    txbInput.select(m.start(),m.end());
+                   txbInput.setCaretPosition(m.start());
+                    System.out.println("hawaiii"+ m.start()+ m.end());
+                    
+                }
+                catch (BadLocationException ex){
+                                System.out.println(ex);
+
+                    Logger.getLogger(Color.class.getName()).log(Level.SEVERE,null,ex);
+                }
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "La palabra a buscar no puede ser vacia", "Aviso",JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    //Selecciona una celda e invoca un metodo para senalar el error dentro del area de texto
+    private void cell_selecction(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cell_selecction
+        // TODO add your handling code here:
+        int roww= jTable_Lexical_errors.rowAtPoint(evt.getPoint());
+        int coll= jTable_Lexical_errors.columnAtPoint(evt.getPoint());
+        System.out.print((jTable_Lexical_errors.isCellSelected(0,0)));
+        //for  (int i=0; i<jTable_Lexical_errors.getRowCount();i++){
+            if (jTable_Lexical_errors.isCellSelected(roww, coll)){
+                String linea=String.valueOf(jTable_Lexical_errors.getValueAt(roww, coll));
+                searchWord(linea);
+                
+                System.out.println(linea);
+         //   }
+        }
+    }//GEN-LAST:event_cell_selecction
 
     /**
      * @param args the command line arguments
@@ -695,12 +645,7 @@ public class View_C0 extends javax.swing.JFrame {
                 new View_C0().setVisible(true);
             }
         });
-         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new View_C0().setVisible(true);
-            }
-        });
+        
     }
         
         // Generates .flex file
@@ -711,22 +656,22 @@ public class View_C0 extends javax.swing.JFrame {
     }
      //Muestra los errores de que hay en el programa, es decir si la sintaxis es correcta.
     private  void showParserErrors(ArrayList<String> pExpectedTokens, ArrayList<String> pErrorsLine, ArrayList<String> pErrors){
-//        txbParser.setText("");
-//        for(int iError = 0; iError != pExpectedTokens.size(); iError++){
-//            txbParser.setText(txbParser.getText()+ pErrorsLine.get(iError));
-//            txbParser.setText(txbParser.getText()+ pExpectedTokens.get(iError)+"\n");
-//            txbParser.setText(txbParser.getText()+ "------------------------------------------------------------\n");
-//        }
-//        if (pExpectedTokens.size()==0){
-//            System.out.println(_TokensList.size() );
-//            
-//            if (_TokensList.size() == 0){
-//                txbParser.setText("Parseo completado sin errores");
-//            }else{                
-//                txbParser.setText("Existen erorres lexicos");
-//            }
-//            
-//        }
+        txbParser.setText("");
+        for(int iError = 0; iError != pExpectedTokens.size(); iError++){
+            txbParser.setText(txbParser.getText()+ pErrorsLine.get(iError));
+            txbParser.setText(txbParser.getText()+ pExpectedTokens.get(iError)+"\n");
+            txbParser.setText(txbParser.getText()+ "------------------------------------------------------------\n");
+        }
+        if (pExpectedTokens.size()==0){
+            System.out.println(_TokensList.size() );
+            
+            if (_TokensList.size() == 0){
+                txbParser.setText("Parseo completado sin errores");
+            }else{                
+                txbParser.setText("Existen erorres lexicos");
+            }
+            
+        }
     }
     //Realiza el pareser, muestra los errores del parser y muestra los errores semanticos.
     private void parse(String pFileInputPath){
@@ -983,15 +928,15 @@ public class View_C0 extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkBox_ReadFile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable_Lexical_errors;
     private javax.swing.JTable jTable_Semantic_errors;
-    private javax.swing.JTable jTable_Sintactic_errors;
     private javax.swing.JTable tbl_tokens;
     private javax.swing.JTextArea txbInput;
+    private javax.swing.JTextArea txbParser;
     // End of variables declaration//GEN-END:variables
 }

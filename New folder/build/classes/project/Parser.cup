@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import project.semantic.evaluators.*;
 import project.semantic.SemanticStack;
 import project.semantic.SymbolTable.SymbolTable;
+
 import project.semantic.registers.*;
 import project.semantic.Writer;
 
@@ -127,13 +128,22 @@ lmain ::= MAIN main | error {: printError("Missing main token") ;:} main;
 //En esta estructura se tiene la forma en que se debe declarar una variable, para ello se utilizan diferentes etiquetas que declara cuál terminal debe ir en la estructura y si esta no está recupera el error.
 variables_list ::= variables_elem variables_list | variables_elem ;
 
-variables_elem ::= TYPE_NUM variables_elem_one ;
+variables_elem ::= TYPE_NUM:t {:
+                                    Symbol symbolT= new Symbol(0,tleft,tright,t);
+                                    SR_Type type= new SR_Type (symbolT);
+                                    type.setType(sym.TYPE_NUM);
+                                    SemanticStack.getInstance().push(type);
+                              :} 
+                    variables_elem_one ;
                    //| error {: printError("Missing Type token") ;:} variables_elem_one  ;
 
-variables_elem_one ::= IDENTIFIER variables_elem_two
+variables_elem_one ::= IDENTIFIER:id {: Symbol symbolID= new Symbol(sym.IDENTIFIER,idleft,idright,id);
+                                      SR_ID register= new SR_ID(symbolID);
+                                      SemanticStack.getInstance().push(register);
+                                   :}  variables_elem_two
                        | error {: printError("Missing Type token") ;:} variables_elem_two  ;
 
-variables_elem_two ::= SEMICOLON 
+variables_elem_two ::= SEMICOLON  {:VariableEvaluator.getInstance().evalUn();:}
                         | assign
                         | error {: printError("Missing ; token") ;:} ;
 end_decl ::= SEMICOLON 
@@ -142,9 +152,12 @@ end_decl ::= SEMICOLON
 //Cada vez que se realiza una asignación debe tener el simbolo = y un entero junto con ;, para esta estructura se defien varias etiquetas para la recuperación de errores.
 assign ::= ASSIGN assign_one | error {: printError("Missing = token") ;:} assign_one;
 
-assign_one ::= LITERAL_NUM assign_two ;
+assign_one ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int");
+                                      SemanticStack.getInstance().push(register);
+                                   :}  assign_two ;
 
-assign_two ::= SEMICOLON;
+assign_two ::= SEMICOLON {:VariableEvaluator.getInstance().evalIn();:};
 
 
 //El main del programa debe seguir cierto orden en la estructura, para ell se utilizan diferntes etiiquetas para declarar la estructura del main.
@@ -172,7 +185,16 @@ structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assi
 //Estructura para declarar como debe ser el putw, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
 putw_struct ::= PUTW putw_struct_one;
 putw_struct_one ::= LPAR putw_struct_two| error {: printError("Missing } token") ;:} putw_struct_two;
-putw_struct_two ::= arithmetic putw_struct_three | IDENTIFIER putw_struct_three | LITERAL_NUM putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
+putw_struct_two ::= arithmetic putw_struct_three 
+                    | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID);
+                                      SemanticStack.getInstance().push(register);
+                                   :}  putw_struct_three 
+                    | LITERAL_NUM :id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int");
+                                      SemanticStack.getInstance().push(register);
+                                   :} 
+                      putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
 putw_struct_three ::= RPAR putw_struct_fourth| error {: printError("Missing } token") ;:} putw_struct_fourth; 
 putw_struct_fourth ::= SEMICOLON| error {: printError("Missing ; token") ;:} SEMICOLON;
 
@@ -186,34 +208,64 @@ puts_struct_fourth ::= SEMICOLON | error {: printError("Missing ; token") ;:} SE
 
 //Estructura para declarar como deben ser las operaciones aritmeticas, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
 arithmetic ::= add |subs|mult |div ;//| error {: printError("Missing ) token"); :};
-mult ::= params MULT _aux;
-div ::= params DIV _aux;
-add ::= params PLUS _aux;
-subs ::= params MINUS _aux;
+mult ::= params MULT:ar
+                    {:Symbol symbol= new Symbol(0,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      SemanticStack.getInstance().push(register);
+                    :}
+         _aux;
+div ::= params DIV:ar
+                    {:Symbol symbol= new Symbol(0,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      SemanticStack.getInstance().push(register);
+                    :}
+         _aux;
+add ::= params PLUS:ar
+                    {:Symbol symbol= new Symbol(0,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      SemanticStack.getInstance().push(register);
+                    :} 
+        _aux;
+subs ::= params MINUS:ar
+                    {:Symbol symbol= new Symbol(0,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      SemanticStack.getInstance().push(register);
+                    :} 
+                _aux;
 
 
 _aux ::= arithmetic | params ;
 
 //Obliga al programa a tener enteros o una variable.
-params ::= LITERAL_NUM | IDENTIFIER| error {: printError("Missing parameter token") ;:};
+params ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int");
+                                      SemanticStack.getInstance().push(register);
+                                   :} 
+            | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID);
+                                      SemanticStack.getInstance().push(register);
+                                   :}
+            | error {: printError("Missing parameter token") ;:};
 
-/*
-if_struct ::= IF if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
-if_struct_one ::= LPAR condition if_struct_two ;
-if_struct_two ::= RPAR if_struct_three| error {: printError("Missing ( token") ;:} if_struct_three;
-if_struct_three ::= BEGIN if_struct_four | error {: printError("Missing { token") ;:} condition if_struct_four;
-if_struct_four ::= content if_struct_five | error {: printError("Missing ( token") ;:} condition if_struct_five;
-if_struct_five ::= END | END else_struct;
-*/
+
 
 //La estructura del if me indica como debe ser la sintaxis en el programa, para ello se realizan diferentes etiquetas donde en cada una se dice cuál es el simbolo que debe haber y realiza la recuperacion de errores.
-if_struct ::= IF if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
+if_struct ::= IF:iff 
+              {: Symbol symbol = new Symbol(0,iffleft,iffright,iff);
+                 SR_If register = new SR_If(symbol);
+                 SemanticStack.getInstance().push(register);
+              :} 
+              if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
 if_struct_one ::= LPAR if_struct_two ;
-if_struct_two ::= condition if_struct_three ; //| error {: printError("Missing ( token") ;:} if_struct_three;
+if_struct_two ::= condition:c
+                   
+                 if_struct_three ; //| error {: printError("Missing ( token") ;:} if_struct_three;
 if_struct_three ::= RPAR if_struct_four;
 if_struct_four ::= BEGIN if_struct_five | error {: printError("Missing { token") ;:} if_struct_five; 
 if_struct_five ::= content if_struct_six | error {: printError("Missing ( token") ;:} if_struct_six;
 if_struct_six ::= END | END else_struct;
+
+
 
 
 
@@ -226,9 +278,27 @@ else_struct_three ::= END;
 //En las estructuras if,while debe haber una condición; en esta etiquita declara la sintaxis de las condiciones.Llama diferentes etiquetas para determinar los simbolos que deben ir en esta estructura y realiza recuperación dee errores.
 condition ::= condition_aux | exp ;
 condition_aux ::= condition_one | error {: printError("Missing if token") ;:};
-condition_one ::= LITERAL_NUM condition_two  | IDENTIFIER condition_two  | arithmetic_aux condition_two | error {: printError("Missing literal_num or Idendifier or arithmetic expression token") ;:} condition_two;
-condition_two ::= comparison condition_three ;//;| error {: printError("Missing ) token"); :} condition_three ;
-condition_three ::= LITERAL_NUM | IDENTIFIER | arithmetic_aux | error {: printError("Missing ) token"); :};
+condition_one ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int");
+                                      SemanticStack.getInstance().push(register);
+                                   :} condition_two  
+                  | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID);
+                                      SemanticStack.getInstance().push(register);
+                                   :} condition_two  
+                  | arithmetic_aux condition_two | error {: printError("Missing literal_num or Idendifier or arithmetic expression token") ;:} condition_two;
+condition_two ::= comparison
+
+                 condition_three ;//;| error {: printError("Missing ) token"); :} condition_three ;
+condition_three ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int");
+                                      SemanticStack.getInstance().push(register);
+                                   :}
+                    | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID);
+                                      SemanticStack.getInstance().push(register);
+                                   :} 
+                    | arithmetic_aux | error {: printError("Missing ) token"); :};
 arithmetic_aux ::= LPAR  arithmetic arithmetic_aux_one;// | error {: printError("Missing ) token"); :} arithmetic arithmetic_aux_one;
 arithmetic_aux_one ::=  RPAR | error {: printError("Missing ) token"); :} RPAR;
 
@@ -238,13 +308,52 @@ expr ::= condition_aux expr_one ;
 expr_one ::= RPAR expr_two | RPAR;
 expr_two ::= logic_comparison expr_three;
 expr_three ::= exp  ;
-comparison ::= LOWER | HIGHER | EQUALS | DIFFERENT ;
-logic_comparison ::= AND | OR;
+comparison ::= LOWER:ar 
+               {:
+                    Symbol symbol= new Symbol(0,arleft,arright,ar);
+                    SR_Op register= new SR_Op(symbol);
+                    SemanticStack.getInstance().push(register);
+               :} 
+                | HIGHER:ar {:
+                    Symbol symbol= new Symbol(0,arleft,arright,ar);
+                    SR_Op register= new SR_Op(symbol);
+                    SemanticStack.getInstance().push(register);
+               :}
+                | EQUALS:ar {:
+                    Symbol symbol= new Symbol(0,arleft,arright,ar);
+                    SR_Op register= new SR_Op(symbol);
+                    SemanticStack.getInstance().push(register);
+               :}
+                | DIFFERENT:ar {:
+                    Symbol symbol= new Symbol(0,arleft,arright,ar);
+                    SR_Op register= new SR_Op(symbol);
+                    SemanticStack.getInstance().push(register);
+               :} ;
+logic_comparison ::= AND:ar{:
+                    Symbol symbol= new Symbol(0,arleft,arright,ar);
+                    SR_Op register= new SR_Op(symbol);
+                    SemanticStack.getInstance().push(register);
+               :} 
+                    | OR:ar {:
+                    Symbol symbol= new Symbol(0,arleft,arright,ar);
+                    SR_Op register= new SR_Op(symbol);
+                    SemanticStack.getInstance().push(register);
+               :};
 
 
-declar_assign ::= IDENTIFIER declar_assign_one;
+declar_assign ::= IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID);
+                                      SemanticStack.getInstance().push(register);
+                                   :}  declar_assign_one;
 declar_assign_one ::= ASSIGN declar_assign_two | error {: printError("Missing ) token"); :} declar_assign_two;
-declar_assign_two ::= IDENTIFIER declar_assign_three | arithmetic declar_assign_three | LITERAL_NUM declar_assign_three | error declar_assign_three;
+declar_assign_two ::= IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID);
+                                      SemanticStack.getInstance().push(register);
+                                   :}  declar_assign_three | arithmetic declar_assign_three 
+                      | LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int");
+                                      SemanticStack.getInstance().push(register);
+                                   :}  declar_assign_three | error declar_assign_three;
 declar_assign_three ::= SEMICOLON | error {: printError("Missing ; token") ;:} SEMICOLON;
 
 

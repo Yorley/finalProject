@@ -29,9 +29,12 @@ public class IfEvaluator {
     }
     private ArrayList<SR_DO> getDOs(){
         ArrayList<SR_DO> DOs = new ArrayList<SR_DO>();
+
         while (!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_If")){
             SR_DO sr_do = (SR_DO)SemanticStack.getInstance().pop();
             String do_name = sr_do.getValue().value.toString();
+            System.out.println("DO NAME: "+do_name);
+
             if(do_name.equals("true"))
                 do_name = "0";
             else{
@@ -46,6 +49,8 @@ public class IfEvaluator {
         ArrayList<SR_DO> DOs = getDOs();
         if(DOs.size() == 1){
             String do_name = DOs.get(0).getValue().value.toString();
+            System.out.println("DO NAME: "+do_name);
+
             if(do_name.equals("0") || do_name.equals("1")){
                 Writer.getInstance().getCode().add("cmp "+DOs.get(0).getValue().value.toString()+" ,0");
             }else{

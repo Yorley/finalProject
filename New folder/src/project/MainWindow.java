@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import project.semantic.SemanticStack;
 import project.semantic.SymbolTable.SymbolTable;
 import project.semantic.Writer;
+import project.semantic.registers.SemanticRegister;
 
 /**
  *
@@ -503,13 +504,22 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }else{
                 txbSemantic.setText("Compilación completada");
+                txbSemantic.setText(SemanticStack.getInstance().toString());   
+                                    
+
+                txbSemantic.setText(SemanticStack.getInstance().getLast().getRegisterType()+" "+(SymbolTable.getInstance().getSymbols())  );
+                printRegisters();
                 Writer.getInstance().writeAll();
             }
         } catch (Exception ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    private void printRegisters(){
+        for (SemanticRegister sr : SemanticStack.getInstance().getStack()){
+            System.out.println(sr.getRegisterType().toString()+ sr.getValue().value.toString());
+        }
+    }
     //genera el .cup
     private static void generateParser(String pFilePath){
         String[] asintactico = {"-parser", "AnalizadorSintactico", pFilePath};

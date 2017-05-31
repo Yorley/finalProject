@@ -55,7 +55,6 @@ public class VariableEvaluator {
             SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
             Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),sr_do.getValue().value.toString(),sr_id.getValue().left);
             SymbolTable.getInstance().addSymbol(symbol);
-            System.out.println("init");
             _InitializedVar.add(symbol);
         }else{
             String result= doOperations(String.valueOf(SemanticStack.getInstance().getLast().getValue().left),_Operations);
@@ -87,6 +86,7 @@ public class VariableEvaluator {
         int len;
         switch (pType){
                 case "int":
+                    System.out.println("si entrarrrrrrrr");
                     len = INT;
                     break;
                 case "char":

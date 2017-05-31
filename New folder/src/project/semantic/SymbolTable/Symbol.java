@@ -10,6 +10,7 @@ public class Symbol {
         this.name=name;
         this._SymbolType = pType;
         this.line = pLine;
+        
     }
     
     public String getName() {
