@@ -23,7 +23,10 @@ public class SR_DO extends SemanticRegister{
         if (symbol != null){
             this._Type = symbol.getSymbolType();
         }else{
-            SymbolTable.getInstance().getErrors().add("No se encuentra el identificador: "+symbol.getName()+" ,linea "+symbol.getLine());
+            System.out.println("es null");
+            SymbolTable.getInstance().getErrors().add("No se encuentra el identificador: "+pValue.value.toString()+" ,linea "+pValue.left);
+                    System.out.println(SymbolTable.getInstance().getErrors().toString());
+
         }
         
     }

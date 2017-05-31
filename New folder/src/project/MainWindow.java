@@ -497,6 +497,7 @@ public class MainWindow extends javax.swing.JFrame {
         AnalizadorSintactico p = new AnalizadorSintactico(new AnalizadorLexico(bf));
         try {
             p.parse();
+            System.out.println(p.getExpectedTokens().toString()+ p.getLineErrors().toString()+ p.getErrors());
             showParserErrors(p.getExpectedTokens(), p.getLineErrors(), p.getErrors());
             if (SymbolTable.getInstance().getErrors().size() != 0){
                 for(int iError = 0; iError != SymbolTable.getInstance().getErrors().size(); iError++){
@@ -504,11 +505,7 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }else{
                 txbSemantic.setText("Compilación completada");
-                txbSemantic.setText(SemanticStack.getInstance().toString());   
-                                    
-
-                txbSemantic.setText(SemanticStack.getInstance().getLast().getRegisterType()+" "+(SymbolTable.getInstance().getSymbols())  );
-                printRegisters();
+                  
                 Writer.getInstance().writeAll();
             }
         } catch (Exception ex) {

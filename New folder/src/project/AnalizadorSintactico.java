@@ -2230,8 +2230,8 @@ Symbol symbol= new Symbol(0,arleft,arright,ar);
 		int idleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
- Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID);
+ Symbol symbolID= new Symbol(sym.IDENTIFIER,idleft,idright,id);
+                                      SR_ID register= new SR_ID(symbolID);
                                       SemanticStack.getInstance().push(register);
                                    
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$34",116, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -2289,7 +2289,7 @@ Symbol symbol= new Symbol(0,arleft,arright,ar);
 		int idright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
  Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID);
+                                      SR_ID register= new SR_ID(symbolID);
                                       SemanticStack.getInstance().push(register);
                                    
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$36",118, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -2326,7 +2326,7 @@ Symbol symbol= new Symbol(0,arleft,arright,ar);
 		int idleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
- Symbol symbolID= new Symbol(0,idleft,idright,id);
+ Symbol symbolID= new Symbol(sym.LITERAL_NUM,idleft,idright,id);
                                       SR_DO register= new SR_DO(symbolID,"int");
                                       SemanticStack.getInstance().push(register);
                                    
@@ -2361,7 +2361,7 @@ Symbol symbol= new Symbol(0,arleft,arright,ar);
           case 160: // declar_assign_three ::= SEMICOLON 
             {
               Object RESULT =null;
-
+		VariableEvaluator.getInstance().evalAssign();
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("declar_assign_three",57, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
             }
           return CUP$AnalizadorSintactico$result;

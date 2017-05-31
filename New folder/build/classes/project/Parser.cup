@@ -155,9 +155,13 @@ assign ::= ASSIGN assign_one | error {: printError("Missing = token") ;:} assign
 assign_one ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
                                       SR_DO register= new SR_DO(symbolID,"int");
                                       SemanticStack.getInstance().push(register);
-                                   :}  assign_two ;
+                                   :}  assign_two 
+                
+;
+                
 
 assign_two ::= SEMICOLON {:VariableEvaluator.getInstance().evalIn();:};
+               
 
 
 //El main del programa debe seguir cierto orden en la estructura, para ell se utilizan diferntes etiiquetas para declarar la estructura del main.
@@ -341,20 +345,23 @@ logic_comparison ::= AND:ar{:
                :};
 
 
-declar_assign ::= IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID);
+declar_assign ::= IDENTIFIER:id {: Symbol symbolID= new Symbol(sym.IDENTIFIER,idleft,idright,id);
+                                      SR_ID register= new SR_ID(symbolID);
                                       SemanticStack.getInstance().push(register);
                                    :}  declar_assign_one;
 declar_assign_one ::= ASSIGN declar_assign_two | error {: printError("Missing ) token"); :} declar_assign_two;
 declar_assign_two ::= IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID);
+                                      SR_ID register= new SR_ID(symbolID);
                                       SemanticStack.getInstance().push(register);
-                                   :}  declar_assign_three | arithmetic declar_assign_three 
-                      | LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                                   :}  declar_assign_three 
+                      | arithmetic declar_assign_three 
+                      | LITERAL_NUM:id {: Symbol symbolID= new Symbol(sym.LITERAL_NUM,idleft,idright,id);
                                       SR_DO register= new SR_DO(symbolID,"int");
                                       SemanticStack.getInstance().push(register);
-                                   :}  declar_assign_three | error declar_assign_three;
-declar_assign_three ::= SEMICOLON | error {: printError("Missing ; token") ;:} SEMICOLON;
+                                   :}  declar_assign_three
+                      
+                      | error declar_assign_three;
+declar_assign_three ::= SEMICOLON {:VariableEvaluator.getInstance().evalAssign();:} | error {: printError("Missing ; token") ;:} SEMICOLON;
 
 
 //La estructura while dice la sintaxis en el programa, para ello se llaman diferentes etiquetas que permite la recuperación de errores.

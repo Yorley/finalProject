@@ -7715,3 +7715,621 @@ SECTION .txt
 global _start
 
 _start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+
+SEECTION .bss
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+
+SEECTION .bss
+y resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+
+SEECTION .bss
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+n: dw 3
+nLen: equ $ - n
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov n ,ebx
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov n ,ebx
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov n ,ebx
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov n ,ebx
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov n ,ebx
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov n ,ebx
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov ebx, 3
+add ebx, 6
+mov n ,ebx
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov n, 8
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov n, 8
+mov y, 0
+SECTION .data
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+x: dw 4
+xLen: equ $ - x
+
+SEECTION .bss
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+y resb 4
+n resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov n, 8
+mov y, 0
