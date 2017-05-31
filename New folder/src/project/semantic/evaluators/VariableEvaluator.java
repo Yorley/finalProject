@@ -68,6 +68,11 @@ public class VariableEvaluator {
     }
     public void evalAssign(){
         System.out.println("Entra al evalAssign");
+        if(SemanticStack.getInstance().getStack().size()==1){
+            SR_ID sr = (SR_ID) SemanticStack.getInstance().pop();
+            SymbolTable.getInstance().getErrors().add("La variable "+sr.getValue().value.toString()+" no cumple con el tipo de dato en el que fue declarado. Linea: "+ sr.getValue().left);
+            System.out.println(SymbolTable.getInstance().getErrors().size());
+        }else{
             try{
                     if (SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getStack().size()-2).getRegisterType().equals("SR_ID")){
                         System.out.println("Entra al if");
@@ -80,7 +85,8 @@ public class VariableEvaluator {
                             System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
                             Writer.getInstance().getCode().add("mov "+sr_id.getValue().value.toString()+", "+sr_do.getValue().value.toString());
                         }else{
-                            SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+"no ha sido inicializada"+ sr_id.getValue().left);
+                            SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
+                            
                         }
 
                     }else{
@@ -105,7 +111,7 @@ public class VariableEvaluator {
             catch ( Error e ){
                     System.out.println("lfvdsdfslkjhgfdsa");
             }
-            
+        }
                 
               
         

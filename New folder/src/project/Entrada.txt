@@ -2,7 +2,7 @@ int y;
 int x=4;
 int n;
 main(){
-n= 8;
+n= "hola";
 
 if(112<1){y=0;}
 }

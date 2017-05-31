@@ -17,7 +17,7 @@ main					MAIN			3
 {					BEGIN			3
 n					IDENTIFIER			4
 =					ASSIGN			4
-8					LITERAL_NUM			4
+"hola"					LITERAL_CONSTANT			4
 ;					SEMICOLON			4
 if					IF			6
 (					LPAR			6
