@@ -1,10 +1,7 @@
+int x;
 int y;
-int x=4;
-int n;
 main(){
-o=3;
-n=8+1;
-if(112<1)
-{putw("fghjk");
-puts(8);}
+     x=6; 
+     y=1; 
+'@&&
 }

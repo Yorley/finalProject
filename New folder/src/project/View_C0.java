@@ -2,16 +2,20 @@ package project;
 
 
 import java.awt.Color;
+import static java.awt.Color.BLACK;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -19,10 +23,13 @@ import java.util.regex.Pattern;
 import java_cup.runtime.Symbol;
 import static javafx.scene.paint.Color.color;
 import static javafx.scene.paint.Color.color;
+import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
@@ -78,15 +85,35 @@ public class View_C0 extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         txbSemantic = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lbl_line = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_column = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("C-0");
+        setBackground(new java.awt.Color(255, 255, 255));
 
         txbInput.setColumns(20);
         txbInput.setRows(5);
-        txbInput.setSelectedTextColor(new java.awt.Color(255, 0, 102));
+        txbInput.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txbInputMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(txbInput);
 
         chkBox_ReadFile.setText("Analizar desde archivo solamente");
+        chkBox_ReadFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkBox_ReadFileActionPerformed(evt);
+            }
+        });
 
         btnAnalize.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAnalize.setText("Analizar");
@@ -355,43 +382,95 @@ public class View_C0 extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("C-0");
 
+        jLabel2.setText("Linea:");
+
+        lbl_line.setText("0");
+
+        jLabel4.setText("Columna:");
+
+        lbl_column.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Lexical_errors, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(317, 317, 317)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
-                                .addComponent(chkBox_ReadFile)
-                                .addGap(73, 73, 73)
-                                .addComponent(btnAnalize))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(312, 312, 312)
-                                .addComponent(jLabel1)))
+                        .addGap(44, 44, 44)
+                        .addComponent(chkBox_ReadFile)
+                        .addGap(73, 73, 73)
+                        .addComponent(btnAnalize)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2)))
+                        .addComponent(jScrollPane2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_line, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_column, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lbl_line, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(lbl_column, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkBox_ReadFile)
                     .addComponent(btnAnalize))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Lexical_errors, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        jMenu1.setText("File");
+
+        jMenu4.setText("Abrir desde...");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
+        jMenu1.add(jMenu4);
+
+        jMenu5.setText("Guardar como...");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
+        jMenu1.add(jMenu5);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -447,36 +526,19 @@ public class View_C0 extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnAnalizeActionPerformed
-    public void searchWord(String text){
-        if(text.length()>=1){
-            DefaultHighlighter.DefaultHighlightPainter highlightPainter= new DefaultHighlighter.DefaultHighlightPainter(Color.GREEN);
-            Highlighter h= txbInput.getHighlighter();
-            h.removeAllHighlights();
-            String text1= txbInput.getText();
-            String chars= text;
-            Pattern p = Pattern.compile(chars);
-            Matcher m = p.matcher(text1);
-            System.out.println(m);
-                        System.out.println(m.find());
-
-            while (m.find()){
-                try {
-                    h.addHighlight(m.start(), m.end(), highlightPainter);
-                    //txbInput.setHighlighter(h);
-                    txbInput.select(m.start(),m.end());
-                   txbInput.setCaretPosition(m.start());
-                    System.out.println("hawaiii"+ m.start()+ m.end());
-                    
-                }
-                catch (BadLocationException ex){
-                                System.out.println(ex);
-
-                    Logger.getLogger(Color.class.getName()).log(Level.SEVERE,null,ex);
-                }
-            }
+    void search(String textt) {
+        if (textt == null) {
+            return;
         }
-        else {
-            JOptionPane.showMessageDialog(null, "La palabra a buscar no puede ser vacia", "Aviso",JOptionPane.WARNING_MESSAGE);
+        String aktStr = txbInput.getText();
+        int Index = aktStr.indexOf(textt);
+        if (Index == -1) {
+            JOptionPane.showMessageDialog(null, "String not found", "Dialog", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            txbInput.requestFocus();
+            
+            txbInput.select(Index, Index + textt.length());
+            System.out.println(Index);
         }
     }
     //Selecciona una celda e invoca un metodo para senalar el error dentro del area de texto
@@ -484,16 +546,97 @@ public class View_C0 extends javax.swing.JFrame {
         // TODO add your handling code here:
         int roww= jTable_Lexical_errors.rowAtPoint(evt.getPoint());
         int coll= jTable_Lexical_errors.columnAtPoint(evt.getPoint());
-        System.out.print((jTable_Lexical_errors.isCellSelected(0,0)));
-        //for  (int i=0; i<jTable_Lexical_errors.getRowCount();i++){
             if (jTable_Lexical_errors.isCellSelected(roww, coll)){
                 String linea=String.valueOf(jTable_Lexical_errors.getValueAt(roww, coll));
-                searchWord(linea);
-                
-                System.out.println(linea);
-         //   }
+                search(linea);                
         }
     }//GEN-LAST:event_cell_selecction
+
+    private void txbInputMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txbInputMouseClicked
+        try {
+            // TODO add your handling code here:
+            int viewToModel= txbInput.viewToModel(evt.getPoint());
+            lbl_column.setText(String.valueOf(txbInput.getCaretPosition()- txbInput.getLineStartOffset(txbInput.getLineOfOffset(viewToModel))));
+            lbl_line.setText(String.valueOf(txbInput.getLineOfOffset(viewToModel)));
+            
+        } catch (BadLocationException ex) {
+            Logger.getLogger(View_C0.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_txbInputMouseClicked
+
+    private void chkBox_ReadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkBox_ReadFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkBox_ReadFileActionPerformed
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        // TODO add your handling code here:
+        clearTableTokens();
+        clearTableTokens(jTable_Lexical_errors);
+        FileNameExtensionFilter filtro= new FileNameExtensionFilter("Archivo de texto","doc","txt");
+        String nombre,contenido;
+        File dir =new File(".");
+        JFileChooser archivo= new JFileChooser();
+        archivo.setFileFilter(filtro);
+        archivo.setDialogTitle("Abrir archivo...");
+        int comparar=archivo.showOpenDialog(null);
+        if (comparar==JFileChooser.APPROVE_OPTION){
+            dir = archivo.getSelectedFile();
+            nombre=dir.getName();
+            
+            try{
+                FileInputStream f1= new FileInputStream(dir);
+                InputStreamReader f2= new InputStreamReader(f1);
+                BufferedReader linea=new BufferedReader(f2);
+                contenido="";
+                while (linea.ready()){
+                    String linea_arch=linea.readLine();
+                    contenido=contenido + linea_arch + "\n";
+                }
+                linea.close();
+                txbInput.setText(contenido);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        // TODO add your handling code here:
+        FileNameExtensionFilter filtro= new FileNameExtensionFilter("Archivo de texto","txt");
+        JFileChooser archivo= new JFileChooser();
+        archivo.setFileFilter(filtro);
+        archivo.setDialogTitle("Guardar archivo...");
+        int comparar=archivo.showSaveDialog(null);
+        if (comparar==JFileChooser.APPROVE_OPTION){
+            final Formatter crear;
+            try{
+                crear = new Formatter(archivo.getSelectedFile()+".txt");
+                crear.format(txbInput.getText());
+                crear.close();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // TODO add your handling code here:
+        Color color=JColorChooser.showDialog(jPanel1, "Elige un color", Color.BLACK);
+        jPanel1.setBackground(color);
+        btnAnalize.setBackground(color);
+        if (color==BLACK){
+           btnAnalize.setForeground(Color.WHITE);
+           jLabel1.setForeground(Color.WHITE);
+        }
+        else{
+            btnAnalize.setForeground(Color.BLACK);
+            jLabel1.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_jMenu2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -530,6 +673,7 @@ public class View_C0 extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new View_C0().setVisible(true);
+                
             }
         });
         
@@ -814,6 +958,13 @@ public class View_C0 extends javax.swing.JFrame {
     private javax.swing.JButton btnAnalize;
     private javax.swing.JCheckBox chkBox_ReadFile;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -821,6 +972,8 @@ public class View_C0 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable_Lexical_errors;
+    private javax.swing.JLabel lbl_column;
+    private javax.swing.JLabel lbl_line;
     private javax.swing.JTable tbl_tokens;
     private javax.swing.JTextArea txbInput;
     private javax.swing.JTextArea txbParser;

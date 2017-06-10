@@ -14,3 +14,114 @@ _start:
 mov ebx, 1
 add ebx, 8
 mov n ,ebx
+SECTION .data
+
+SEECTION .bss
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+
+SEECTION .bss
+
+SECTION .txt
+global _start
+
+_start:
+SECTION .data
+
+SEECTION .bss
+x resb 4
+y resb 4
+x resb 4
+x resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov x, 6
+mov y, 1
+SECTION .data
+
+SEECTION .bss
+x resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov x, 6
+mov y, 1
+SECTION .data
+
+SEECTION .bss
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov x, 6
+mov y, 1
+SECTION .data
+
+SEECTION .bss
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov x, 6
+mov y, 1
+SECTION .data
+
+SEECTION .bss
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov x, 6
+mov y, 1
+SECTION .data
+
+SEECTION .bss
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+x resb 4
+y resb 4
+
+SECTION .txt
+global _start
+
+_start:
+mov x, 6
+mov y, 1
