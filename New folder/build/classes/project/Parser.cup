@@ -187,7 +187,11 @@ content ::= structures content | structures ;
 structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assign ;
 
 //Estructura para declarar como debe ser el putw, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
-putw_struct ::= PUTW putw_struct_one;
+putw_struct ::= PUTW:p {:
+                           Symbol symbol= new Symbol(sym.PUTS,pleft,pright,p);
+                           SR_PUTW register= new SR_PUTW(symbol);
+                           SemanticStack.getInstance().push(register);
+                    :} putw_struct_one;
 putw_struct_one ::= LPAR putw_struct_two| error {: printError("Missing } token") ;:} putw_struct_two;
 putw_struct_two ::= arithmetic putw_struct_three 
                     | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
@@ -199,14 +203,23 @@ putw_struct_two ::= arithmetic putw_struct_three
                                       SemanticStack.getInstance().push(register);
                                    :} 
                       putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;
-putw_struct_three ::= RPAR putw_struct_fourth| error {: printError("Missing } token") ;:} putw_struct_fourth; 
+putw_struct_three ::= RPAR putw_struct_fourth {: RWEvaluator.getInstance().evalPutw(); :}| error {: printError("Missing } token") ;:} putw_struct_fourth; 
 putw_struct_fourth ::= SEMICOLON| error {: printError("Missing ; token") ;:} SEMICOLON;
 
 //Estructura para declarar como debe ser el puts, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
-puts_struct ::= PUTS puts_struct_one ;
+puts_struct ::= PUTS:p {:
+                           Symbol symbol= new Symbol(sym.PUTS,pleft,pright,p);
+                           SR_PUTS register= new SR_PUTS(symbol);
+                           SemanticStack.getInstance().push(register);
+                        :} puts_struct_one ;
 puts_struct_one ::= LPAR puts_struct_two | error {: printError("Missing } token") ;:} puts_struct_two;
-puts_struct_two ::= LITERAL_CONSTANT puts_struct_three | error {: printError("Missing } token") ;:} puts_struct_three;
-puts_struct_three ::= RPAR puts_struct_fourth | error {: printError("Missing ; token") ;:} puts_struct_fourth;
+puts_struct_two ::= LITERAL_CONSTANT:s {:
+                                            Symbol symbol= new Symbol(0,sleft,sright,s);
+                                            SR_DO sr_do = new SR_DO(symbol,"char");
+                                            SemanticStack.getInstance().push(sr_do);
+                                            :} puts_struct_three 
+                    | error {: printError("Missing } token") ;:} puts_struct_three;
+puts_struct_three ::= RPAR puts_struct_fourth {: RWEvaluator.getInstance().evalPuts(); :} | error {: printError("Missing ; token") ;:} puts_struct_fourth;
 puts_struct_fourth ::= SEMICOLON | error {: printError("Missing ; token") ;:} SEMICOLON;
 
 

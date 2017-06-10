@@ -34,6 +34,7 @@ public class Writer {
     public void write(String pContent) {
         try {
             File file = new File(_Filename+".asm");
+            
             FileWriter fileWritter = new FileWriter(file.getAbsoluteFile(),true);
             BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
             bufferWritter.write(pContent+"\n");

@@ -68,6 +68,10 @@ public class VariableEvaluator {
     }
     public void evalAssign(){
         System.out.println("Entra al evalAssign");
+        System.out.println("Entra al evalAssign : "+ SemanticStack.getInstance().getStack().size());
+        System.out.println("Entra al evalAssign 1: "+ SemanticStack.getInstance().getLast().getValue().value);
+        System.out.println("Entra al evalAssign 2: "+ SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getSize()-2).getValue().value);
+        
         if(SemanticStack.getInstance().getStack().size()==1){
             SR_ID sr = (SR_ID) SemanticStack.getInstance().pop();
             SymbolTable.getInstance().getErrors().add("La variable "+sr.getValue().value.toString()+" no cumple con el tipo de dato en el que fue declarado. Linea: "+ sr.getValue().left);
@@ -76,18 +80,39 @@ public class VariableEvaluator {
             try{
                     if (SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getStack().size()-2).getRegisterType().equals("SR_ID")){
                         System.out.println("Entra al if");
+                        System.out.println("Entra al evalAssign 2: "+ SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getSize()-2).getValue().value);
+                        if ((SemanticStack.getInstance().getLast().getRegisterType()).equals("SR_ID")){
+                            SR_ID sr_id = (SR_ID) SemanticStack.getInstance().pop();
+                            SR_ID sr_id1 = (SR_ID)SemanticStack.getInstance().pop();
+                            if (SymbolTable.getInstance().existSymbol(sr_id1.getValue().value.toString(), "Var")){
+                                if (SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
+                                    System.out.println("Valor que tiene el sr_id antes de evaluar si es null: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id1.getValue().value.toString())).getValue());
+                                    
+                                }else{
+                                      SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido declarada. Linea: "+ sr_id.getValue().left);
 
-                        SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
-                        SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
-                        if (SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
-                            System.out.println("este es el valor de el sr_do: "+ sr_do.getValue().value.toString());
-                            ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
-                            System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
-                            Writer.getInstance().getCode().add("mov "+sr_id.getValue().value.toString()+", "+sr_do.getValue().value.toString());
+                                }
+                                
+                            }else{
+                                SymbolTable.getInstance().getErrors().add("La variable "+sr_id1.getValue().value.toString()+" no ha sido declarada. Linea: "+ sr_id.getValue().left);
+
+                            }
                         }else{
-                            SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
-                            
+                            SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
+                            SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
+                            if (SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
+                                System.out.println("este es el valor de el sr_do: "+ sr_do.getValue().value.toString());
+                                ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
+                                System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
+                                
+                                Writer.getInstance().getCode().add("mov "+sr_id.getValue().value.toString()+", "+sr_do.getValue().value.toString());
+                            }else{
+                                SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
+
+                            }
                         }
+                        
+                        
 
                     }else{
                             System.out.println("Entra else");
@@ -194,10 +219,12 @@ public class VariableEvaluator {
                 sr_do1.getValue().value = String.valueOf(res);
                 if (SemanticStack.getInstance().getLast().getRegisterType().equals("SR_ID")){
                     System.out.println("entra al ultimo if ... push");
+                    System.out.println("Estoaaaaa: "+SemanticStack.getInstance().getLast().getRegisterType());
                     SemanticStack.getInstance().push(sr_do1);
                     break;
                 }
             }catch(Error e){
+                System.out.println("Estossdaaaaa: "+SemanticStack.getInstance().getLast().getRegisterType());
                 SymbolTable.getInstance().getErrors().add("Error en la expresion, linea "+pLine);
             }
         }

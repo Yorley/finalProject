@@ -9,10 +9,11 @@ import java_cup.runtime.Symbol;
 
 /**
  *
- * @author Christian
+ * @author YM
  */
-public class SR_Write extends SemanticRegister{
-    public SR_Write(Symbol pValue) {
-        super(pValue,"SR_Write");
+public class SR_PUTS extends SemanticRegister{
+    public SR_PUTS(Symbol pValue) {
+        super(pValue,"SR_PUTS");
+        System.out.println("se creo el puts");
     }
 }

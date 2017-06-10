@@ -22,7 +22,7 @@ import project.semantic.registers.SemanticRegister;
 
 /**
  *
- * @author LuisPC
+ * @author YM
  */
 public class MainWindow extends javax.swing.JFrame {
 

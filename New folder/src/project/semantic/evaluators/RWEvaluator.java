@@ -12,7 +12,8 @@ import project.semantic.Writer;
 import project.semantic.registers.SR_DO;
 import project.semantic.registers.SR_ID;
 import project.semantic.registers.SR_Read;
-import project.semantic.registers.SR_Write;
+import project.semantic.registers.SR_PUTS;
+import project.semantic.registers.SR_PUTW;
 
 /**
  *
@@ -36,6 +37,55 @@ public class RWEvaluator {
         }
         return DOs;
     }
+    public void evalPuts(){
+        if(!(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_PUTS"))){
+            if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_DO")){
+                SR_DO str_to_print= (SR_DO) SemanticStack.getInstance().pop();
+                SR_PUTS sr_puts= (SR_PUTS) SemanticStack.getInstance().pop();
+                
+            }else{
+                SymbolTable.getInstance().getErrors().add("hAY UN ERROR EN EL PUTS");
+
+            }
+        }else{
+            SR_PUTS sr_puts= (SR_PUTS) SemanticStack.getInstance().pop();
+            SymbolTable.getInstance().getErrors().add("Dentro del puts solo deben venir literal_constant. Linea: "+sr_puts.getValue().left);
+
+        }
+        
+    
+    }
+    public void evalPutw(){
+        if(!(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_PUTW"))){
+            if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_DO")){
+                SR_DO str_to_print= (SR_DO) SemanticStack.getInstance().pop();
+                SR_PUTW sr_puts= (SR_PUTW) SemanticStack.getInstance().pop();
+                
+            }else{
+                if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_ID")){
+                    SR_ID str_to_print= (SR_ID) SemanticStack.getInstance().pop();
+
+                    if(SymbolTable.getInstance().existSymbol(SemanticStack.getInstance().getLast().getValue().value.toString(), "Var")){
+                        SR_PUTW sr_putw= (SR_PUTW) SemanticStack.getInstance().pop();
+                    }else{
+                         SymbolTable.getInstance().getErrors().add("La variable: "+str_to_print.getValue().value+"no ha sido declarada.");
+    
+                    }
+                    
+                
+                }else{
+                    SymbolTable.getInstance().getErrors().add("HAY UN ERROR EN EL PUTW");
+
+                }
+            }
+        }else{
+            SR_PUTW sr_putw= (SR_PUTW) SemanticStack.getInstance().pop();
+            SymbolTable.getInstance().getErrors().add("Dentro del putw solo deben venir literal_num. Linea: "+sr_putw.getValue().left);
+
+        }
+        
+    
+    }
     public void evalEndWrite(){
         ArrayList<SR_DO> DOs = getDOs();
         for (int iDO = 0; iDO != DOs.size(); iDO++){
@@ -46,7 +96,7 @@ public class RWEvaluator {
             Writer.getInstance().getCode().add("mov eax, equ "+ sr_do.getValue().value.toString());
             Writer.getInstance().getCode().add("int 80h\n");
         }
-        SR_Write sr_write = (SR_Write)SemanticStack.getInstance().pop();
+        SR_PUTS sr_write = (SR_PUTS)SemanticStack.getInstance().pop();
     }
     public void evalEndRead(){
         SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();

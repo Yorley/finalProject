@@ -75,8 +75,8 @@ public class View_C0 extends javax.swing.JFrame {
         jTable_Lexical_errors = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         txbParser = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable_Semantic_errors = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txbSemantic = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -346,124 +346,11 @@ public class View_C0 extends javax.swing.JFrame {
 
         Lexical_errors.addTab("Errores sintácticos", jScrollPane1);
 
-        jTable_Semantic_errors.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Token", "Tipo", "Línea", "Posición línea"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
+        txbSemantic.setColumns(20);
+        txbSemantic.setRows(5);
+        jScrollPane3.setViewportView(txbSemantic);
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane4.setViewportView(jTable_Semantic_errors);
-
-        Lexical_errors.addTab("Errores semánticos", jScrollPane4);
+        Lexical_errors.addTab("Errores semanticos", jScrollPane3);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("C-0");
@@ -530,7 +417,7 @@ public class View_C0 extends javax.swing.JFrame {
         try {
             clearTableTokens();
             clearTableTokens(jTable_Lexical_errors);
-
+            txbSemantic.setText("");
             File dir =new File(".");
             String filePath =dir.getCanonicalPath()+"/src/project/";
             String inPath = filePath+ fileInputPath;
@@ -687,10 +574,10 @@ public class View_C0 extends javax.swing.JFrame {
             showParserErrors(p.getExpectedTokens(), p.getLineErrors(), p.getErrors());
             if (SymbolTable.getInstance().getErrors().size() != 0){
                 for(int iError = 0; iError != SymbolTable.getInstance().getErrors().size(); iError++){
-                    //txbSemantic.setText(txbSemantic.getText()+SymbolTable.getInstance().getErrors().get(iError)+"\n");
+                    txbSemantic.setText(txbSemantic.getText()+SymbolTable.getInstance().getErrors().get(iError)+"\n");
                 }
             }else{
-                //txbSemantic.setText("Compilación completada");
+                txbSemantic.setText("Compilación completada");
                 Writer.getInstance().writeAll();
             }
         } catch (Exception ex) {
@@ -930,13 +817,13 @@ public class View_C0 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTable jTable_Lexical_errors;
-    private javax.swing.JTable jTable_Semantic_errors;
     private javax.swing.JTable tbl_tokens;
     private javax.swing.JTextArea txbInput;
     private javax.swing.JTextArea txbParser;
+    private javax.swing.JTextArea txbSemantic;
     // End of variables declaration//GEN-END:variables
 }
