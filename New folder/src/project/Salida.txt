@@ -43,8 +43,10 @@ puts					PUTS			9
 (					LPAR			9
 "jhgf"					LITERAL_CONSTANT			9
 )					RPAR			9
+;					SEMICOLON			9
 break					BREAK			9
 default					DEFAULT			10
+:					COLON			10
 break					BREAK			10
 }					END			10
 }					END			11
