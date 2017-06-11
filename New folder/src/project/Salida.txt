@@ -18,6 +18,17 @@ y					IDENTIFIER			4
 =					ASSIGN			4
 1					LITERAL_NUM			4
 ;					SEMICOLON			4
-'@&&
-					error			5
-}					END			6
+int					TYPE_NUM			5
+hola					IDENTIFIER			5
+(					LPAR			5
+)					RPAR			5
+{					BEGIN			5
+return					RETURN			5
+x					IDENTIFIER			5
+}					END			5
+puts					PUTS			6
+(					LPAR			6
+"dsa"					LITERAL_CONSTANT			6
+)					RPAR			6
+;					SEMICOLON			6
+}					END			7

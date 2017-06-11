@@ -93,7 +93,7 @@ parser code {:
 // Simbolos terminales
 terminal LITERAL_NUM,LITERAL_CONSTANT, LITERAL_CHAR, TYPE_NUM, TYPE_CHAR, TYPE_STR, IF, ELSE, WHILE,BREAK, KEYWORD, 
     IDENTIFIER, ARITHMETIC, SEMICOLON, COMMA, LPAR, RPAR, ASSIGN,PUTW, PUTS, MAIN, OPERADOR, BEGIN, END, PLUS,MINUS,MULT,DIV,
-    AND, OR, HIGHER, LOWER,EQUALS,DIFFERENT;  
+    AND, OR, HIGHER, LOWER,EQUALS,DIFFERENT,RETURN,COLON,SWITCH,CASE,DEFAULT;
 
 
 //Todos los no terminales, son las "funciones" que se utilizan para definir una estructura, deben estar declaradas para que no surja ningún error.
@@ -107,7 +107,9 @@ non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_var
             condition,else_struct_one,else_struct_two,else_struct_three,declar_assign_one,declar_assign_two,declar_assign_three,
             comparison,expr,expr_two,expr_aux,logic_comparison,exp,arithmetic_aux,expr_aux_one,condition_one,arithmetic_aux_one,
             if_struct_six,condition_two,condition_three,condition_aux,expr_one, expr_three, expr_four, while_struct_one,while_struct_two,
-            while_struct_three,while_struct_four,while_struct_five,while_struct_six,while_struct_aux
+            while_struct_three,while_struct_four,while_struct_five,while_struct_six,while_struct_aux,
+            init_decl, funct,funct_sec,funct_third,funct_fourth,funct_fifth,funct_sixth,parameters, primitiveType,init_decl_one,
+            funct_seventh, case_stms, switch,  switch_one, switch_two, switch_three,  switch_four,  switch_five
             ;
 
 // Seccion de precedencia
@@ -184,7 +186,7 @@ fin ::=  END
 content ::= structures content | structures ;
 
 //Definición  de las estructuras if, putw,puts,while y la declaración de una asignación.
-structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assign ;
+structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assign | funct ;
 
 //Estructura para declarar como debe ser el putw, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
 putw_struct ::= PUTW:p {:
@@ -386,3 +388,99 @@ while_struct_four ::= BEGIN while_struct_five | error {: printError("Missing { t
 while_struct_five ::= while_struct_aux while_struct_six;
 while_struct_aux ::= content | content BREAK SEMICOLON | BREAK SEMICOLON | BREAK SEMICOLON content;
 while_struct_six ::= END ;
+
+
+funct ::= init_decl funct_sec
+         
+    ;
+
+funct_sec ::= LPAR funct_third
+    | error {:printError("Missing ( token");:} funct_third
+    ; 
+
+funct_third ::= RPAR funct_fourth   
+    | parameters RPAR funct_fourth
+    | error {:printError("Missing ) token");:} RPAR funct_fourth
+    ;
+
+funct_fourth ::= BEGIN funct_fifth
+               | error {:printError("Missing { token");:} funct_fifth;
+funct_fifth ::= content funct_sixth
+               | funct_sixth
+;
+
+funct_sixth ::= RETURN funct_seventh
+                ;
+funct_seventh ::= LITERAL_NUM END
+                | IDENTIFIER:id
+                {:
+                    Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
+                    SR_ID srId = new SR_ID(symbol);
+                    SemanticStack.getInstance().push(srId);
+                    VariableEvaluator.getInstance().Exist();
+               :} END
+
+                | error END
+;
+init_decl ::=  TYPE_NUM error
+
+             |TYPE_NUM:val init_decl_one
+    {: 
+        Symbol symbolID = new Symbol(0,valleft,valright,val);
+        SR_Type type = new SR_Type(symbolID);
+        type.setType(sym.TYPE_NUM);
+        SemanticStack.getInstance().push(type); 
+        
+        
+    :} 
+    
+    | error  {: printError("Type not specified"); :} init_decl_one
+    ;
+init_decl_one ::= IDENTIFIER:id 
+                {:
+                    Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
+                    SR_ID srId = new SR_ID(symbol);
+                    SemanticStack.getInstance().push(srId);
+                :}
+                //|error  {: printError("Debe traer nombre la funcion"); :}
+;
+parameters ::= primitiveType IDENTIFIER:id
+               {:
+               Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
+               SR_ID srId = new SR_ID(symbol);
+               SemanticStack.getInstance().push(srId);
+
+               VariableEvaluator.getInstance().evalUn();
+               :}
+               | primitiveType IDENTIFIER:id
+                {:
+                    Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
+                    SR_ID srId = new SR_ID(symbol);
+                    SemanticStack.getInstance().push(srId);
+                    VariableEvaluator.getInstance().evalUn();
+               :}
+                 COMMA parameters;
+primitiveType ::= TYPE_NUM:val 
+                   {:
+                        Symbol symbolID= new Symbol(0,valleft,valright,val);
+                        SR_Type type= new SR_Type(symbolID);
+                        type.setType(sym.TYPE_NUM);
+                        SemanticStack.getInstance().push(type);
+
+                   :}
+                  //| TYPE_CHAR
+;
+switch ::= SWITCH switch_one;
+switch_one ::= LPAR switch_two;
+switch_two ::= IDENTIFIER:id
+                {:
+                    Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
+                    SR_ID srId = new SR_ID(symbol);
+                    SemanticStack.getInstance().push(srId);
+                    VariableEvaluator.getInstance().Exist();
+               :} RPAR switch_three;
+switch_three ::= BEGIN case_stms switch_four;
+switch_four ::= DEFAULT switch_five;
+switch_five ::= BREAK END;
+
+case_stms ::= ;

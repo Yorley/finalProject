@@ -43,14 +43,14 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
    */
   private static final String ZZ_CMAP_PACKED = 
     "\11\0\1\3\1\4\1\0\1\3\1\5\22\0\1\3\1\0\1\31"+
-    "\3\0\1\30\1\14\1\15\1\16\1\21\1\6\1\51\1\7\1\0"+
-    "\1\22\1\2\11\10\1\0\1\52\1\23\1\25\1\24\2\0\32\1"+
-    "\4\0\1\13\1\0\1\33\1\42\2\1\1\36\1\47\1\1\1\46"+
-    "\1\34\1\1\1\44\1\12\1\32\1\35\1\1\1\40\1\1\1\43"+
-    "\1\37\1\41\1\11\1\1\1\45\3\1\1\17\1\27\1\20\43\0"+
-    "\1\26\35\0\1\50\1\0\1\50\7\0\1\50\3\0\1\50\3\0"+
-    "\1\50\1\0\1\50\6\0\1\50\6\0\1\50\7\0\1\50\3\0"+
-    "\1\50\3\0\1\50\1\0\1\50\6\0\1\50\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff15\0";
+    "\3\0\1\30\1\14\1\15\1\16\1\21\1\6\1\53\1\7\1\0"+
+    "\1\22\1\2\11\10\1\54\1\55\1\23\1\25\1\24\2\0\32\1"+
+    "\4\0\1\13\1\0\1\33\1\42\1\51\1\52\1\36\1\47\1\1"+
+    "\1\46\1\34\1\1\1\44\1\12\1\32\1\35\1\1\1\40\1\1"+
+    "\1\43\1\37\1\41\1\11\1\1\1\45\3\1\1\17\1\27\1\20"+
+    "\43\0\1\26\35\0\1\50\1\0\1\50\7\0\1\50\3\0\1\50"+
+    "\3\0\1\50\1\0\1\50\6\0\1\50\6\0\1\50\7\0\1\50"+
+    "\3\0\1\50\3\0\1\50\1\0\1\50\6\0\1\50\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uff15\0";
 
   /** 
    * Translates characters to character classes
@@ -65,13 +65,15 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\2\4\1\5\1\6\1\3"+
     "\1\1\1\7\1\10\1\11\1\12\1\13\1\14\1\15"+
-    "\1\16\1\17\4\1\6\2\1\20\1\21\1\22\1\20"+
-    "\1\3\1\0\1\20\1\23\1\24\1\25\1\26\1\27"+
-    "\1\0\2\2\1\30\4\2\2\3\1\2\1\31\4\2"+
-    "\1\32\1\33\1\34\1\35\2\2\1\36\1\37";
+    "\1\16\1\17\4\1\10\2\1\20\2\2\1\21\1\22"+
+    "\1\23\1\20\1\3\1\0\1\20\1\24\1\25\1\26"+
+    "\1\27\1\30\1\0\2\2\1\31\10\2\2\3\1\2"+
+    "\1\32\10\2\1\33\1\34\1\2\1\35\1\36\3\2"+
+    "\1\37\2\2\1\40\1\2\1\41\1\2\1\42\1\43"+
+    "\1\2\1\44";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[65];
+    int [] result = new int[89];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -96,18 +98,21 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\53\0\126\0\201\0\53\0\254\0\53\0\53"+
-    "\0\327\0\u0102\0\53\0\53\0\53\0\53\0\53\0\53"+
-    "\0\53\0\53\0\u012d\0\u0158\0\u0183\0\u01ae\0\u01d9\0\u0204"+
-    "\0\u022f\0\u025a\0\u0285\0\u02b0\0\u02db\0\53\0\53\0\53"+
-    "\0\201\0\u0306\0\u0102\0\u0331\0\53\0\53\0\53\0\53"+
-    "\0\53\0\u01d9\0\u035c\0\u0387\0\126\0\u03b2\0\u03dd\0\u0408"+
-    "\0\u0433\0\u045e\0\53\0\u0489\0\126\0\u04b4\0\u04df\0\u050a"+
-    "\0\u0535\0\126\0\126\0\126\0\126\0\u0560\0\u058b\0\126"+
-    "\0\126";
+    "\0\0\0\56\0\134\0\212\0\56\0\270\0\56\0\56"+
+    "\0\346\0\u0114\0\56\0\56\0\56\0\56\0\56\0\56"+
+    "\0\56\0\56\0\u0142\0\u0170\0\u019e\0\u01cc\0\u01fa\0\u0228"+
+    "\0\u0256\0\u0284\0\u02b2\0\u02e0\0\u030e\0\u033c\0\u036a\0\56"+
+    "\0\u0398\0\u03c6\0\56\0\56\0\56\0\212\0\u03f4\0\u0114"+
+    "\0\u0422\0\56\0\56\0\56\0\56\0\56\0\u01fa\0\u0450"+
+    "\0\u047e\0\134\0\u04ac\0\u04da\0\u0508\0\u0536\0\u0564\0\u0592"+
+    "\0\u05c0\0\u05ee\0\u061c\0\56\0\u064a\0\134\0\u0678\0\u06a6"+
+    "\0\u06d4\0\u0702\0\u0730\0\u075e\0\u078c\0\u07ba\0\134\0\134"+
+    "\0\u07e8\0\134\0\134\0\u0816\0\u0844\0\u0872\0\134\0\u08a0"+
+    "\0\u08ce\0\134\0\u08fc\0\134\0\u092a\0\134\0\134\0\u0958"+
+    "\0\134";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[65];
+    int [] result = new int[89];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -133,38 +138,67 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
     "\1\2\1\3\1\4\2\5\1\6\1\7\1\10\1\11"+
     "\2\3\1\2\1\12\1\13\1\14\1\15\1\16\1\17"+
     "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\27"+
-    "\1\30\1\3\1\31\1\3\1\32\1\3\1\33\1\3"+
-    "\1\34\2\3\1\35\2\3\1\36\1\37\1\40\54\0"+
-    "\2\3\5\0\4\3\16\0\16\3\4\0\1\41\7\0"+
-    "\2\41\17\0\16\41\7\0\1\5\47\0\1\41\1\42"+
-    "\5\0\1\42\2\41\17\0\16\41\3\0\4\43\1\36"+
-    "\1\44\6\43\1\45\36\43\25\0\1\46\52\0\1\47"+
-    "\54\0\1\50\53\0\1\51\22\0\4\52\1\36\1\44"+
-    "\23\52\1\45\21\52\1\0\2\3\5\0\4\3\16\0"+
-    "\1\3\1\53\14\3\4\0\2\3\5\0\4\3\16\0"+
-    "\3\3\1\54\11\3\1\55\4\0\2\3\5\0\2\3"+
-    "\1\56\1\3\16\0\16\3\4\0\2\3\5\0\1\3"+
-    "\1\57\2\3\16\0\16\3\4\0\2\3\5\0\4\3"+
-    "\16\0\11\3\1\60\4\3\4\0\2\3\5\0\4\3"+
-    "\16\0\14\3\1\61\1\3\5\0\1\42\5\0\1\42"+
-    "\1\62\1\63\44\0\1\36\47\0\2\3\5\0\4\3"+
-    "\16\0\2\3\1\64\13\3\4\0\2\3\5\0\4\3"+
-    "\16\0\7\3\1\65\6\3\4\0\2\3\5\0\4\3"+
-    "\16\0\5\3\1\66\10\3\4\0\2\3\5\0\4\3"+
-    "\16\0\7\3\1\67\6\3\4\0\2\3\5\0\4\3"+
-    "\16\0\4\3\1\70\11\3\4\0\2\3\5\0\4\3"+
-    "\16\0\2\3\1\71\13\3\15\0\1\63\41\0\2\3"+
-    "\5\0\4\3\16\0\3\3\1\72\12\3\4\0\2\3"+
-    "\5\0\4\3\16\0\4\3\1\73\11\3\4\0\2\3"+
-    "\5\0\4\3\16\0\5\3\1\74\5\3\1\75\2\3"+
-    "\4\0\2\3\5\0\4\3\16\0\1\3\1\76\14\3"+
-    "\4\0\2\3\5\0\2\3\1\77\1\3\16\0\16\3"+
-    "\4\0\2\3\5\0\4\3\16\0\12\3\1\100\3\3"+
-    "\4\0\2\3\5\0\4\3\16\0\4\3\1\101\11\3"+
-    "\3\0";
+    "\1\30\1\3\1\31\1\3\1\32\1\33\1\34\1\3"+
+    "\1\35\1\36\1\3\1\37\2\3\1\40\1\41\1\42"+
+    "\1\43\1\44\1\45\57\0\2\3\5\0\4\3\16\0"+
+    "\16\3\1\0\2\3\4\0\1\46\7\0\2\46\17\0"+
+    "\16\46\1\0\2\46\7\0\1\5\52\0\1\46\1\47"+
+    "\5\0\1\47\2\46\17\0\16\46\1\0\2\46\3\0"+
+    "\4\50\1\40\1\51\6\50\1\52\41\50\25\0\1\53"+
+    "\55\0\1\54\57\0\1\55\56\0\1\56\25\0\4\57"+
+    "\1\40\1\51\23\57\1\52\24\57\1\0\2\3\5\0"+
+    "\4\3\16\0\1\3\1\60\14\3\1\0\2\3\4\0"+
+    "\2\3\5\0\4\3\16\0\3\3\1\61\11\3\1\62"+
+    "\1\0\2\3\4\0\2\3\5\0\2\3\1\63\1\3"+
+    "\16\0\16\3\1\0\2\3\4\0\2\3\5\0\4\3"+
+    "\16\0\13\3\1\64\2\3\1\0\2\3\4\0\2\3"+
+    "\5\0\1\3\1\65\2\3\16\0\16\3\1\0\2\3"+
+    "\4\0\2\3\5\0\4\3\16\0\11\3\1\66\4\3"+
+    "\1\0\2\3\4\0\2\3\5\0\4\3\16\0\4\3"+
+    "\1\67\11\3\1\0\2\3\4\0\2\3\5\0\4\3"+
+    "\16\0\14\3\1\70\1\3\1\0\2\3\4\0\2\3"+
+    "\5\0\4\3\16\0\1\3\1\71\14\3\1\0\2\3"+
+    "\4\0\2\3\5\0\4\3\16\0\4\3\1\72\11\3"+
+    "\1\0\2\3\5\0\1\47\5\0\1\47\1\73\1\74"+
+    "\47\0\1\40\52\0\2\3\5\0\4\3\16\0\2\3"+
+    "\1\75\13\3\1\0\2\3\4\0\2\3\5\0\4\3"+
+    "\16\0\7\3\1\76\6\3\1\0\2\3\4\0\2\3"+
+    "\5\0\4\3\16\0\5\3\1\77\10\3\1\0\2\3"+
+    "\4\0\2\3\5\0\4\3\16\0\2\3\1\100\13\3"+
+    "\1\0\2\3\4\0\2\3\5\0\4\3\16\0\7\3"+
+    "\1\101\6\3\1\0\2\3\4\0\2\3\5\0\4\3"+
+    "\16\0\4\3\1\102\11\3\1\0\2\3\4\0\2\3"+
+    "\5\0\4\3\16\0\7\3\1\103\6\3\1\0\2\3"+
+    "\4\0\2\3\5\0\4\3\16\0\2\3\1\104\13\3"+
+    "\1\0\2\3\4\0\2\3\5\0\4\3\16\0\5\3"+
+    "\1\105\10\3\1\0\2\3\4\0\2\3\5\0\4\3"+
+    "\16\0\15\3\1\106\1\0\2\3\15\0\1\74\44\0"+
+    "\2\3\5\0\4\3\16\0\3\3\1\107\12\3\1\0"+
+    "\2\3\4\0\2\3\5\0\4\3\16\0\4\3\1\110"+
+    "\11\3\1\0\2\3\4\0\2\3\5\0\4\3\16\0"+
+    "\7\3\1\111\6\3\1\0\2\3\4\0\2\3\5\0"+
+    "\4\3\16\0\5\3\1\112\5\3\1\113\2\3\1\0"+
+    "\2\3\4\0\2\3\5\0\4\3\16\0\1\3\1\114"+
+    "\14\3\1\0\2\3\4\0\2\3\5\0\1\3\1\115"+
+    "\2\3\16\0\16\3\1\0\2\3\4\0\2\3\5\0"+
+    "\2\3\1\116\1\3\16\0\16\3\1\0\2\3\4\0"+
+    "\2\3\5\0\4\3\16\0\4\3\1\117\11\3\1\0"+
+    "\2\3\4\0\2\3\5\0\4\3\16\0\1\3\1\120"+
+    "\14\3\1\0\2\3\4\0\2\3\5\0\4\3\16\0"+
+    "\16\3\1\0\1\121\1\3\4\0\2\3\5\0\4\3"+
+    "\16\0\12\3\1\122\3\3\1\0\2\3\4\0\2\3"+
+    "\5\0\4\3\16\0\11\3\1\123\4\3\1\0\2\3"+
+    "\4\0\2\3\5\0\4\3\16\0\4\3\1\124\11\3"+
+    "\1\0\2\3\4\0\2\3\5\0\1\3\1\125\2\3"+
+    "\16\0\16\3\1\0\2\3\4\0\2\3\5\0\4\3"+
+    "\16\0\14\3\1\126\1\3\1\0\2\3\4\0\2\3"+
+    "\5\0\4\3\16\0\3\3\1\127\12\3\1\0\2\3"+
+    "\4\0\2\3\5\0\2\3\1\130\1\3\16\0\16\3"+
+    "\1\0\2\3\4\0\2\3\5\0\4\3\16\0\7\3"+
+    "\1\131\6\3\1\0\2\3\3\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1462];
+    int [] result = new int[2438];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -203,11 +237,11 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\2\1\1\11\1\1\2\11\2\1\10\11"+
-    "\13\1\3\11\2\1\1\0\1\1\5\11\1\0\10\1"+
-    "\1\11\16\1";
+    "\15\1\1\11\2\1\3\11\2\1\1\0\1\1\5\11"+
+    "\1\0\14\1\1\11\35\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[65];
+    int [] result = new int[89];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -315,7 +349,7 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 208) {
+    while (i < 210) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -690,214 +724,249 @@ public class AnalizadorLexico implements java_cup.runtime.Scanner {
     tokens.add(t);
     return t;
             }
-          case 32: break;
+          case 37: break;
           case 2: 
             { contador++;
     Symbol t = new Symbol(sym.IDENTIFIER,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 33: break;
+          case 38: break;
           case 3: 
             { contador++;
     Symbol t = new Symbol(sym.LITERAL_NUM,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 34: break;
+          case 39: break;
           case 4: 
             { //ignorar
             }
-          case 35: break;
+          case 40: break;
           case 5: 
             { contador++;
     Symbol t = new Symbol(sym.PLUS, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 36: break;
+          case 41: break;
           case 6: 
             { contador++;
     Symbol t = new Symbol(sym.MINUS, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 37: break;
+          case 42: break;
           case 7: 
             { contador++;
     Symbol t = new Symbol(sym.LPAR, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 38: break;
+          case 43: break;
           case 8: 
             { contador++;
     Symbol t = new Symbol(sym.RPAR, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 39: break;
+          case 44: break;
           case 9: 
             { contador++;
     Symbol t = new Symbol(sym.BEGIN, yyline, yycolumn,yytext());
     tokens.add(t);
     return t;
             }
-          case 40: break;
+          case 45: break;
           case 10: 
             { contador++;
     Symbol t = new Symbol(sym.END, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 41: break;
+          case 46: break;
           case 11: 
             { contador++;
     Symbol t = new Symbol(sym.MULT, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 42: break;
+          case 47: break;
           case 12: 
             { contador++;
     Symbol t = new Symbol(sym.DIV, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 43: break;
+          case 48: break;
           case 13: 
             { contador++;
     Symbol t = new Symbol(sym.LOWER, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 44: break;
+          case 49: break;
           case 14: 
             { contador++;
     Symbol t = new Symbol(sym.HIGHER, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 45: break;
+          case 50: break;
           case 15: 
             { contador++;
     Symbol t = new Symbol(sym.ASSIGN, yyline, yycolumn,yytext());
     tokens.add(t);
     return t;
             }
-          case 46: break;
+          case 51: break;
           case 16: 
             { contador++;
     Symbol t = new Symbol(sym.error, yyline,yycolumn,  yytext());
     tokens.add(t);
     return t;
             }
-          case 47: break;
+          case 52: break;
           case 17: 
             { contador++;
     Symbol t = new Symbol(sym.COMMA, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 48: break;
+          case 53: break;
           case 18: 
+            { contador ++;
+    Symbol t = new Symbol(sym.COLON,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+            }
+          case 54: break;
+          case 19: 
             { contador++;
     Symbol t = new Symbol(sym.SEMICOLON, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 49: break;
-          case 19: 
+          case 55: break;
+          case 20: 
             { contador++;
     Symbol t = new Symbol(sym.LITERAL_CONSTANT,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 50: break;
-          case 20: 
+          case 56: break;
+          case 21: 
             { contador++;
     Symbol t = new Symbol(sym.EQUALS, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 51: break;
-          case 21: 
+          case 57: break;
+          case 22: 
             { contador++;
     Symbol t = new Symbol(sym.DIFFERENT, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 52: break;
-          case 22: 
+          case 58: break;
+          case 23: 
             { contador++;
     Symbol t = new Symbol(sym.OR, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 53: break;
-          case 23: 
+          case 59: break;
+          case 24: 
             { contador++;
     Symbol t = new Symbol(sym.AND, yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 54: break;
-          case 24: 
+          case 60: break;
+          case 25: 
             { contador ++;
     Symbol t = new Symbol(sym.IF,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 55: break;
-          case 25: 
+          case 61: break;
+          case 26: 
             { contador ++;
     Symbol t = new Symbol(sym.TYPE_NUM,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 56: break;
-          case 26: 
+          case 62: break;
+          case 27: 
             { contador ++;
     Symbol t = new Symbol(sym.MAIN,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 57: break;
-          case 27: 
+          case 63: break;
+          case 28: 
             { contador ++;
     Symbol t = new Symbol(sym.ELSE,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 58: break;
-          case 28: 
+          case 64: break;
+          case 29: 
             { contador ++;
     Symbol t = new Symbol(sym.PUTS,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 59: break;
-          case 29: 
+          case 65: break;
+          case 30: 
             { contador ++;
     Symbol t = new Symbol(sym.PUTW,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 60: break;
-          case 30: 
+          case 66: break;
+          case 31: 
+            { contador ++;
+    Symbol t = new Symbol(sym.CASE,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+            }
+          case 67: break;
+          case 32: 
             { contador ++;
     Symbol t = new Symbol(sym.BREAK,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 61: break;
-          case 31: 
+          case 68: break;
+          case 33: 
             { contador ++;
     Symbol t = new Symbol(sym.WHILE,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
             }
-          case 62: break;
+          case 69: break;
+          case 34: 
+            { contador ++;
+    Symbol t = new Symbol(sym.SWITCH,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+            }
+          case 70: break;
+          case 35: 
+            { contador ++;
+    Symbol t = new Symbol(sym.RETURN,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+            }
+          case 71: break;
+          case 36: 
+            { contador ++;
+    Symbol t = new Symbol(sym.DEFAULT,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+            }
+          case 72: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

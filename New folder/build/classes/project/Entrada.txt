@@ -3,5 +3,6 @@ int y;
 main(){
      x=6; 
      y=1; 
-'@&&
+     int  hola(){return x}
+     puts("dsa");
 }

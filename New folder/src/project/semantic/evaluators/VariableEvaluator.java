@@ -66,6 +66,18 @@ public class VariableEvaluator {
             _UninitializedVar.add(symbol);
         }
     }
+    public void Exist(){
+        SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
+        if(!SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
+           SymbolTable.getInstance().getErrors().add("La variable "+ sr_id.getValue().value +" no existe");
+        }
+        else {
+        //aca va el codigo de ensamblador
+        }
+        
+        
+    
+    }
     public void evalAssign(){
         System.out.println("Entra al evalAssign");
         System.out.println("Entra al evalAssign : "+ SemanticStack.getInstance().getStack().size());

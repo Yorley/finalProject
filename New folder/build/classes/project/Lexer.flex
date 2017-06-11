@@ -77,7 +77,7 @@ ASSIGN= "="                                                                     
 CONSTANT=  \"[^\n\r\"]*\" | \'[^\n\r\']*\'                                      
 
 //Identificadores y palabras reservadas
-KEYWORD = "main" | "else" | "puts" | "int" | "break"                            //Palabras claves utilizadas en elcompilador.
+KEYWORD = "main" | "else" | "puts" | "int" | "break" | "return"                            //Palabras claves utilizadas en elcompilador.
 TYPE_INT = "int"                                                                //Tipo de dato aceptado en el compilador.
 TYPE_FLOW_CONTROL = "while" | "if" | "else" | "then"                            //Otras palabras claves, sin embargo estas son para las estructuras de control.
 //FLOAT = ({DIGITO}+)"."({DIGITO}*)("e"({SIGNO}?)({DIGITO}+))?(L|l|f|F)?
@@ -168,11 +168,36 @@ INVALID_CHAR_ERROR = {INVALID_CHARACTERS}
     tokens.add(t);
     return t;
 }
+"switch" {
+    contador ++;
+    Symbol t = new Symbol(sym.SWITCH,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+}
+"case" {
+    contador ++;
+    Symbol t = new Symbol(sym.CASE,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+}
+
+"return" {
+    contador ++;
+    Symbol t = new Symbol(sym.RETURN,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
+}
 "break" {
     contador ++;
     Symbol t = new Symbol(sym.BREAK,yyline,yycolumn, yytext());
     tokens.add(t);
     return t; 
+}
+"default" {
+    contador ++;
+    Symbol t = new Symbol(sym.DEFAULT,yyline,yycolumn, yytext());
+    tokens.add(t);
+    return t;
 }
 
 "main" {
@@ -272,6 +297,12 @@ INVALID_CHAR_ERROR = {INVALID_CHARACTERS}
 {ASSIGN} {
     contador++;
     Symbol t = new Symbol(sym.ASSIGN, yyline, yycolumn,yytext());
+    tokens.add(t);
+    return t;
+}
+":" {
+    contador ++;
+    Symbol t = new Symbol(sym.COLON,yyline,yycolumn, yytext());
     tokens.add(t);
     return t;
 }

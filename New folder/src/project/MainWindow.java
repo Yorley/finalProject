@@ -456,7 +456,8 @@ public class MainWindow extends javax.swing.JFrame {
         generateParser(parserPath);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow().setVisible(true);
+                //new MainWindow().setVisible(true);
+                new View_C0().setVisible(true);
             }
         });
     }

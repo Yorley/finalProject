@@ -429,11 +429,12 @@ public class View_C0 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(lbl_line, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(lbl_column, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_line, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
+                        .addComponent(lbl_column, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkBox_ReadFile)
@@ -628,13 +629,16 @@ public class View_C0 extends javax.swing.JFrame {
         Color color=JColorChooser.showDialog(jPanel1, "Elige un color", Color.BLACK);
         jPanel1.setBackground(color);
         btnAnalize.setBackground(color);
+        chkBox_ReadFile.setBackground(color);
         if (color==BLACK){
            btnAnalize.setForeground(Color.WHITE);
            jLabel1.setForeground(Color.WHITE);
+           chkBox_ReadFile.setForeground(Color.WHITE);
         }
         else{
             btnAnalize.setForeground(Color.BLACK);
             jLabel1.setForeground(Color.BLACK);
+            chkBox_ReadFile.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_jMenu2MouseClicked
 

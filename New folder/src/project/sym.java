@@ -10,6 +10,7 @@ public class sym {
   /* terminals */
   public static final int MULT = 28;
   public static final int EQUALS = 34;
+  public static final int CASE = 39;
   public static final int LOWER = 33;
   public static final int MINUS = 27;
   public static final int SEMICOLON = 15;
@@ -27,19 +28,23 @@ public class sym {
   public static final int IF = 8;
   public static final int ARITHMETIC = 14;
   public static final int EOF = 0;
+  public static final int RETURN = 36;
   public static final int KEYWORD = 12;
   public static final int error = 1;
   public static final int LITERAL_CHAR = 4;
   public static final int HIGHER = 32;
   public static final int BREAK = 11;
   public static final int TYPE_NUM = 5;
+  public static final int SWITCH = 38;
   public static final int TYPE_CHAR = 6;
   public static final int PUTW = 20;
+  public static final int COLON = 37;
   public static final int PUTS = 21;
   public static final int ELSE = 9;
   public static final int LITERAL_CONSTANT = 3;
   public static final int OPERADOR = 23;
   public static final int WHILE = 10;
+  public static final int DEFAULT = 40;
   public static final int END = 25;
   public static final int LPAR = 17;
   public static final int LITERAL_NUM = 2;
@@ -80,7 +85,12 @@ public class sym {
   "HIGHER",
   "LOWER",
   "EQUALS",
-  "DIFFERENT"
+  "DIFFERENT",
+  "RETURN",
+  "COLON",
+  "SWITCH",
+  "CASE",
+  "DEFAULT"
   };
 }
 
