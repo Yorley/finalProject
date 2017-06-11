@@ -109,7 +109,8 @@ non terminal program,main,decl_set, variables_list, variables_decl_aux , aux_var
             if_struct_six,condition_two,condition_three,condition_aux,expr_one, expr_three, expr_four, while_struct_one,while_struct_two,
             while_struct_three,while_struct_four,while_struct_five,while_struct_six,while_struct_aux,
             init_decl, funct,funct_sec,funct_third,funct_fourth,funct_fifth,funct_sixth,parameters, primitiveType,init_decl_one,
-            funct_seventh, case_stms, switch,  switch_one, switch_two, switch_three,  switch_four,  switch_five
+            funct_seventh, case_stms, switch,  switch_one, switch_two, switch_three,  switch_four,  switch_five,switch_nine,
+            switch_seven,switch_eight , case_structures, switch_six,case, case_one, case_two, case_three, case_content,case_four
             ;
 
 // Seccion de precedencia
@@ -186,7 +187,7 @@ fin ::=  END
 content ::= structures content | structures ;
 
 //Definición  de las estructuras if, putw,puts,while y la declaración de una asignación.
-structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assign | funct ;
+structures ::= if_struct | putw_struct | puts_struct| while_struct | declar_assign | funct | switch;
 
 //Estructura para declarar como debe ser el putw, en ella se llaman una secuencia de etiquetas para ir recuperando errores.
 putw_struct ::= PUTW:p {:
@@ -470,17 +471,35 @@ primitiveType ::= TYPE_NUM:val
                    :}
                   //| TYPE_CHAR
 ;
-switch ::= SWITCH switch_one;
-switch_one ::= LPAR switch_two;
+switch ::= SWITCH switch_one ;
+switch_one ::= LPAR switch_two |error  {: printError("Missing ( token"); :}switch_two;
 switch_two ::= IDENTIFIER:id
                 {:
                     Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
                     SR_ID srId = new SR_ID(symbol);
                     SemanticStack.getInstance().push(srId);
                     VariableEvaluator.getInstance().Exist();
-               :} RPAR switch_three;
-switch_three ::= BEGIN case_stms switch_four;
-switch_four ::= DEFAULT switch_five;
-switch_five ::= BREAK END;
+               :} switch_three
+               |error  {: printError("Missing Variable token"); :}
+;
+switch_three ::= RPAR switch_four | error  {: printError("Missing ) token"); :} switch_four;
+switch_four ::= BEGIN switch_five| error  {: printError("Missing { token"); :} switch_five;
+switch_five ::= case_stms switch_six | error  {: printError("Missing { token"); :} switch_six ;
+switch_six ::= DEFAULT  switch_seven ;
+switch_seven ::= COLON switch_eight| error {: printError("Missing : token"); :}  switch_eight;
+switch_eight ::= BREAK switch_nine | error {: printError("Missing break token"); :} ;
+switch_nine ::= END | error{: printError("Missing } token"); :} ;
 
-case_stms ::= ;
+
+case_stms ::= case case_stms | case ;
+case ::= CASE case_one | error  {: printError("Missing CASE token"); :} case_one ;
+case_one ::= LITERAL_NUM  case_two | error  {: printError("Missing Literal_num token"); :} case_two  ;
+case_two ::= COLON case_three | error  {: printError("Missing : token"); :} case_three;
+
+
+case_three ::= case_content case_four | error {: printError("Missing break token"); :} case_four ;
+case_four ::= BREAK | error {: printError("Missing } token"); :}  ;
+case_content ::= case_structures case_content | case_structures  ;
+
+case_structures ::= putw_struct  | puts_struct| declar_assign ;
+
