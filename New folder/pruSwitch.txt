@@ -1,0 +1,13 @@
+int x;
+int y;
+int c=6;
+main(){
+     x=6; 
+     y=1; 
+     int  hola(){return x}
+     puts("dsa");
+     
+           switch (x){
+           case 9: puts("jhgf") ;break
+           default:  break}
+}

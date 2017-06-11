@@ -1,12 +1,19 @@
 int x;
 int y;
+int c=6;
 main(){
-     x=6; 
-     y=1; 
-     int  hola(){return x}
+      y=1+2;
+
      puts("dsa");
-     
-           switch (i){
-           case 9: puts("jhgf") ;break
-           default:  break}
+     y=2;
+     puts("holi fer");
+     putw(0);
+     putw(y);
+     switch (y){
+           case 9: 
+                 puts("jhgf") ;
+                 break
+           default:  
+                 break
+     }
 }

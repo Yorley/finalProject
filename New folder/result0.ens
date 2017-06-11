@@ -1,0 +1,18 @@
+;Este es mi programa:
+   MOVE 6, /c
+   MOVE #1,.R1
+   ADD .R1,#2
+   MOVE .A , /y
+   WRSTR /mens0
+
+   MOVE 2, /y
+   WRSTR /mens1
+
+   WRINT #0
+   WRINT /y
+mens0:   DATA "dsa"
+mens1:   DATA "holi fer"
+
+c: EQU 6
+x: RES 4
+y: RES 4

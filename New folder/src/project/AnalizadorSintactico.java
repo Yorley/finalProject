@@ -1440,7 +1440,7 @@ class CUP$AnalizadorSintactico$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
  Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID);
+                                      SR_ID register= new SR_ID(symbolID);
                                       SemanticStack.getInstance().push(register);
                                    
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$12",123, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);
@@ -1468,8 +1468,8 @@ class CUP$AnalizadorSintactico$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()).right;
 		Object id = (Object)((java_cup.runtime.Symbol) CUP$AnalizadorSintactico$stack.peek()).value;
- Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID,"int");
+ Symbol symbolDO= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolDO,"int");
                                       SemanticStack.getInstance().push(register);
                                    
               CUP$AnalizadorSintactico$result = parser.getSymbolFactory().newSymbol("NT$13",124, ((java_cup.runtime.Symbol)CUP$AnalizadorSintactico$stack.peek()), RESULT);

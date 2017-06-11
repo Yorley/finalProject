@@ -14,7 +14,7 @@ import project.semantic.registers.SR_If;
 
 /**
  *
- * @author Christian
+ * @author YM
  */
 public class IfEvaluator {
     private static IfEvaluator _Instance = null;

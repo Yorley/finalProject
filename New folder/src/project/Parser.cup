@@ -198,11 +198,11 @@ putw_struct ::= PUTW:p {:
 putw_struct_one ::= LPAR putw_struct_two| error {: printError("Missing } token") ;:} putw_struct_two;
 putw_struct_two ::= arithmetic putw_struct_three 
                     | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID);
+                                      SR_ID register= new SR_ID(symbolID);
                                       SemanticStack.getInstance().push(register);
                                    :}  putw_struct_three 
-                    | LITERAL_NUM :id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID,"int");
+                    | LITERAL_NUM :id {: Symbol symbolDO= new Symbol(0,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolDO,"int");
                                       SemanticStack.getInstance().push(register);
                                    :} 
                       putw_struct_three | error {: printError("Missing } token") ;:} putw_struct_three;

@@ -18,7 +18,7 @@ import project.semantic.registers.SR_Type;
 
 /**
  *
- * @author Christian
+ * @author YM
  */
 public class VariableEvaluator {
     private static VariableEvaluator _Instance = null;
@@ -55,12 +55,13 @@ public class VariableEvaluator {
             SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
             Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),sr_do.getValue().value.toString(),sr_id.getValue().left);
             SymbolTable.getInstance().addSymbol(symbol);
+            Writer.getInstance().getCode().add("   MOVE "+sr_do.getValue().value+", /"+sr_id.getValue().value);
             _InitializedVar.add(symbol);
         }else{
             String result= doOperations(String.valueOf(SemanticStack.getInstance().getLast().getValue().left),_Operations);
             SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
             SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
-            _Operations.add("mov "+sr_id.getValue().value.toString()+" ,"+ result);
+            _Operations.add("   MOVE "+ result+", /"+sr_id.getValue().value.toString());
             Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),"0", sr_id.getValue().left);
             SymbolTable.getInstance().addSymbol(symbol);
             _UninitializedVar.add(symbol);
@@ -116,8 +117,9 @@ public class VariableEvaluator {
                                 System.out.println("este es el valor de el sr_do: "+ sr_do.getValue().value.toString());
                                 ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
                                 System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
+                                VariableEvaluator.getInstance().getOperations().add("   MOVE "+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString()); 
                                 
-                                Writer.getInstance().getCode().add("mov "+sr_id.getValue().value.toString()+", "+sr_do.getValue().value.toString());
+                                //Writer.getInstance().getCode().add("MOVE "+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString());
                             }else{
                                 SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
 
@@ -139,7 +141,9 @@ public class VariableEvaluator {
                             System.out.println("este es el valor de el sr_do: "+ sr_do.getValue().value.toString());
                             ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
                             System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
-                            Writer.getInstance().getCode().add("mov "+sr_id.getValue().value.toString()+" ,"+ result); 
+                            //Writer.getInstance().getCode().add("MOVE "+ result+" , /"+sr_id.getValue().value.toString());
+                            VariableEvaluator.getInstance().getOperations().add("   MOVE "+ result+" , /"+sr_id.getValue().value.toString()); 
+
                         }else{
                             SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
                         }
@@ -196,36 +200,36 @@ public class VariableEvaluator {
         while (!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_ID")){
             try {
                 System.out.print(cont);
-                SR_DO sr_do1 = (SR_DO)SemanticStack.getInstance().pop();
-                System.out.println(sr_do1.getValue().value);
-                SR_Op sr_op = (SR_Op)SemanticStack.getInstance().pop();
-                System.out.println(sr_op.getValue().value);
-
                 SR_DO sr_do2 = (SR_DO)SemanticStack.getInstance().pop();
+                
+                SR_Op sr_op = (SR_Op)SemanticStack.getInstance().pop();
+                
+
+                SR_DO sr_do1 = (SR_DO)SemanticStack.getInstance().pop();
                 System.out.println(sr_do2.getValue().value);
                 cont++;
 
                 switch(sr_op.getValue().value.toString()){
                     case "+":
-                        pList.add("mov ebx, "+sr_do1.getValue().value.toString());
-                        pList.add("add ebx, "+sr_do2.getValue().value.toString());
-                        result = "ebx";
+                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        pList.add("   ADD .R1,#"+sr_do2.getValue().value.toString());
+                        result = ".A";
                         res=res+(Integer.parseInt(sr_do1.getValue().value.toString()) + Integer.parseInt(sr_do2.getValue().value.toString()) );
                         break;
                     case "-":
-                        pList.add("mov ebx, "+sr_do1.getValue().value.toString());
-                        pList.add("sub ebx, "+sr_do2.getValue().value.toString());
-                        result = "ebx";
+                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        pList.add("   SUB .R1,#"+sr_do2.getValue().value.toString());
+                        result = ".A";
                         break;
                     case "*":
-                        pList.add("mov eax, "+sr_do1.getValue().value.toString());
-                        pList.add("mul eax, "+sr_do2.getValue().value.toString());
-                        result = "eax";
+                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        pList.add("   MUL .R1,#"+sr_do2.getValue().value.toString());
+                        result = ".A";
                         break;
                     case "/":
-                        pList.add("mov eax, "+sr_do1.getValue().value.toString());
-                        pList.add("div eax, "+sr_do2.getValue().value.toString());
-                        result = "eax";
+                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        pList.add("   DIV .R1,#"+sr_do2.getValue().value.toString());
+                        result = ".A";
                         break;
                 }
                 sr_do1.getValue().value = String.valueOf(res);
