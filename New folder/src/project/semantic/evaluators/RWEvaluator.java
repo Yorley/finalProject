@@ -14,6 +14,7 @@ import project.semantic.registers.SR_ID;
 import project.semantic.registers.SR_Read;
 import project.semantic.registers.SR_PUTS;
 import project.semantic.registers.SR_PUTW;
+import project.semantic.registers.SemanticRegister;
 
 /**
  *
@@ -42,6 +43,20 @@ public class RWEvaluator {
         return DOs;
     }
     public void evalPuts(){
+        Boolean isSwitch= false;
+        for(SemanticRegister i : SemanticStack.getInstance().getStack()){
+            if (i.getRegisterType().equals("SR_SWITCH")){
+                isSwitch=true;
+                break;
+            }
+        }
+        
+       if(isSwitch){
+            
+        
+        }else{
+        
+        
         if(!(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_PUTS"))){
             if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_DO")){
                 SR_DO str_to_print= (SR_DO) SemanticStack.getInstance().pop();
@@ -59,11 +74,24 @@ public class RWEvaluator {
             SymbolTable.getInstance().getErrors().add("Dentro del puts solo deben venir literal_constant. Linea: "+sr_puts.getValue().left);
 
         }
+       }
         
     
     }
     public void evalPutw(){
-        if(!(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_PUTW"))){
+        Boolean isSwitch= false;
+        for(SemanticRegister i : SemanticStack.getInstance().getStack()){
+            if (i.getRegisterType().equals("SR_SWITCH")){
+                isSwitch=true;
+                break;
+            }
+        }
+        
+       if(isSwitch){
+            
+        
+        }else{
+            if(!(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_PUTW"))){
             if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_DO")){
                 SR_DO str_to_print= (SR_DO) SemanticStack.getInstance().pop();
                 SR_PUTW sr_puts= (SR_PUTW) SemanticStack.getInstance().pop();
@@ -95,9 +123,9 @@ public class RWEvaluator {
             SymbolTable.getInstance().getErrors().add("Dentro del putw solo deben venir literal_num. Linea: "+sr_putw.getValue().left);
 
         }
-        
-    
-    }
+            
+    } 
+}
     public void evalEndWrite(){
         ArrayList<SR_DO> DOs = getDOs();
         for (int iDO = 0; iDO != DOs.size(); iDO++){

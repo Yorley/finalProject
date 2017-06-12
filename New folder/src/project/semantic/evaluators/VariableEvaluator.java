@@ -15,6 +15,7 @@ import project.semantic.registers.SR_DO;
 import project.semantic.registers.SR_ID;
 import project.semantic.registers.SR_Op;
 import project.semantic.registers.SR_Type;
+import project.semantic.registers.SemanticRegister;
 
 /**
  *
@@ -41,32 +42,59 @@ public class VariableEvaluator {
         return _Instance;
     }
     public void evalUn(){
-        SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
-        SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
-        Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),"0", sr_id.getValue().left);
-        SymbolTable.getInstance().addSymbol(symbol);
-        _UninitializedVar.add(symbol);
-    }
-    
-     public void evalIn(){
-        if (SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getStack().size()-2).getRegisterType().equals("SR_ID")){              
-            SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
-            SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
-            SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
-            Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),sr_do.getValue().value.toString(),sr_id.getValue().left);
-            SymbolTable.getInstance().addSymbol(symbol);
-            Writer.getInstance().getCode().add("   MOVE "+sr_do.getValue().value+", /"+sr_id.getValue().value);
-            _InitializedVar.add(symbol);
+        Boolean isSwitch= false;
+        for(SemanticRegister i : SemanticStack.getInstance().getStack()){
+            if (i.getRegisterType().equals("SR_SWITCH")){
+                isSwitch=true;
+                break;
+            }
+        }
+        
+       if(isSwitch){
+            
+        
         }else{
-            String result= doOperations(String.valueOf(SemanticStack.getInstance().getLast().getValue().left),_Operations);
+        
             SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
             SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
-            _Operations.add("   MOVE "+ result+", /"+sr_id.getValue().value.toString());
             Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),"0", sr_id.getValue().left);
             SymbolTable.getInstance().addSymbol(symbol);
             _UninitializedVar.add(symbol);
         }
     }
+    
+     public void evalIn(){
+        Boolean isSwitch= false;
+        for(SemanticRegister i : SemanticStack.getInstance().getStack()){
+            if (i.getRegisterType().equals("SR_SWITCH")){
+                isSwitch=true;
+                break;
+            }
+        }
+        
+       if(isSwitch){
+            
+        
+        }else{
+            if (SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getStack().size()-2).getRegisterType().equals("SR_ID")){              
+                SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
+                SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
+                SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
+                Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),sr_do.getValue().value.toString(),sr_id.getValue().left);
+                SymbolTable.getInstance().addSymbol(symbol);
+                Writer.getInstance().getCode().add("   MOVE "+sr_do.getValue().value+", /"+sr_id.getValue().value);
+                _InitializedVar.add(symbol);
+            }else{
+                String result= doOperations(String.valueOf(SemanticStack.getInstance().getLast().getValue().left),_Operations);
+                SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
+                SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
+                _Operations.add("   MOVE "+ result+", /"+sr_id.getValue().value.toString());
+                Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),"0", sr_id.getValue().left);
+                SymbolTable.getInstance().addSymbol(symbol);
+                _UninitializedVar.add(symbol);
+            }
+        }
+     }
     public void Exist(){
         SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
         if(!SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
@@ -80,10 +108,19 @@ public class VariableEvaluator {
     
     }
     public void evalAssign(){
-        System.out.println("Entra al evalAssign");
-        System.out.println("Entra al evalAssign : "+ SemanticStack.getInstance().getStack().size());
-        System.out.println("Entra al evalAssign 1: "+ SemanticStack.getInstance().getLast().getValue().value);
-        System.out.println("Entra al evalAssign 2: "+ SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getSize()-2).getValue().value);
+        Boolean isSwitch= false;
+        for(SemanticRegister i : SemanticStack.getInstance().getStack()){
+            if (i.getRegisterType().equals("SR_SWITCH")){
+                isSwitch=true;
+                break;
+            }
+        }
+        
+       if(isSwitch){
+            
+        
+        }else{
+        
         
         if(SemanticStack.getInstance().getStack().size()==1){
             SR_ID sr = (SR_ID) SemanticStack.getInstance().pop();
@@ -153,7 +190,7 @@ public class VariableEvaluator {
                     System.out.println("lfvdsdfslkjhgfdsa");
             }
         }
-                
+    }        
               
         
     }

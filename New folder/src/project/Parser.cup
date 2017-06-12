@@ -471,7 +471,13 @@ primitiveType ::= TYPE_NUM:val
                    :}
                   //| TYPE_CHAR
 ;
-switch ::= SWITCH switch_one ;
+switch ::= SWITCH:s
+           {:
+            Symbol symbol = new Symbol(sym.SWITCH,sleft,sright,s);   
+            SR_SWITCH sr_sw= new SR_SWITCH(symbol);
+            SemanticStack.getInstance().push(sr_sw);
+            :}
+     switch_one ;
 switch_one ::= LPAR switch_two |error  {: printError("Missing ( token"); :}switch_two;
 switch_two ::= IDENTIFIER:id
                 {:

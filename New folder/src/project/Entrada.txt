@@ -11,6 +11,7 @@ main(){
      putw(y);
      switch (y){
            case 9: 
+                 x=3;
                  puts("jhgf") ;
                  break
            default:  

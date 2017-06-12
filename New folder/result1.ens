@@ -10,11 +10,8 @@
 
    WRINT #0
    WRINT /y
-   WRSTR /mens2
-
 mens0:   DATA "dsa"
 mens1:   DATA "holi fer"
-mens2:   DATA "jhgf"
 
 c: EQU 6
 x: RES 4
