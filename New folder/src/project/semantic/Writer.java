@@ -21,7 +21,7 @@ public class Writer {
     private String _Filename = "result";
     private String file1=null;
     private ArrayList<String> _Code = new ArrayList<String>();
-    private String instructions=null;    
+    private ArrayList<String> functions=new ArrayList<String>(); 
     private String data=null;    
     private String dataLenght=null;
     
@@ -74,7 +74,14 @@ public class Writer {
             write(operations.get(iOperation),file1);
         }
         
+        for (String f: this.getFunctions() ){
+            System.out.println("esta escribiendo f: "+f);
+            write(f,file1);
+        }
         write(data,file1);
+        Object f=" \"Fin switch\" ";
+        write("defaultmsg: DATA "+ f,file1);
+
         ArrayList<Symbol> init = VariableEvaluator.getInstance().getInitializedVar();
 //        write("SECTION .data");
         
@@ -89,6 +96,7 @@ public class Writer {
             Symbol_Var symbol = (Symbol_Var)uninit.get(iVariable);
             write(symbol.getName()+": RES "+VariableEvaluator.getInstance().getLenght(symbol.getType()),file1);
         }
+
 //        write("\nSECTION .txt");
 //        write("global _start");
 //        write("\n_start:");
@@ -102,7 +110,7 @@ public class Writer {
         VariableEvaluator.getInstance().getInitializedVar().clear();
         VariableEvaluator.getInstance().getUninitializedVar().clear();
         this.data=null;
-        this.instructions=null;
+        this.functions.clear();
         this.dataLenght=null;
         this._Code.clear();
         RWEvaluator.setCont(0);
@@ -114,8 +122,8 @@ public class Writer {
     public void setCode(ArrayList<String> _Code) {
         this._Code = _Code;
     }
-    public String getInstructions() {
-        return instructions;
+    public ArrayList<String> getFunctions() {
+        return functions;
     }
 
     public String getData() {
@@ -131,9 +139,7 @@ public class Writer {
         return file1;
     }
 
-    public void setInstructions(String pInstructions) {
-        this.instructions = instructions+pInstructions;
-    }
+    
 
     public void setData(String pData) {
         if (data==null){

@@ -412,20 +412,25 @@ funct_fifth ::= content funct_sixth
 
 funct_sixth ::= RETURN funct_seventh
                 ;
-funct_seventh ::= LITERAL_NUM END
+funct_seventh ::= LITERAL_NUM:id
+                {: Symbol symbolID= new Symbol(sym.LITERAL_NUM,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int");
+                                      SemanticStack.getInstance().push(register);
+                                      FunctionEvaluator.getInstance().evalReturn();
+                :} END
                 | IDENTIFIER:id
                 {:
                     Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
                     SR_ID srId = new SR_ID(symbol);
                     SemanticStack.getInstance().push(srId);
-                    VariableEvaluator.getInstance().Exist();
+                    FunctionEvaluator.getInstance().evalReturn();
                :} END
 
                 | error END
 ;
 init_decl ::=  TYPE_NUM error
 
-             |TYPE_NUM:val init_decl_one
+             |TYPE_NUM:val
     {: 
         Symbol symbolID = new Symbol(0,valleft,valright,val);
         SR_Type type = new SR_Type(symbolID);
@@ -433,7 +438,7 @@ init_decl ::=  TYPE_NUM error
         SemanticStack.getInstance().push(type); 
         
         
-    :} 
+    :}  init_decl_one
     
     | error  {: printError("Type not specified"); :} init_decl_one
     ;
@@ -442,6 +447,8 @@ init_decl_one ::= IDENTIFIER:id
                     Symbol symbol = new Symbol(sym.IDENTIFIER,idleft,idright,id);
                     SR_ID srId = new SR_ID(symbol);
                     SemanticStack.getInstance().push(srId);
+                    FunctionEvaluator.getInstance().evalDeclaration();
+
                 :}
                 //|error  {: printError("Debe traer nombre la funcion"); :}
 ;
@@ -491,20 +498,46 @@ switch_two ::= IDENTIFIER:id
 switch_three ::= RPAR switch_four | error  {: printError("Missing ) token"); :} switch_four;
 switch_four ::= BEGIN switch_five| error  {: printError("Missing { token"); :} switch_five;
 switch_five ::= case_stms switch_six | error  {: printError("Missing { token"); :} switch_six ;
-switch_six ::= DEFAULT  switch_seven ;
+switch_six ::= DEFAULT:s
+           {:
+            Symbol symbol = new Symbol(sym.DEFAULT,sleft,sright,s);   
+            SR_DEFAULT sr_sw= new SR_DEFAULT(symbol);
+            SemanticStack.getInstance().push(sr_sw);
+            :}  switch_seven ;
 switch_seven ::= COLON switch_eight| error {: printError("Missing : token"); :}  switch_eight;
-switch_eight ::= BREAK switch_nine | error {: printError("Missing break token"); :} ;
-switch_nine ::= END | error{: printError("Missing } token"); :} ;
+switch_eight ::= BREAK:s
+           {:
+            Symbol symbol = new Symbol(sym.DEFAULT,sleft,sright,s);   
+            SR_BREAK_DEFAULT sr_sw= new SR_BREAK_DEFAULT(symbol);
+            SemanticStack.getInstance().push(sr_sw);
+            :}  switch_nine | error {: printError("Missing break token"); :} ;
+switch_nine ::= END {:SwitchEvaluator.getInstance().evalSwitch();:} | error{: printError("Missing } token"); :} ;
 
 
 case_stms ::= case case_stms | case ;
-case ::= CASE case_one | error  {: printError("Missing CASE token"); :} case_one ;
-case_one ::= LITERAL_NUM  case_two | error  {: printError("Missing Literal_num token"); :} case_two  ;
+case ::= CASE:s
+           {:
+            Symbol symbol = new Symbol(sym.CASE,sleft,sright,s);   
+            SR_CASE sr_sw= new SR_CASE(symbol);
+            SemanticStack.getInstance().push(sr_sw);
+            :} 
+            case_one | error  {: printError("Missing CASE token"); :} case_one ;
+case_one ::= LITERAL_NUM :s
+           {:
+            Symbol symbol = new Symbol(0,sleft,sright,s);   
+            SR_OPT sr_sw= new SR_OPT(symbol);
+            SemanticStack.getInstance().push(sr_sw);
+            :}  case_two | error  {: printError("Missing Literal_num token"); :} case_two  ;
 case_two ::= COLON case_three | error  {: printError("Missing : token"); :} case_three;
 
 
 case_three ::= case_content case_four | error {: printError("Missing break token"); :} case_four ;
-case_four ::= BREAK | error {: printError("Missing } token"); :}  ;
+case_four ::= BREAK:s
+           {:
+            Symbol symbol = new Symbol(sym.BREAK,sleft,sright,s);   
+            SR_BREAK_TAG sr_sw= new SR_BREAK_TAG(symbol);
+            SemanticStack.getInstance().push(sr_sw);
+            :}  | error {: printError("Missing } token"); :}  ;
 case_content ::= case_structures case_content | case_structures  ;
 
 case_structures ::= putw_struct  | puts_struct| declar_assign ;

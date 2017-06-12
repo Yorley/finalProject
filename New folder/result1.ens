@@ -1,18 +1,43 @@
 ;Este es mi programa:
-   MOVE 6, /c
-   MOVE #1,.R1
-   ADD .R1,#2
-   MOVE .A , /y
+   MOVE #6, /x
+   MOVE #1, /y
    WRSTR /mens0
 
-   MOVE 2, /y
+   CMP #6, #9
+   BZ $case9
+   CMP #6, #3
+   BZ $case3
+   BZ /Default
+
+case9: 
+   WRSTR /mens2
+   BR /salirSwitch
+
+case3: 
    WRSTR /mens1
+   BR /salirSwitch
 
-   WRINT #0
-   WRINT /y
+Default: 
+   BR /salirSwitch
+salirSwitch: 
+   WRSTR /defaultmsg
+
+func:
+   MOVE /x, .A 
+   RET
+
+func1:
+   MOVE #0, .A 
+   RET
+
+func2:
+   MOVE #9, .A 
+   RET
 mens0:   DATA "dsa"
-mens1:   DATA "holi fer"
+mens1:   DATA "Holis Yor"
+mens2:   DATA "jhgf"
 
+defaultmsg: DATA  "Fin switch" 
 c: EQU 6
 x: RES 4
 y: RES 4

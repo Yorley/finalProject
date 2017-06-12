@@ -82,13 +82,13 @@ public class VariableEvaluator {
                 SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
                 Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),sr_do.getValue().value.toString(),sr_id.getValue().left);
                 SymbolTable.getInstance().addSymbol(symbol);
-                Writer.getInstance().getCode().add("   MOVE "+sr_do.getValue().value+", /"+sr_id.getValue().value);
+                //Writer.getInstance().getCode().add("   MOVE #"+sr_do.getValue().value+", /"+sr_id.getValue().value);
                 _InitializedVar.add(symbol);
             }else{
                 String result= doOperations(String.valueOf(SemanticStack.getInstance().getLast().getValue().left),_Operations);
                 SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
                 SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
-                _Operations.add("   MOVE "+ result+", /"+sr_id.getValue().value.toString());
+                _Operations.add("   MOVE #"+ result+", /"+sr_id.getValue().value.toString());
                 Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),"0", sr_id.getValue().left);
                 SymbolTable.getInstance().addSymbol(symbol);
                 _UninitializedVar.add(symbol);
@@ -101,6 +101,8 @@ public class VariableEvaluator {
            SymbolTable.getInstance().getErrors().add("La variable "+ sr_id.getValue().value +" no existe");
         }
         else {
+            Symbol_Var symb=((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString()));
+            SwitchEvaluator.setOption_to_evaluate(Integer.valueOf(symb.getValue()));
         //aca va el codigo de ensamblador
         }
         
@@ -154,7 +156,7 @@ public class VariableEvaluator {
                                 System.out.println("este es el valor de el sr_do: "+ sr_do.getValue().value.toString());
                                 ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
                                 System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
-                                VariableEvaluator.getInstance().getOperations().add("   MOVE "+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString()); 
+                                VariableEvaluator.getInstance().getOperations().add("   MOVE #"+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString()); 
                                 
                                 //Writer.getInstance().getCode().add("MOVE "+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString());
                             }else{
@@ -179,7 +181,7 @@ public class VariableEvaluator {
                             ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
                             System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
                             //Writer.getInstance().getCode().add("MOVE "+ result+" , /"+sr_id.getValue().value.toString());
-                            VariableEvaluator.getInstance().getOperations().add("   MOVE "+ result+" , /"+sr_id.getValue().value.toString()); 
+                            VariableEvaluator.getInstance().getOperations().add("   MOVE #"+ result+" , /"+sr_id.getValue().value.toString()); 
 
                         }else{
                             SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);

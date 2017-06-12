@@ -36,6 +36,10 @@ import javax.swing.text.Highlighter;
 import project.semantic.SemanticStack;
 import project.semantic.SymbolTable.SymbolTable;
 import project.semantic.Writer;
+import static javafx.scene.paint.Color.color;
+import static javafx.scene.paint.Color.color;
+import static javafx.scene.paint.Color.color;
+import static javafx.scene.paint.Color.color;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

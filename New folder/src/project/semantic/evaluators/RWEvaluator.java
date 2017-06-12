@@ -156,6 +156,10 @@ public class RWEvaluator {
     public static void setCont(int cont) {
         RWEvaluator.cont = cont;
     }
+
+    public static int getCont() {
+        return cont;
+    }
     
 
     
