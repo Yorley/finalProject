@@ -88,7 +88,7 @@ public class WhileEvaluator {
                                 break;
                             }
                             else{
-                                System.out.println("Aqui iria evaluacion de identificadores en switch");
+                                System.out.println("Aqui iria evaluacion de identificadores en while");
                                 break;
                             }
                         }
@@ -110,13 +110,13 @@ public class WhileEvaluator {
                                     break;
                                 }
                                 else{
-                                    System.out.println("Aqui iria evaluacion de identificadores en switch");
+                                    System.out.println("Aqui iria evaluacion de identificadores en while");
                                     break;
                                 }
                             }
                         }
                         else{
-                            SymbolTable.getInstance().getErrors().add("Hay un error en switch: Est[a escribiendo instrucciones no permitidas en el case, verifiquelo.");
+                            SymbolTable.getInstance().getErrors().add("Hay un error en while: Esta escribiendo instrucciones no permitidas en el while, verifiquelo.");
                             break;
                         }
                     }

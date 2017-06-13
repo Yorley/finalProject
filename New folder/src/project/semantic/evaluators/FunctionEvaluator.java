@@ -54,11 +54,11 @@ public class FunctionEvaluator {
                     Writer.getInstance().getFunctions().add(0,function+"   MOVE /"+value+", .A \n   RET");
                 }
                 else{
-                    SymbolTable.getInstance().getErrors().add("La variable de retorno no ha sido declarada, verifique... :)");
+                    SymbolTable.getInstance().getErrors().add("La variable de retorno en la funcion no ha sido declarada, verifique... :)");
                 }
             }
             else{
-                SymbolTable.getInstance().getErrors().add("El valor de retorno no es valido :)");
+                SymbolTable.getInstance().getErrors().add("El valor de retorno en la funcion no es valido :)");
             }
         }
     }

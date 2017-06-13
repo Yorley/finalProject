@@ -147,15 +147,12 @@ public class VariableEvaluator {
                             if (SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
                                 ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
                                 _Operations.add("   MOVE #"+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString()); 
-                                System.out.println("es asignacion simple: "+_Operations+"\n"+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString());
-
 //Writer.getInstance().getCode().add("MOVE "+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString());
                             }else{
                                 SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
                             }
                         }
                     }else{
-                        System.out.println("es asignacion compleja: "+_Operations+"\n");
                         String result= doOperations(String.valueOf(SemanticStack.getInstance().getLast().getValue().left),Writer.getInstance().getCode());
 
                         SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
@@ -167,8 +164,6 @@ public class VariableEvaluator {
                         }else{
                             SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
                         }
-                        System.out.println("compleja result: "+_Operations+"\n");
-
                 }
             }
             catch ( Error e ){

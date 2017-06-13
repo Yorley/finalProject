@@ -24,12 +24,8 @@ public class Writer {
     private ArrayList<String> functions=new ArrayList<String>();
     private ArrayList<String> whiles=new ArrayList<String>();
     private ArrayList<String> ifs=new ArrayList<String>();
-
-    
-
     private String data=null;    
     private String dataLenght=null;
-    
     private Writer() {}
     
     private static void createInstance(){
@@ -43,18 +39,14 @@ public class Writer {
     
     public void write(String pContent) {
         try {
-            
             File file = new File(_Filename+cont+".ens");  
             this.file1=_Filename+cont;
             FileWriter fileWritter = new FileWriter(file.getAbsoluteFile(),false);
             BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
             bufferWritter.write(pContent+"\n");
             bufferWritter.close();
-            
-            
         } catch (IOException e) {
             e.printStackTrace();
-            
         }
     }
     public void write(String pContent, String pFileName) {
@@ -69,7 +61,6 @@ public class Writer {
         }
     }
     public void writeAll(){
-        
         write(";Este es mi programa:");
         for (int iCode = 0; iCode !=_Code.size(); iCode++ ){
             write(_Code.get(iCode),file1);
@@ -78,7 +69,6 @@ public class Writer {
         for (int iOperation = 0; iOperation !=operations.size(); iOperation++ ){
             write(operations.get(iOperation),file1);
         }
-        
         for (String f: this.getFunctions() ){
             write(f,file1);
         }
@@ -86,34 +76,21 @@ public class Writer {
             write(wh,file1);
         }
         for (String ifs: this.getIfs()){
-            System.out.println("escribiendo ifs");
             write(ifs,file1);
         }
-        
         write(data,file1);
         Object f=" \"Fin switch\" ";
         write("defaultmsg: DATA "+ f,file1);
-
         ArrayList<Symbol> init = VariableEvaluator.getInstance().getInitializedVar();
-//        write("SECTION .data");
-        
         for(int iVariable = 0; iVariable != init.size(); iVariable++){
             Symbol_Var symbol = (Symbol_Var)init.get(iVariable);
-            
             write(symbol.getName()+": EQU "+ symbol.getValue(),file1);
         }
         ArrayList<Symbol> uninit = VariableEvaluator.getInstance().getUninitializedVar();
-//        write("\nSEECTION .bss");
         for(int iVariable = 0; iVariable != uninit.size(); iVariable++){
             Symbol_Var symbol = (Symbol_Var)uninit.get(iVariable);
             write(symbol.getName()+": RES "+VariableEvaluator.getInstance().getLenght(symbol.getType()),file1);
         }
-
-//        write("\nSECTION .txt");
-//        write("global _start");
-//        write("\n_start:");
-        
-        
         cont++;
         resetValues();
     }

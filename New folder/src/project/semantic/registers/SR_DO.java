@@ -11,7 +11,7 @@ import project.sym;
 
 /**
  *
- * @author Christian
+ * @author YM
  */
 public class SR_DO extends SemanticRegister{
 

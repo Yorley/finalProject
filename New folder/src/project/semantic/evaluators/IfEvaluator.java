@@ -39,8 +39,6 @@ public class IfEvaluator {
         while (!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_If")){
             SR_DO sr_do = (SR_DO)SemanticStack.getInstance().pop();
             String do_name = sr_do.getValue().value.toString();
-            System.out.println("DO NAME: "+do_name);
-
             if(do_name.equals("true"))
                 do_name = "0";
             else{
@@ -52,11 +50,9 @@ public class IfEvaluator {
         return DOs;
     }
     public void evalTest(){
-        System.out.print("entre al evaliftest"+SemanticStack.getInstance().getStack());
         SR_If sr_if = null;
         while (!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_If")){
             if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_ID")){
-        //if(SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getStack().size()-2).getRegisterType().equals("SR_While")){
                 SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
                 sr_if = (SR_If)SemanticStack.getInstance().getLast();            
                 String do_name = sr_do.getValue().value.toString();
@@ -70,10 +66,6 @@ public class IfEvaluator {
             else{
                 String j;
                 j = doOperations("",new ArrayList<String>(),sr_if);
-                //Writer.getInstance().getCode().add("cmp "+sr_do1.getValue().value.toString()+", "+sr_do2.getValue().value.toString());
-                System.out.println("\n if struct"+ifStruct);
-                //String cond = getCond(sr_Op);
-                //Writer.getInstance().getCode().add("je "+sr_while.getExitLabel());
             }
         }
     }
@@ -133,15 +125,10 @@ public class IfEvaluator {
         }
         return result;
     }
-
-        
-
         public void evalTestIf(){
         ArrayList<SR_DO> DOs = getDOs();
         if(DOs.size() == 1){
             String do_name = DOs.get(0).getValue().value.toString();
-            System.out.println("DO NAME: "+do_name);
-
             if(do_name.equals("0") || do_name.equals("1")){
                 Writer.getInstance().getCode().add("cmp "+DOs.get(0).getValue().value.toString()+" ,0");
             }else{
@@ -152,9 +139,6 @@ public class IfEvaluator {
         Writer.getInstance().getCode().add("je "+sr_if.getElseLabel());
     }
     public void evalEnd(){
-        System.out.println("esto hay en la pila en el tope:"+SemanticStack.getInstance().getLast().getRegisterType()+
-                "\n "+!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_IF"));
-      
         while(!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_IF")){
                 if (SemanticStack.getInstance().getLast().getRegisterType().equals("SR_DO")){
                         SR_DO sr=(SR_DO) SemanticStack.getInstance().pop();
@@ -168,7 +152,6 @@ public class IfEvaluator {
                         else{
                             if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_PUTW")){
                                 ifStruct.add(1,"WRINT #"+sr.getValue().value.toString()+"\n");
-                                System.out.println("entra en if srPutw"+ifStruct);
                                 SemanticStack.getInstance().pop();
                                 break;
                             }
@@ -210,11 +193,6 @@ public class IfEvaluator {
                 for(String ifStructitem:ifStruct){
                     Writer.getInstance().getIfs().add("   "+ifStructitem);
                 }
-            //SR_While sr_while = (SR_While)SemanticStack.getInstance().getLast();
-            //Writer.getInstance().getCode().add("jump "+sr_while.getWhileLabel());
-            //Writer.getInstance().getCode().add("\n"+sr_while.getExitLabel()+":");
-        
-       
     }
     public void evalEndIf(){
         SR_If sr_if = (SR_If)SemanticStack.getInstance().getLast();
@@ -228,9 +206,7 @@ public class IfEvaluator {
     }
     public void evalStart(){
         SR_If sr_while = (SR_If)SemanticStack.getInstance().getLast();
-        //Writer.getInstance().getCode().add("\n"+sr_while.getWhileLabel()+":");
         ifStruct.add("\n"+sr_while.getIfLabel()+":");
-        
     }
     public void evalStartElse(){
         SR_If sr_if = (SR_If)SemanticStack.getInstance().getLast();

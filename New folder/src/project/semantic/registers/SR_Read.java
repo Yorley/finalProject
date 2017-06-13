@@ -9,7 +9,7 @@ import java_cup.runtime.Symbol;
 
 /**
  *
- * @author Christian
+ * @author YM
  */
 public class SR_Read extends SemanticRegister{
     public SR_Read(Symbol pValue) {
