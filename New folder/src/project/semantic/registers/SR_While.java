@@ -9,7 +9,7 @@ import java_cup.runtime.Symbol;
 
 /**
  *
- * @author Christian
+ * @author YM
  */
 public class SR_While extends SemanticRegister{
     private static int _Count = 1;

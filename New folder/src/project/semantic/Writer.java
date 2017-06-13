@@ -21,7 +21,12 @@ public class Writer {
     private String _Filename = "result";
     private String file1=null;
     private ArrayList<String> _Code = new ArrayList<String>();
-    private ArrayList<String> functions=new ArrayList<String>(); 
+    private ArrayList<String> functions=new ArrayList<String>();
+    private ArrayList<String> whiles=new ArrayList<String>();
+    private ArrayList<String> ifs=new ArrayList<String>();
+
+    
+
     private String data=null;    
     private String dataLenght=null;
     
@@ -75,9 +80,16 @@ public class Writer {
         }
         
         for (String f: this.getFunctions() ){
-            System.out.println("esta escribiendo f: "+f);
             write(f,file1);
         }
+        for (String wh: this.getWhiles() ){
+            write(wh,file1);
+        }
+        for (String ifs: this.getIfs()){
+            System.out.println("escribiendo ifs");
+            write(ifs,file1);
+        }
+        
         write(data,file1);
         Object f=" \"Fin switch\" ";
         write("defaultmsg: DATA "+ f,file1);
@@ -113,6 +125,8 @@ public class Writer {
         this.functions.clear();
         this.dataLenght=null;
         this._Code.clear();
+        this.ifs.clear();
+        this.whiles.clear();
         RWEvaluator.setCont(0);
     }
     public ArrayList<String> getCode() {
@@ -139,6 +153,10 @@ public class Writer {
         return file1;
     }
 
+    public ArrayList<String> getWhiles() {
+        return whiles;
+    }
+
     
 
     public void setData(String pData) {
@@ -153,6 +171,10 @@ public class Writer {
 
     public void setDataLenght(String pDataLenght) {
         this.dataLenght = dataLenght+pDataLenght;
+    }
+
+    public ArrayList<String> getIfs() {
+        return ifs;
     }
     
 }

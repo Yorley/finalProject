@@ -274,16 +274,17 @@ if_struct ::= IF:iff
               {: Symbol symbol = new Symbol(0,iffleft,iffright,iff);
                  SR_If register = new SR_If(symbol);
                  SemanticStack.getInstance().push(register);
+                 IfEvaluator.getInstance().evalStart();
               :} 
               if_struct_one | error {: printError("Missing if token") ;:} if_struct_one;
 if_struct_one ::= LPAR if_struct_two ;
-if_struct_two ::= condition:c
+if_struct_two ::= condition:c {: IfEvaluator.getInstance().evalTest(); :}
                    
                  if_struct_three ; //| error {: printError("Missing ( token") ;:} if_struct_three;
 if_struct_three ::= RPAR if_struct_four;
 if_struct_four ::= BEGIN if_struct_five | error {: printError("Missing { token") ;:} if_struct_five; 
 if_struct_five ::= content if_struct_six | error {: printError("Missing ( token") ;:} if_struct_six;
-if_struct_six ::= END | END else_struct;
+if_struct_six ::= END{: IfEvaluator.getInstance().evalEnd();:} | END else_struct;
 
 
 
@@ -298,11 +299,12 @@ else_struct_three ::= END;
 //En las estructuras if,while debe haber una condición; en esta etiquita declara la sintaxis de las condiciones.Llama diferentes etiquetas para determinar los simbolos que deben ir en esta estructura y realiza recuperación dee errores.
 condition ::= condition_aux | exp ;
 condition_aux ::= condition_one | error {: printError("Missing if token") ;:};
-condition_one ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID,"int");
+condition_one ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(sym.LITERAL_NUM,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int","condicion");
+                                      register.setValue(id.toString());
                                       SemanticStack.getInstance().push(register);
                                    :} condition_two  
-                  | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                  | IDENTIFIER:id {: Symbol symbolID= new Symbol(sym.IDENTIFIER,idleft,idright,id);
                                       SR_DO register= new SR_DO(symbolID);
                                       SemanticStack.getInstance().push(register);
                                    :} condition_two  
@@ -310,11 +312,12 @@ condition_one ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright
 condition_two ::= comparison
 
                  condition_three ;//;| error {: printError("Missing ) token"); :} condition_three ;
-condition_three ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
-                                      SR_DO register= new SR_DO(symbolID,"int");
+condition_three ::= LITERAL_NUM:id {: Symbol symbolID= new Symbol(sym.LITERAL_NUM,idleft,idright,id);
+                                      SR_DO register= new SR_DO(symbolID,"int","condicion");
+                                      register.setValue(id.toString());
                                       SemanticStack.getInstance().push(register);
                                    :}
-                    | IDENTIFIER:id {: Symbol symbolID= new Symbol(0,idleft,idright,id);
+                    | IDENTIFIER:id {: Symbol symbolID= new Symbol(sym.IDENTIFIER,idleft,idright,id);
                                       SR_DO register= new SR_DO(symbolID);
                                       SemanticStack.getInstance().push(register);
                                    :} 
@@ -328,27 +331,30 @@ expr ::= condition_aux expr_one ;
 expr_one ::= RPAR expr_two | RPAR;
 expr_two ::= logic_comparison expr_three;
 expr_three ::= exp  ;
-comparison ::= LOWER:ar 
-               {:
-                    Symbol symbol= new Symbol(0,arleft,arright,ar);
-                    SR_Op register= new SR_Op(symbol);
-                    SemanticStack.getInstance().push(register);
-               :} 
-                | HIGHER:ar {:
-                    Symbol symbol= new Symbol(0,arleft,arright,ar);
-                    SR_Op register= new SR_Op(symbol);
-                    SemanticStack.getInstance().push(register);
-               :}
-                | EQUALS:ar {:
-                    Symbol symbol= new Symbol(0,arleft,arright,ar);
-                    SR_Op register= new SR_Op(symbol);
-                    SemanticStack.getInstance().push(register);
-               :}
-                | DIFFERENT:ar {:
-                    Symbol symbol= new Symbol(0,arleft,arright,ar);
-                    SR_Op register= new SR_Op(symbol);
-                    SemanticStack.getInstance().push(register);
-               :} ;
+comparison ::= LOWER:ar
+                    {:Symbol symbol= new Symbol(sym.LOWER,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      register.setType(ar.toString());
+                      SemanticStack.getInstance().push(register);
+                    :} 
+                | HIGHER:ar
+                    {:Symbol symbol= new Symbol(sym.LOWER,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      register.setType(ar.toString());
+                      SemanticStack.getInstance().push(register);
+                    :}
+                | EQUALS:ar
+                    {:Symbol symbol= new Symbol(sym.LOWER,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      register.setType(ar.toString());
+                      SemanticStack.getInstance().push(register);
+                    :}
+                | DIFFERENT:ar
+                    {:Symbol symbol= new Symbol(sym.LOWER,arleft,arright,ar);
+                      SR_Op register= new SR_Op (symbol);
+                      register.setType(ar.toString());
+                      SemanticStack.getInstance().push(register);
+                    :} ;
 logic_comparison ::= AND:ar{:
                     Symbol symbol= new Symbol(0,arleft,arright,ar);
                     SR_Op register= new SR_Op(symbol);
@@ -381,14 +387,19 @@ declar_assign_three ::= SEMICOLON {:VariableEvaluator.getInstance().evalAssign()
 
 
 //La estructura while dice la sintaxis en el programa, para ello se llaman diferentes etiquetas que permite la recuperación de errores.
-while_struct ::= WHILE while_struct_one ;
+while_struct ::= WHILE:wh {:
+                        Symbol symbolID= new Symbol(sym.WHILE,whleft,whright,wh);
+                        SR_While register= new SR_While(symbolID);
+                        SemanticStack.getInstance().push(register); 
+                        WhileEvaluator.getInstance().evalStart(); 
+                :} while_struct_one ;
 while_struct_one ::= LPAR while_struct_two | error {: printError("Missing ) token"); :} while_struct_two ;
-while_struct_two ::= condition while_struct_three;
+while_struct_two ::= condition{: WhileEvaluator.getInstance().evalTest();:} while_struct_three;
 while_struct_three ::= RPAR while_struct_four | error {: printError("Missing ) token"); :} while_struct_four;
 while_struct_four ::= BEGIN while_struct_five | error {: printError("Missing { token"); :} while_struct_five;
 while_struct_five ::= while_struct_aux while_struct_six;
 while_struct_aux ::= content | content BREAK SEMICOLON | BREAK SEMICOLON | BREAK SEMICOLON content;
-while_struct_six ::= END ;
+while_struct_six ::= END{: WhileEvaluator.getInstance().evalEnd();:} ;
 
 
 funct ::= init_decl funct_sec

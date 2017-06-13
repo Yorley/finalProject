@@ -14,6 +14,5 @@ import java_cup.runtime.Symbol;
 public class SR_PUTS extends SemanticRegister{
     public SR_PUTS(Symbol pValue) {
         super(pValue,"SR_PUTS");
-        System.out.println("se creo el puts");
     }
 }

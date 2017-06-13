@@ -22,7 +22,6 @@ public class SymbolTable {
     }
     
     public void addSymbol(Symbol symbol){
-        System.out.println(symbol.getName()+symbol.getSymbolType()+symbol.getLine());
         if(!existSymbol(symbol))
             _Symbols.add(symbol);
         else{

@@ -45,7 +45,7 @@ public class RWEvaluator {
     public void evalPuts(){
         Boolean isSwitch= false;
         for(SemanticRegister i : SemanticStack.getInstance().getStack()){
-            if (i.getRegisterType().equals("SR_SWITCH")){
+            if (i.getRegisterType().equals("SR_SWITCH") || i.getRegisterType().equals("SR_While")|| i.getRegisterType().equals("SR_If")|| i.getRegisterType().equals("SR_Func") ){
                 isSwitch=true;
                 break;
             }
@@ -81,7 +81,7 @@ public class RWEvaluator {
     public void evalPutw(){
         Boolean isSwitch= false;
         for(SemanticRegister i : SemanticStack.getInstance().getStack()){
-            if (i.getRegisterType().equals("SR_SWITCH")){
+            if (i.getRegisterType().equals("SR_SWITCH") || i.getRegisterType().equals("SR_While")|| i.getRegisterType().equals("SR_If")|| i.getRegisterType().equals("SR_Func") ){
                 isSwitch=true;
                 break;
             }
@@ -100,7 +100,6 @@ public class RWEvaluator {
                 
             }else{
                 if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_ID")){
-                    System.out.println("voy a escribir wrint");
                     SR_ID int_to_print= (SR_ID) SemanticStack.getInstance().pop();
 
                     if(SymbolTable.getInstance().existSymbol(int_to_print.getValue().value.toString(), "Var")){

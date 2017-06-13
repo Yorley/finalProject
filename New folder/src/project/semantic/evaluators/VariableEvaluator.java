@@ -82,6 +82,8 @@ public class VariableEvaluator {
                 SR_Type sr_type = (SR_Type) SemanticStack.getInstance().pop();
                 Symbol symbol = new Symbol_Var(sr_id.getValue().value.toString(),sr_type.getValue().value.toString(),sr_do.getValue().value.toString(),sr_id.getValue().left);
                 SymbolTable.getInstance().addSymbol(symbol);
+                //_Operations.add("   MOVE #"+sr_do.getValue().value+", /"+sr_id.getValue().value);
+
                 //Writer.getInstance().getCode().add("   MOVE #"+sr_do.getValue().value+", /"+sr_id.getValue().value);
                 _InitializedVar.add(symbol);
             }else{
@@ -117,22 +119,15 @@ public class VariableEvaluator {
                 break;
             }
         }
-        
        if(isSwitch){
-            
         
         }else{
-        
-        
         if(SemanticStack.getInstance().getStack().size()==1){
             SR_ID sr = (SR_ID) SemanticStack.getInstance().pop();
             SymbolTable.getInstance().getErrors().add("La variable "+sr.getValue().value.toString()+" no cumple con el tipo de dato en el que fue declarado. Linea: "+ sr.getValue().left);
-            System.out.println(SymbolTable.getInstance().getErrors().size());
         }else{
             try{
                     if (SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getStack().size()-2).getRegisterType().equals("SR_ID")){
-                        System.out.println("Entra al if");
-                        System.out.println("Entra al evalAssign 2: "+ SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getSize()-2).getValue().value);
                         if ((SemanticStack.getInstance().getLast().getRegisterType()).equals("SR_ID")){
                             SR_ID sr_id = (SR_ID) SemanticStack.getInstance().pop();
                             SR_ID sr_id1 = (SR_ID)SemanticStack.getInstance().pop();
@@ -142,54 +137,41 @@ public class VariableEvaluator {
                                     
                                 }else{
                                       SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido declarada. Linea: "+ sr_id.getValue().left);
-
                                 }
-                                
                             }else{
                                 SymbolTable.getInstance().getErrors().add("La variable "+sr_id1.getValue().value.toString()+" no ha sido declarada. Linea: "+ sr_id.getValue().left);
-
                             }
                         }else{
                             SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
                             SR_ID sr_id = (SR_ID)SemanticStack.getInstance().pop();
                             if (SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
-                                System.out.println("este es el valor de el sr_do: "+ sr_do.getValue().value.toString());
                                 ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
-                                System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
-                                VariableEvaluator.getInstance().getOperations().add("   MOVE #"+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString()); 
-                                
-                                //Writer.getInstance().getCode().add("MOVE "+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString());
+                                _Operations.add("   MOVE #"+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString()); 
+                                System.out.println("es asignacion simple: "+_Operations+"\n"+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString());
+
+//Writer.getInstance().getCode().add("MOVE "+sr_do.getValue().value.toString()+", /"+sr_id.getValue().value.toString());
                             }else{
                                 SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
-
                             }
                         }
-                        
-                        
-
                     }else{
-                            System.out.println("Entra else");
-                            System.out.println(String.valueOf(SemanticStack.getInstance().getLast().getValue().left));
-
+                        System.out.println("es asignacion compleja: "+_Operations+"\n");
                         String result= doOperations(String.valueOf(SemanticStack.getInstance().getLast().getValue().left),Writer.getInstance().getCode());
-                        System.out.println(SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getSize()-1).getValue().value);
-                        System.out.println(SemanticStack.getInstance().getStack().get(SemanticStack.getInstance().getSize()-2).getValue().value);
+
                         SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
                         SR_ID sr_id = (SR_ID) SemanticStack.getInstance().pop();
                         if (SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
-                            System.out.println("este es el valor de el sr_do: "+ sr_do.getValue().value.toString());
                             ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
-                            System.out.println("perro: "+((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).getValue());
                             //Writer.getInstance().getCode().add("MOVE "+ result+" , /"+sr_id.getValue().value.toString());
-                            VariableEvaluator.getInstance().getOperations().add("   MOVE #"+ result+" , /"+sr_id.getValue().value.toString()); 
-
+                            _Operations.add("   MOVE "+ result+" , /"+sr_id.getValue().value.toString()); 
                         }else{
                             SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
                         }
+                        System.out.println("compleja result: "+_Operations+"\n");
+
                 }
             }
             catch ( Error e ){
-                    System.out.println("lfvdsdfslkjhgfdsa");
             }
         }
     }        
@@ -200,7 +182,6 @@ public class VariableEvaluator {
         int len;
         switch (pType){
                 case "int":
-                    System.out.println("si entrarrrrrrrr");
                     len = INT;
                     break;
                 case "char":
@@ -238,51 +219,51 @@ public class VariableEvaluator {
         int cont=0;
         while (!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_ID")){
             try {
-                System.out.print(cont);
                 SR_DO sr_do2 = (SR_DO)SemanticStack.getInstance().pop();
-                
                 SR_Op sr_op = (SR_Op)SemanticStack.getInstance().pop();
-                
-
                 SR_DO sr_do1 = (SR_DO)SemanticStack.getInstance().pop();
-                System.out.println(sr_do2.getValue().value);
                 cont++;
-
                 switch(sr_op.getValue().value.toString()){
                     case "+":
-                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
-                        pList.add("   ADD .R1,#"+sr_do2.getValue().value.toString());
+                        _Operations.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        _Operations.add("   ADD .R1,#"+sr_do2.getValue().value.toString());
                         result = ".A";
                         res=res+(Integer.parseInt(sr_do1.getValue().value.toString()) + Integer.parseInt(sr_do2.getValue().value.toString()) );
                         break;
                     case "-":
-                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
-                        pList.add("   SUB .R1,#"+sr_do2.getValue().value.toString());
+                        _Operations.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        _Operations.add("   SUB .R1,#"+sr_do2.getValue().value.toString());
                         result = ".A";
                         break;
                     case "*":
-                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
-                        pList.add("   MUL .R1,#"+sr_do2.getValue().value.toString());
+                        _Operations.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        _Operations.add("   MUL .R1,#"+sr_do2.getValue().value.toString());
                         result = ".A";
                         break;
                     case "/":
-                        pList.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
-                        pList.add("   DIV .R1,#"+sr_do2.getValue().value.toString());
+                        _Operations.add("   MOVE #"+sr_do1.getValue().value.toString()+",.R1");
+                        _Operations.add("   DIV .R1,#"+sr_do2.getValue().value.toString());
                         result = ".A";
                         break;
                 }
                 sr_do1.getValue().value = String.valueOf(res);
                 if (SemanticStack.getInstance().getLast().getRegisterType().equals("SR_ID")){
-                    System.out.println("entra al ultimo if ... push");
-                    System.out.println("Estoaaaaa: "+SemanticStack.getInstance().getLast().getRegisterType());
                     SemanticStack.getInstance().push(sr_do1);
                     break;
                 }
             }catch(Error e){
-                System.out.println("Estossdaaaaa: "+SemanticStack.getInstance().getLast().getRegisterType());
                 SymbolTable.getInstance().getErrors().add("Error en la expresion, linea "+pLine);
             }
         }
+//        SR_DO sr_do = (SR_DO) SemanticStack.getInstance().pop();
+//                        SR_ID sr_id = (SR_ID) SemanticStack.getInstance().pop();
+//                        if (SymbolTable.getInstance().existSymbol(sr_id.getValue().value.toString(), "Var")){
+//                            ((Symbol_Var) SymbolTable.getInstance().getSymbol(sr_id.getValue().value.toString())).setValue(sr_do.getValue().value.toString());
+//                            //Writer.getInstance().getCode().add("MOVE "+ result+" , /"+sr_id.getValue().value.toString());
+//                            _Operations.add("   MOVE #"+ result+" , /"+sr_id.getValue().value.toString()); 
+//                        }else{
+//                            SymbolTable.getInstance().getErrors().add("La variable "+sr_id.getValue().value.toString()+" no ha sido inicializada. Linea: "+ sr_id.getValue().left);
+//                        }
         return result;
     }
 }

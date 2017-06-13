@@ -9,6 +9,7 @@ public class SemanticRegister {
     
     public SemanticRegister(Symbol pValue, String pRegisterType) {
         _Value = pValue;
+        
         _RegisterType = pRegisterType;
     }
 

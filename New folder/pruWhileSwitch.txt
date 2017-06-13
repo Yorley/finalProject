@@ -1,0 +1,24 @@
+int x;
+int y;
+int c=6;
+main(){
+    
+     x=6; 
+     y=1+2; 
+     putw(0);
+   
+     
+     int  func(){return x}
+     int  func1(){return 0 }
+     int  func2(){return 9 }
+     while(5<9){
+          puts("polar");
+     }
+     puts("dsa");
+     
+           switch (x){
+           case 9: puts("jhgf") ;break
+           case 3: puts("Holis Yor") ;break
+           default:  break}
+           
+}

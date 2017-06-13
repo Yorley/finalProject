@@ -1,8 +1,17 @@
 ;Este es mi programa:
    MOVE #6, /x
-   MOVE #1, /y
-   WRSTR /mens0
+   MOVE #1,.R1
+   ADD .R1,#2
+   MOVE .A , /y
+   WRINT #0
 
+   CMP #9, #1
+   BN   $Iflabel1
+exitIf1:
+
+   CMP #10, #11
+   BN   $while_Label1
+exitWhile1:
    CMP #6, #9
    BZ $case9
    CMP #6, #3
@@ -21,15 +30,21 @@ Default:
    BR /salirSwitch
 salirSwitch: 
    WRSTR /defaultmsg
+   
+while_Label1:
+   WRSTR /mens0
 
-func:
-   MOVE /x, .A 
-   RET
+   CMP #10, #11
+   BN   $while_Label1
+   BR   $exitWhile1
+   
+Iflabel1:
+   WRINT #8787
 
-func1:
-   MOVE #0, .A 
-   RET
-mens0:   DATA "dsa"
+   CMP #9, #1
+   BN   $Iflabel1
+   BR   $exitIf1
+mens0:   DATA "estoy en el while"
 mens1:   DATA "Holis Yor"
 mens2:   DATA "jhgf"
 

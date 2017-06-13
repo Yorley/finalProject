@@ -15,10 +15,13 @@ public class SR_If extends SemanticRegister{
     private static int _Count = 1;
     private String elseLabel = "";
     private String exitLabel = "";
+    private String IfLabel="";
     public SR_If(Symbol pValue) {
         super(pValue,"SR_If");
         elseLabel = "else_label"+_Count;
         exitLabel = "exitIf"+_Count;
+        IfLabel = "Iflabel"+_Count;
+
         _Count++;
     }
 
@@ -28,4 +31,9 @@ public class SR_If extends SemanticRegister{
     public String getExitLabel() {
         return exitLabel;
     }
+
+    public String getIfLabel() {
+        return IfLabel;
+    }
+    
 }

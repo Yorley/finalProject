@@ -12,17 +12,17 @@ import java_cup.runtime.Symbol;
  * @author YM
  */
 public class SR_Op extends SemanticRegister{
-    private int _Type;
+    private String _Type;
     
     public SR_Op(Symbol pValue) {
         super(pValue,"SR_Op");
     }
 
-    public int getType() {
+    public String getType() {
         return _Type;
     }
 
-    public void setType(int _Type) {
+    public void setType(String _Type) {
         this._Type = _Type;
     }
 }

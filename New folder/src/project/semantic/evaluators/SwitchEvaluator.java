@@ -41,7 +41,6 @@ public class SwitchEvaluator {
     
     public void evalSwitch(){
         while (!SemanticStack.getInstance().getLast().getRegisterType().equals("SR_SWITCH")){
-            System.out.println(SemanticStack.getInstance().getStack());
             if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_BREAK_DEFAULT")){
                 SR_BREAK_DEFAULT breakDefault= (SR_BREAK_DEFAULT) SemanticStack.getInstance().pop();
                 SR_DEFAULT defaults=(SR_DEFAULT) SemanticStack.getInstance().pop();
@@ -59,13 +58,8 @@ public class SwitchEvaluator {
                     SemanticStack.getInstance().pop();
                     tempCase.add("   BR /salirSwitch");
                 }else{
-                
-                
-                
                     if (SemanticStack.getInstance().getLast().getRegisterType().equals("SR_DO")){
                         SR_DO sr=(SR_DO) SemanticStack.getInstance().pop();
-                        System.out.println(SemanticStack.getInstance().getLast().getRegisterType());
-
                         if(SemanticStack.getInstance().getLast().getRegisterType().equals("SR_PUTS")){
                             Writer.getInstance().setData("mens"+RWEvaluator.getInstance().getCont()+":   DATA "+sr.getValue().value+"\n");
                             tempCase.add(0,"WRSTR /mens"+RWEvaluator.getInstance().getCont()+"\n");

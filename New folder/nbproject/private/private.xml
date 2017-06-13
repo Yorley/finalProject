@@ -3,11 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/registers/SR_Func.java</file>
-            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/Writer.java</file>
-            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/View_C0.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/SymbolTable/Symbol.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/WhileEvaluator.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/registers/SR_While.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/sym.java</file>
             <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/VariableEvaluator.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/SymbolTable/Symbol_Func.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/IfEvaluator.java</file>
             <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/Parser.cup</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/FunctionEvaluator.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/Writer.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/SwitchEvaluator.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/SemanticStack.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/SymbolTable/SymbolTable.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/registers/SemanticRegister.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/registers/SR_Op.java</file>
+            <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/AnalizadorSintactico.java</file>
             <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/registers/SR_DO.java</file>
             <file>file:/C:/Users/ym/Documents/GitHub/finalProject/New%20folder/src/project/semantic/evaluators/RWEvaluator.java</file>
         </group>

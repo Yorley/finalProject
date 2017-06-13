@@ -6,30 +6,12 @@
    WRINT #0
 
    CMP #9, #1
-   BN   $Iflabel2
-exitIf2:
+   BN   $Iflabel3
+exitIf3:
 
    CMP #10, #11
-   BN   $while_Label2
-exitWhile2:
-   CMP #6, #9
-   BZ $case9
-   CMP #6, #3
-   BZ $case3
-   BZ /Default
-
-case9: 
-   WRSTR /mens1
-   BR /salirSwitch
-
-case3: 
-   WRSTR /mens0
-   BR /salirSwitch
-
-Default: 
-   BR /salirSwitch
-salirSwitch: 
-   WRSTR /defaultmsg
+   BN   $while_Label3
+exitWhile3:
    
 Iflabel1:
    WRINT #8787
@@ -51,9 +33,28 @@ Iflabel2:
    CMP #9, #1
    BN   $Iflabel2
    BR   $exitIf2
-mens0:   DATA "Holis Yor"
-mens1:   DATA "jhgf"
+   
+Iflabel1:
+   WRINT #8787
 
+   WRINT #8787
+
+   WRINT #8787
+
+   CMP #9, #1
+   BN   $Iflabel1
+   BR   $exitIf1
+   
+Iflabel2:
+   CMP #9, #1
+   BN   $Iflabel2
+   BR   $exitIf2
+   
+Iflabel3:
+   CMP #9, #1
+   BN   $Iflabel3
+   BR   $exitIf3
+null
 defaultmsg: DATA  "Fin switch" 
 c: EQU 6
 x: RES 4

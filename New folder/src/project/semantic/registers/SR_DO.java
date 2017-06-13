@@ -7,6 +7,7 @@ package project.semantic.registers;
 
 import java_cup.runtime.Symbol;
 import project.semantic.SymbolTable.SymbolTable;
+import project.sym;
 
 /**
  *
@@ -15,17 +16,14 @@ import project.semantic.SymbolTable.SymbolTable;
 public class SR_DO extends SemanticRegister{
 
     private String _Type = "";
-    
+    private String _Value="";
     public SR_DO(Symbol pValue) {
         super(pValue,"SR_DO");
-        
         project.semantic.SymbolTable.Symbol symbol = SymbolTable.getInstance().getSymbol(pValue.value.toString());
         if (symbol != null){
             this._Type = symbol.getSymbolType();
         }else{
-            System.out.println("es null");
             SymbolTable.getInstance().getErrors().add("No se encuentra el identificador: "+pValue.value.toString()+" ,linea "+pValue.left);
-                    System.out.println(SymbolTable.getInstance().getErrors().toString());
 
         }
         
@@ -33,6 +31,13 @@ public class SR_DO extends SemanticRegister{
     public SR_DO(Symbol pValue, String pType) {
         super(pValue,"SR_DO");
         _Type = pType;
+        
+    }
+    public SR_DO(Symbol pValue, String pType, String operation) {
+        super(pValue,"SR_DO");
+        _Type = pType;
+        _Value= pValue.value.toString();
+        
     }
 
     public String getType() {
@@ -42,5 +47,14 @@ public class SR_DO extends SemanticRegister{
     public void setType(String _Type) {
         this._Type = _Type;
     }
+
+    public String getLiteralValue() {
+        return _Value;
+    }
+
+    public void setValue(String _Value) {
+        this._Value = _Value;
+    }
+    
     
 }
