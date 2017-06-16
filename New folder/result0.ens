@@ -1,28 +1,13 @@
 ;Este es mi programa:
    MOVE #6, /x
-   MOVE #1,.R1
-   ADD .R1,#2
-   MOVE .A , /y
-   WRINT #0
+   MOVE #1, /y
+   WRSTR /mens0
 
-   CMP #9, #1
-   BN   $Iflabel1
-exitIf1:
-
-   CMP #10, #11
-   BN   $while_Label1
-exitWhile1:
    CMP #6, #9
    BZ $case9
-   CMP #6, #3
-   BZ $case3
    BZ /Default
 
 case9: 
-   WRSTR /mens2
-   BR /salirSwitch
-
-case3: 
    WRSTR /mens1
    BR /salirSwitch
 
@@ -30,23 +15,12 @@ Default:
    BR /salirSwitch
 salirSwitch: 
    WRSTR /defaultmsg
-   
-while_Label1:
-   WRSTR /mens0
 
-   CMP #10, #11
-   BN   $while_Label1
-   BR   $exitWhile1
-   
-Iflabel1:
-   WRINT #8787
-
-   CMP #9, #1
-   BN   $Iflabel1
-   BR   $exitIf1
-mens0:   DATA "estoy en el while"
-mens1:   DATA "Holis Yor"
-mens2:   DATA "jhgf"
+hola:
+   MOVE /x, .A 
+   RET
+mens0:   DATA "dsa"
+mens1:   DATA "jhgf"
 
 defaultmsg: DATA  "Fin switch" 
 c: EQU 6

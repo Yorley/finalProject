@@ -2,22 +2,12 @@ int x;
 int y;
 int c=6;
 main(){
-    
      x=6; 
-     y=1+2; 
-     putw(0);
-     if(9<1){
-         putw(8787);
-     }
-     while(10<11){
-         puts("estoy en el while");
-     }  
-     switch (x){
-           case 9: puts("jhgf") ;break
-           case 3: puts("Holis Yor") ;break
-           default:  break
-      }
+     y=1; 
+     int  hola(){return x}
+     puts("dsa");
      
-           
-           
+           switch (x){
+           case 9: puts("jhgf") ;break
+           default:  break}
 }
